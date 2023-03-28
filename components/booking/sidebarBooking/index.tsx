@@ -1,0 +1,64 @@
+import { OutlineButton } from "@/components/buttons/OutlineButton"
+import { Filter } from "@/components/icons"
+import InputCheckbox from "../../input/InputCheckbox"
+import PriceRange from "../../select/PriceRange"
+
+const SidebarBooking = (props: any) => {
+  const handlePriceRangeChange = (minPrice: number, maxPrice: number) => {
+    console.log(`Selected price range: ${minPrice} - ${maxPrice}`)
+    // Do something with the selected price range
+  }
+
+  const hotelFacilities = [
+    {
+      id: 1,
+      checkbox: <InputCheckbox />,
+      faci: "Parking Facility",
+    },
+    {
+      id: 2,
+      checkbox: <InputCheckbox />,
+      faci: "Security",
+    },
+    {
+      id: 3,
+      checkbox: <InputCheckbox />,
+      faci: "Restaurant",
+    },
+    {
+      id: 4,
+      checkbox: <InputCheckbox />,
+      faci: "Swimming Pool",
+    },
+    {
+      id: 5,
+      checkbox: <InputCheckbox />,
+      faci: "Gym",
+    },
+  ]
+
+  return (
+    <aside className="text-[#1C2434] max-w-max h-screen mt-4 bg-white shadow rounded px-4 py-3">
+      <div className="flex justify-between items-center">
+        <div className="flex gap-1 items-center">
+          <Filter width="15" />
+          <h1 className="font-semibold">FILTERS</h1>
+        </div>
+        <OutlineButton title="Clear All" />
+      </div>
+      <h3 className="font-semibold text-sm mt-2 mb-2">Price Range</h3>
+      <PriceRange onChange={handlePriceRangeChange} />
+      <h3 className="font-semibold text-sm mt-4 mb-2">Hotel Facilities</h3>
+      <ul>
+        {hotelFacilities.map(item => (
+          <li key={item.id} className="flex gap-2 items-center mb-3 ml-1">
+            {item.checkbox}
+            <p className="text-xs font-semibold">{item.faci}</p>
+          </li>
+        ))}
+      </ul>
+    </aside>
+  )
+}
+
+export default SidebarBooking
