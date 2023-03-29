@@ -1,11 +1,5 @@
-import Shopping from '@/components/icons/Cart';
-import Hotels from '@/components/icons/Hotel';
-import Money from '@/components/icons/Money';
-import User from '@/components/icons/User';
-import Folder from '@/components/icons/Folder';
-import Dashboard from '@/components/icons/Dashboard';
-import Chevron from '@/components/icons/Chevron';
-import Hr from '@/components/icons/Hr';
+import { Dashboard, Chevron, Money, Hr, Folder, User, Hotel, Cart } from "../icons";
+
 
 const listMenu = [
   {
@@ -17,19 +11,19 @@ const listMenu = [
   {
     to: "/hotel",
     path: "/hotel",
-    icon: Hotels,
+    icon: Hotel,
     name: "Hotel",
   },
   {
     to: "",
     path: "",
-    icon: Hotels,
+    icon: Hotel,
     name: "Resto",
   },
   {
     to: "#",
     path: "#",
-    icon: Shopping,
+    icon: Cart,
     name: "Purchasing",
     icon2: Chevron,
     submenu: [
@@ -58,28 +52,28 @@ const listMenu = [
     icon2: Chevron,
     submenu: [
       {
-        to: "",
-        path: "",
+        to: "/payment/bank",
+        path: "/payment/bank",
         title: "Bank",
       },
       {
-        to: "",
-        path: "",
+        to: "/payment/fintech",
+        path: "/payment/fintech",
         title: "Fintech",
       },
       {
-        to: "",
-        path: "",
+        to: "/payment/topup",
+        path: "/payment/topup",
         title: "Top Up",
       },
       {
-        to: "",
-        path: "",
+        to: "/payment/account",
+        path: "/payment/account",
         title: "Account",
       },
       {
-        to: "",
-        path: "",
+        to: "/payment/transaction",
+        path: "/payment/transaction",
         title: "Transaction",
       },
     ],

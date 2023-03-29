@@ -6,6 +6,10 @@ import { hotelsReducers } from "../HOTELS/reducer/hotelsReducers"
 
 import { createLogger } from "redux-logger"
 import rootSaga from "../sagaPublic/index"
+import { accountReducers } from "../PAYMENT/reducer/accountsReducer"
+import { bankReducers } from "../PAYMENT/reducer/bankReducer"
+import { fintechReducers } from "../PAYMENT/reducer/fintechReducer"
+import { transactionReducers } from "../PAYMENT/reducer/transactionReducer"
 
 const logger = createLogger()
 const saga = createSagaMiddleware()
@@ -13,6 +17,10 @@ const saga = createSagaMiddleware()
 const reducer = combineReducers({
   departmentReducers,
   hotelsReducers,
+  bankReducers,
+  fintechReducers,
+  accountReducers,
+  transactionReducers,
 })
 
 const store = configureStore({
