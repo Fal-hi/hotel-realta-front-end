@@ -24,7 +24,6 @@ const Bank = () => {
   const handleSearchChange = (e: any): void => {
     setSearch(e.target.value)
   }
-
   const handleAddData = () => {
     setIsOpen({ bank: "", id: 0, isShow: true })
   }
@@ -41,18 +40,6 @@ const Bank = () => {
   useEffect(() => {
     dispatch(getDataBank(search))
   }, [dispatch, search])
-
-  const listHead = [
-    {
-      nama: "Bank Code",
-    },
-    {
-      nama: "Bank Name",
-    },
-    {
-      nama: "Action",
-    },
-  ]
   return (
     <div className="">
       <div>
