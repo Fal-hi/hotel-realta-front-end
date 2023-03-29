@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import React, { LegacyRef, forwardRef, useState } from "react"
+import React, { forwardRef, useEffect, useState, useRef } from "react"
 import sidebarcss from "./sidebarcss"
 import Link from "next/link"
 import { useRouter } from "next/router"
@@ -10,28 +10,47 @@ import Logo from "../../assets/image/logo.png"
 import Menu from "./Menu"
 import listMenu from "./listmenu"
 
-const Sidebar = forwardRef(({}, ref: LegacyRef<HTMLDivElement>) => {
+const Sidebar = forwardRef(({}, ref) => {
   const router = useRouter()
   const [dropdown, setDropdown] = useState({
     status: false,
     index: -1,
-  })
-  const handleDropdown = (index: any) => {
-    setDropdown({
+  });
+  const dropdownRef = useRef(dropdown);
+
+  useEffect(() => {
+    const dropdownFromLocalStorage = window.localStorage.getItem('dropdown');
+    if (dropdownFromLocalStorage) {
+      const { status, index } = JSON.parse(dropdownFromLocalStorage);
+      setDropdown({ status, index });
+      dropdownRef.current = { status, index };
+    }
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem('dropdown', JSON.stringify(dropdownRef.current));
+  }, [dropdownRef.current]);
+
+  const handleDropdown = (index:number) => {
+    setDropdown(prevState => ({
+      status: prevState.index === index ? !prevState.status : true,
+      index,
+    }));
+    dropdownRef.current = {
       status: dropdown.index === index ? !dropdown.status : true,
       index,
-    })
+    };
   }
 
   return (
-    <div className={`${sidebarcss.sidebar}"`}>
+    <div className={`${sidebarcss.sidebar} overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow`}>
       <div className={`${sidebarcss.sidebarcontainer} `}>
         <div className="flex justify-center mt-[14px]">
           <Image className="w-[251px] mb-3.5" src={Logo} alt="company logo" />
         </div>
         <ul className="">
           {(listMenu || []).map((menu, index) => (
-            <>
+            <div key={index}>
               <div className="pt-[26px]">
                 <Link
                   key={menu.name}
@@ -72,13 +91,9 @@ const Sidebar = forwardRef(({}, ref: LegacyRef<HTMLDivElement>) => {
                 <div className="pl-[40px]">
                   {menu.submenu.map(slink => (
                     <div
-                      key={slink.title}
-                      className={`${sidebarcss.sidesubmenuactive}  ${
-                        router.pathname === slink.to
-                          ? "font-bold text-primary"
-                          : "font-medium"
-                      }`}
-                    >
+                    key={slink.title}
+                    className={`${sidebarcss.sidesubmenuactive} ${router.pathname === slink.to ? 'font-bold text-bgPrimary': 'font-medium'}`}
+                  >
                       <Link href={slink.to}>
                         <Typography variant={variants.basemedium}>
                           {slink.title}
@@ -88,7 +103,7 @@ const Sidebar = forwardRef(({}, ref: LegacyRef<HTMLDivElement>) => {
                   ))}
                 </div>
               )}
-            </>
+            </div>
           ))}
         </ul>
       </div>
