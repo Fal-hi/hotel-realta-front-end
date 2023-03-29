@@ -17,6 +17,7 @@ import Plus from "./Plus"
 import Search from "./Search"
 import Trash from "./Trash"
 import User from "./User"
+import RatingStart from "./RatingStart"
 
 export {
   Car,
@@ -35,6 +36,7 @@ export {
   Money,
   Pencil,
   Plus,
+  RatingStart,
   Search,
   Trash,
   User,

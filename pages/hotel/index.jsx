@@ -3,7 +3,7 @@ import React from "react"
 import { CiSearch } from "react-icons/ci"
 import { useDispatch, useSelector } from "react-redux"
 import { doRequestGetHotels } from "../../redux/HOTELS/action/actionHotels"
-import { Search, Trash, Pencil } from "@/components/icons/index"
+import { Search, Trash, Pencil, RatingStart } from "@/components/icons/index"
 
 export default function Hotel() {
   let { hotels, message } = useSelector(state => state.hotelsReducers)
@@ -16,6 +16,26 @@ export default function Hotel() {
   React.useEffect(() => {
     dispatch(doRequestGetHotels())
   }, [])
+
+  const RatingContainer = count => {
+    let ratingNumber =
+      100 + parseInt(count.toString().slice(0, 3).replace(".", "") + "0")
+
+    const ratings = Array.from({ length: 5 }, (_, index) => {
+      ratingNumber =
+        ratingNumber >= 100 ? ratingNumber - 100 : 100 - ratingNumber
+      const test = parseInt(count.toString().slice(1, 4).replace(".", ""))
+      const angkaDepan = parseInt(count.toString().slice(0, 1).replace(".", ""))
+
+      if (index + 1 > angkaDepan + 1) {
+        return <RatingStart rating={0} />
+      } else {
+        return <RatingStart rating={ratingNumber > 99 ? 100 : test} />
+      }
+    })
+
+    return <div className="flex justify-center">{ratings}</div>
+  }
 
   console.log(hotels)
 
@@ -65,8 +85,8 @@ export default function Hotel() {
       <div className="tabel-container w-full">
         <table class="table-auto  w-full border-collapse border-x border-slate-200">
           <thead className="bg-bgGray">
-            <tr className="border-t border-slate-200 text-textGray">
-              <th className="font-normal">No</th>
+            <tr className="border-t border-slate-200 text-textGray ">
+              <th className="font-normal p-3">No</th>
               <th className="font-normal">Hotel Name</th>
               <th className="font-normal">Rating Star</th>
               <th className="font-normal">Modified Date</th>
@@ -75,12 +95,16 @@ export default function Hotel() {
           </thead>
           <tbody>
             {hotels.map(hotel => (
-              <tr className="text-center text-textSecondary font-medium border-t border-slate-200">
-                <td>1</td>
+              <tr className="text-center text-textSecondary  font-medium border-t border-slate-200">
+                <td className="p-3">1</td>
                 <td>{hotel.hotel_name}</td>
-                <td>{hotel.hotel_rating_star}</td>
+
+                <td className="flex justify-center">
+                  {RatingContainer(hotel.hotel_rating_star)}
+                </td>
                 <td>{hotel.hotel_modified_date}</td>
-                <td className="flex justify-center gap-2">
+
+                <td className="flex p-3 justify-center gap-2 items-center content-center w-full h-full">
                   <Pencil width="15" /> |
                   <Trash width="15" />
                 </td>
