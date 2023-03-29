@@ -18,9 +18,9 @@ const Chevron: FC<ChevronProps> = (props: any) => {
       <path
         d="M8.25 4.58342L14.6667 11.0001L8.25 17.4167"
         stroke={props.stroke}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   )

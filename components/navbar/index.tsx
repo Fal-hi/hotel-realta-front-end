@@ -8,7 +8,9 @@ import Menualt from "@/components/icons/MenuAlt"
 
 const Navbar = ({ showNav, setShownav }: any) => {
   return (
-    <div className={`${navbarCss.navbar}`}>
+    <div className={`${navbarCss.navbar} ${
+      showNav ? "pl-64" : ""
+    }`}>
       <div className={"flex justify-center items-center"}>
         <div
           onClick={() => setShownav(!showNav)}
