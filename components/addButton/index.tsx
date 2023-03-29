@@ -1,7 +1,7 @@
 import React from "react";
-import { Plus } from "../icons/Plus";
 import Typography from "../Typography";
 import variants from "../Typography/textcss";
+import { Plus } from "../icons";
 
 type Props = {
   onClick?: any;

@@ -3,15 +3,14 @@ import { FC } from 'react'
 
 interface MenuProps {
   icon?: any
-  isActive?: boolean
 }
 
-const Menu: FC<MenuProps> = ({ icon, isActive }) => {
-  const fill = isActive ? '#5600E8' : '#757575'
+const Menu: FC<MenuProps> = ({ icon}) => {
+
   const IconMenu = icon
   return (
     <div className="items-center flex justify-centeR">
-      <IconMenu color={fill} />
+      <IconMenu/>
     </div>
   )
 }
