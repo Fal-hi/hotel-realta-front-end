@@ -38,9 +38,9 @@ const SidebarBooking = (props: any) => {
   ]
 
   return (
-    <aside className="text-[#1C2434] max-w-max h-screen mt-4 bg-white shadow rounded px-4 py-3">
+    <aside className="fixed top-26 text-[#1C2434] max-w-max h-screen bg-white shadow rounded px-4 py-3">
       <div className="flex justify-between items-center">
-        <div className="flex gap-1 items-center">
+        <div className="flex gap-1 items-center mb-4">
           <Filter width="15" />
           <h1 className="font-semibold">FILTERS</h1>
         </div>

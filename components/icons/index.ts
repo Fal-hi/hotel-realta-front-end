@@ -4,6 +4,7 @@ import Chevron from "./Chevron"
 import ChevronLeft from "./ChevronLeft"
 import ChevronRight from "./ChevronRight"
 import Coffee from "./Coffee"
+import Coupon from "./Coupon"
 import Dashboard from "./Dashboard"
 import Filter from "./Filter"
 import Folder from "./Folder"
@@ -17,14 +18,20 @@ import Plus from "./Plus"
 import Search from "./Search"
 import Trash from "./Trash"
 import User from "./User"
+import UserCircleFill from "./UserCircleFill"
+import Ac from "./Ac"
+import Tv from "./Tv"
+import Wifi from "./Wifi"
 
 export {
+  Ac,
   Car,
   Cart,
   Chevron,
   ChevronLeft,
   ChevronRight,
   Coffee,
+  Coupon,
   Dashboard,
   Filter,
   Folder,
@@ -37,5 +44,8 @@ export {
   Plus,
   Search,
   Trash,
+  Tv,
   User,
+  UserCircleFill,
+  Wifi
 }
