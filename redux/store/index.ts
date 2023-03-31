@@ -10,8 +10,9 @@ import { accountReducers } from "../PAYMENT/reducer/accountsReducer"
 import { bankReducers } from "../PAYMENT/reducer/bankReducer"
 import { fintechReducers } from "../PAYMENT/reducer/fintechReducer"
 import { transactionReducers } from "../PAYMENT/reducer/transactionReducer"
+import vendorReducers from "../PURCHASING/reducer/vendorReducer"
 
-const logger = createLogger()
+// const logger = createLogger()
 const saga = createSagaMiddleware()
 
 const reducer = combineReducers({
@@ -21,6 +22,7 @@ const reducer = combineReducers({
   fintechReducers,
   accountReducers,
   transactionReducers,
+  vendorReducers,
 })
 
 const store = configureStore({
@@ -29,7 +31,7 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     })
-      .concat(logger)
+      // .concat(logger)
       .concat(saga),
 })
 

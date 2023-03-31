@@ -28,8 +28,8 @@ const listMenu = [
     icon2: Chevron,
     submenu: [
       {
-        to: "",
-        path: "",
+        to: "/purchasing/vendor",
+        path: "/purchasing/vendor",
         title: "Vendor",
       },
       {
