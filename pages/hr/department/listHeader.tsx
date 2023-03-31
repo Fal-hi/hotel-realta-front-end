@@ -26,8 +26,8 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
               className="mx-2 cursor-pointer"
               onClick={() => {
                 setIsDelete({
-                  bank: data.name,
-                  id: data.bank_entity_id,
+                  department: data.department,
+                  id: data.id,
                   isShow: true,
                 })
               }}
@@ -38,8 +38,8 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
               className="mx-2 cursor-pointer"
               onClick={() => {
                 setIsOpen({
-                  bank: data.bank_name,
-                  id: data.bank_entity_id,
+                  department: data.department,
+                  id: data.id,
                   isShow: true,
                 })
               }}

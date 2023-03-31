@@ -21,7 +21,7 @@ interface IDepartement {
 const Department = () => {
   const [search, setSearch] = useState("")
   const [page, setPage] = useState(1)
-  const [entry, setEntry] = useState(10)
+  const [entry, setEntry] = useState(2)
   const [isOpen, setIsOpen] = useState({
     department: "",
     id: 0,
