@@ -1,15 +1,31 @@
 import ActionTypes from "./actionType"
 
-export const doRequestGetHotels = () => {
+export const doRequestGetHotels = payload => {
   return {
     type: ActionTypes.REQ_GET_HOTELS,
+    payload,
   }
 }
 
 export const doGetHotelsResponse = payload => {
-  console.log(payload)
+  // console.log(payload)
   return {
     type: ActionTypes.GET_HOTELS_RESPONSE,
+    payload,
+  }
+}
+
+export const doRequestGetHotelsByName = payload => {
+  console.log(payload)
+  return {
+    type: ActionTypes.REQ_GET_HOTELS_BY_NAME,
+    payload,
+  }
+}
+
+export const doRequestGetHotelsByNameResponse = payload => {
+  return {
+    type: ActionTypes.GET_HOTELS_RESPONSE_BY_NAME,
     payload,
   }
 }
