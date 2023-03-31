@@ -5,15 +5,15 @@ import React from "react"
 export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
   return [
     {
-      title: "Bank Code",
+      title: "Departmen ID",
       render: (data: any) => {
-        return <span>{data.bank_code}</span>
+        return <span>{data.id}</span>
       },
     },
     {
-      title: "Bank Name",
+      title: "Department",
       render: (data: any) => {
-        return <span>{data.bank_name}</span>
+        return <span>{data.name}</span>
       },
     },
 

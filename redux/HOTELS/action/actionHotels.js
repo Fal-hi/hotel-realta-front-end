@@ -7,7 +7,7 @@ export const doRequestGetHotels = () => {
 }
 
 export const doGetHotelsResponse = payload => {
-  console.log(payload)
+  // console.log(payload)
   return {
     type: ActionTypes.GET_HOTELS_RESPONSE,
     payload,
