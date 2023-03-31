@@ -22,6 +22,7 @@ import UserCircleFill from "./UserCircleFill"
 import Ac from "./Ac"
 import Tv from "./Tv"
 import Wifi from "./Wifi"
+import RatingStart from "./RatingStart"
 
 export {
   Ac,
@@ -42,10 +43,11 @@ export {
   Money,
   Pencil,
   Plus,
+  RatingStart,
   Search,
   Trash,
   Tv,
   User,
   UserCircleFill,
-  Wifi
+  Wifi,
 }

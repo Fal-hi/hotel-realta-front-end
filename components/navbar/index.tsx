@@ -6,18 +6,18 @@ import Image from "next/image"
 import Avatar from "../../assets/image/avatar.png"
 import Menualt from "@/components/icons/MenuAlt"
 
-const Navbar = ({ showNav, setShownav }: any) => {
+const Navbar = ({ showNav, setShowNav,screenWidth }: any) => {
   return (
     <div className={`${navbarCss.navbar} ${
-      showNav ? "pl-64" : ""
+      screenWidth >= 768 && showNav ? "pl-64" : ""
     }`}>
       <div className={"flex justify-center items-center"}>
-        <div
-          onClick={() => setShownav(!showNav)}
+        <button
           className={"relative inline-block ml-8 cursor-pointer"}
+          onClick={() => setShowNav(!showNav)}
         >
           <Menualt />
-        </div>
+        </button>
       </div>
       <div className={`${navbarCss.navbarbody}`}>
         <div className={"text-right"}>
