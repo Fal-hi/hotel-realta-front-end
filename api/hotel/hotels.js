@@ -1,7 +1,7 @@
 import axios from "../config"
 
 const get = () => {
-  console.log("tes")
+ 
   return axios.get("/hotels")
 }
 

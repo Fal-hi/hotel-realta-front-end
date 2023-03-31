@@ -15,8 +15,8 @@ const listMenu = [
     name: "Hotel",
   },
   {
-    to: "",
-    path: "",
+    to: "/resto/admin",
+    path: "/resto/admin",
     icon: Hotel,
     name: "Resto",
   },

@@ -17,7 +17,7 @@ export default function Hotel() {
     dispatch(doRequestGetHotels())
   }, [])
 
-  console.log(hotels)
+  
 
   return (
     <div className="container px-4 pt-10 ">
