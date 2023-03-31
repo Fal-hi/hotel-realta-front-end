@@ -56,6 +56,7 @@ const Bank = () => {
         </div>
 
         <Table cols={tableConstants(setIsOpen, setIsDelete)} data={bank} />
+        
         {isOpen.isShow ? (
           <Modal onClose={handleClose} header={"Add Bank"}>
             <p>tes</p>

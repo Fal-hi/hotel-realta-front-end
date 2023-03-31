@@ -5,12 +5,13 @@ interface OutlineButtonProps {
   px?: string
   py?: string
   textSize?: string
+  textColor?: string
 }
 
 export const OutlineButton: FC<OutlineButtonProps> = (props: any) => {
   return (
     <button
-      className={`px-${props.px} py-${props.py} font-semibold text-${props.textSize} text-text border-bgPrimary border-solid border-2 outline-none focus:outline-none hover:text-white rounded-md hover:bg-bgPrimary`}
+      className={`px-${props.px} py-${props.py} font-semibold text-${props.textSize} text-${props.textColor} border-bgPrimary border-solid border-2 outline-none focus:outline-none hover:text-white rounded-md hover:bg-bgPrimary`}
     >
       {props.title}
     </button>
@@ -22,4 +23,5 @@ OutlineButton.defaultProps = {
   px: "1",
   py: "1",
   textSize: "[8px]",
+  textColor: "textPurple",
 }
