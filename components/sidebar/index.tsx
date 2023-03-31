@@ -10,7 +10,7 @@ import Logo from "../../assets/image/logo.png"
 import Menu from "./Menu"
 import listMenu from "./listmenu"
 
-const Sidebar = forwardRef(({}, ref) => {
+const Sidebar = forwardRef(({ showNav, setShownav }: any, ref) => {
   const router = useRouter()
   const [dropdown, setDropdown] = useState({
     status: false,
@@ -43,7 +43,7 @@ const Sidebar = forwardRef(({}, ref) => {
   }
 
   return (
-    <div className={`${sidebarcss.sidebar} overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow`}>
+    <div className={`${sidebarcss.sidebar} overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow ${showNav ? "translate-x-0" : "-translate-x-full"}`}>
       <div className={`${sidebarcss.sidebarcontainer} `}>
         <div className="flex justify-center mt-[14px]">
           <Image className="w-[251px] mb-3.5" src={Logo} alt="company logo" />

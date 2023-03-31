@@ -12,7 +12,7 @@ export const tableConstants = (handleEdit?:any) => {
     {
       title: 'Trx Date',
       render: (data:any) => {
-        return <span>{data.paga_name}</span>;
+        return <span>{data.part_modified_date}</span>;
       },
     },
     {
