@@ -12,6 +12,7 @@ import variants from "@/components/Typography/textcss"
 import { deleteDepartment, getDepartment } from "@/redux/HR/action/department"
 import Table from "@/components/Table"
 import { tableConstants } from "./listHeader"
+import ShowingResult from "@/components/showingResult"
 
 interface IDepartement {
   id: number
@@ -21,7 +22,7 @@ interface IDepartement {
 const Department = () => {
   const [search, setSearch] = useState("")
   const [page, setPage] = useState(1)
-  const [entry, setEntry] = useState(2)
+  const [entry, setEntry] = useState(10)
   const [isOpen, setIsOpen] = useState({
     department: "",
     id: 0,
@@ -61,7 +62,7 @@ const Department = () => {
   useEffect(() => {
     dispatch(getDepartment(search, page, entry))
   }, [search, page, entry, refresh, isOpen, dispatch, isDelete])
-
+  // console.log(isDelete)
   return (
     <div className="flex w-full font-poppins-regular">
       <div className="flex flex-col items-start px-5 mt-10 w-full">
@@ -75,15 +76,11 @@ const Department = () => {
         </div>
 
         <div className="py-3">
-          <div className="sm:flex-1 sm:items-center sm:justify-start">
-            <Typography variant={variants.smregular} color={"text-[#ABABAB]"}>
-              <p className="text-sm">
-                Showing <span className="font-medium">{data.from}</span> to{" "}
-                <span className="font-medium">{data.to}</span> of{" "}
-                <span className="font-medium">{data.totalData}</span> results
-              </p>
-            </Typography>
-          </div>
+          <ShowingResult
+            from={data.from}
+            to={data.to}
+            totalData={data.totalData}
+          />
         </div>
 
         <Table
