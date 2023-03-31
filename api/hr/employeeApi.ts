@@ -3,8 +3,8 @@ import axios from "../config"
 const getEmployee = (
   page: number,
   entry: number,
-  search?: string,
-  status?: number
+  search: string = "",
+  status: string = ""
 ) => {
   return axios.get(
     `/hr/employee?search=${search}&page=${page}&entry=${entry}&status=${status}`
@@ -43,6 +43,7 @@ const getUsersForSearchOptionEmployee = (search: string) => {
 
 const employeeApi = {
   createEmployee,
+  getEmployee,
   getEmployeeForUpdate,
   updateEmployee,
   getJobRoleOption,

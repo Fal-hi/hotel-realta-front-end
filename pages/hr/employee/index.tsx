@@ -2,10 +2,18 @@ import Table from "@/components/Table"
 import AddButton from "@/components/addButton"
 import { SearchInput } from "@/components/searchInput"
 import ShowingResult from "@/components/showingResult"
-import React from "react"
+import { getEmployee } from "@/redux/HR/action/employee"
+import React, { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
 const Employee = () => {
   const handleSearchChange = () => {}
+  console.log(useSelector((state: any) => state.employeeReducers))
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getEmployee({ page: 1, entry: 10 }))
+  }, [])
+
   return (
     <div className="flex w-full font-poppins-regular">
       <div className="flex flex-col items-start px-5 mt-10 w-full">
