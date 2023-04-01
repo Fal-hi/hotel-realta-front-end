@@ -2,16 +2,22 @@ import { FC } from "react"
 
 interface BgButtonProps {
   title: string
-  px?: string
-  py?: string
+  padding?: string
   textSize?: string
   width?: string
+  onClick?: () => any
 }
 
 const BgButton: FC<BgButtonProps> = (props: any) => {
   return (
     <button
-      className={`px-${props.px} py-${props.py} font-semibold text-${props.textSize} w-${props.width} text-white border-bgPrimary bg-bgPrimary border-solid border-2 outline-none focus:outline-none hover:text-white rounded-md hover:bg-bgPrimary`}
+      className="font-semibold text-white border-bgPrimary bg-bgPrimary border-solid border-2 outline-none focus:outline-none hover:text-white rounded-md hover:bg-bgPrimary"
+      style={{
+        padding: props.padding,
+        fontSize: props.textSize,
+        width: props.width,
+      }}
+      onClick={props.onClick}
     >
       {props.title}
     </button>
@@ -20,9 +26,8 @@ const BgButton: FC<BgButtonProps> = (props: any) => {
 
 BgButton.defaultProps = {
   title: "Search",
-  px: "4",
-  py: "2",
-  textSize: "xs",
+  padding: "0.5rem 1rem",
+  textSize: "12px",
   width: "auto",
 }
 

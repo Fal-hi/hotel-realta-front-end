@@ -54,3 +54,9 @@ body{
   font-family: "poppins-light";
   src: url('../assets/fonts/Poppins-Light.ttf')
 }
+
+input[type="range"]::-webkit-slider-thumb,
+input[type="range"]::-moz-range-thumb,
+input[type="range"]::-ms-thumb {
+    opacity:0;
+}

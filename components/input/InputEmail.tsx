@@ -1,15 +1,15 @@
 import { FC } from "react"
 
-interface InputTextProps {
+interface InputEmailProps {
   width?: string
   placeholder: string
 }
 
-const InputText: FC<InputTextProps> = (props: any) => {
+const InputEmail: FC<InputEmailProps> = (props: any) => {
   return (
     <form className="flex items-center">
       <input
-        type="text"
+        type="email"
         className="bg-white border-[#D0D5DD] text-[#667085] text-xs px-3 py-2 rounded-md font-normal border-2 focus:outline-none"
         placeholder={props.placeholder}
         required
@@ -21,9 +21,9 @@ const InputText: FC<InputTextProps> = (props: any) => {
   )
 }
 
-InputText.defaultProps = {
+InputEmail.defaultProps = {
   width: "auto",
-  placeholder: "Input text...",
+  placeholder: "Input Email...",
 }
 
-export default InputText
+export default InputEmail

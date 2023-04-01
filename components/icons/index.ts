@@ -1,6 +1,8 @@
 import Car from "./Car"
 import Cart from "./Cart"
+import Calendar from "./Calendar"
 import Chevron from "./Chevron"
+import ChevronDown from "./ChevronDown"
 import ChevronLeft from "./ChevronLeft"
 import ChevronRight from "./ChevronRight"
 import Coffee from "./Coffee"
@@ -22,12 +24,15 @@ import UserCircleFill from "./UserCircleFill"
 import Ac from "./Ac"
 import Tv from "./Tv"
 import Wifi from "./Wifi"
+import X from "./X"
 
 export {
   Ac,
   Car,
+  Calendar,
   Cart,
   Chevron,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Coffee,
@@ -47,5 +52,6 @@ export {
   Tv,
   User,
   UserCircleFill,
-  Wifi
+  Wifi,
+  X
 }
