@@ -109,7 +109,7 @@ const CardBooking = (props: any) => {
                 </h1>
               </div>
               <div className="mt-7 text-right">
-                <BgButton px="4" py="2" title="Booking Now" />
+                <BgButton padding="0.5rem 1rem" title="Booking Now" />
               </div>
             </section>
           </article>

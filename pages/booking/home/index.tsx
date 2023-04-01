@@ -2,6 +2,8 @@ import CardBooking from "@/components/booking/cardBooking"
 import SearchBooking from "@/components/booking/searchBooking"
 import SidebarBooking from "@/components/booking/sidebarBooking"
 import BookingDetails from "../details"
+import ModifyBooking from "../modify"
+import InvoiceBooking from "../invoice"
 
 const HomeBooking = () => {
   return (
@@ -12,6 +14,8 @@ const HomeBooking = () => {
         <CardBooking />
       </div> */}
       <BookingDetails />
+      {/* <ModifyBooking /> */}
+      {/* <InvoiceBooking /> */}
     </main>
   )
 }

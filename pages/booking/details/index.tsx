@@ -7,10 +7,14 @@ import Bedroom5 from "@/assets/image/bedrooms/bedroom5.jpg"
 import Stars from "@/assets/image/Stars.png"
 import { OutlineButton } from "@/components/buttons/OutlineButton"
 import formatRupiah from "@/functions/formatRupiah"
-import { Coupon } from "@/components/icons"
+import { ChevronRight, Coupon } from "@/components/icons"
 import BgButton from "@/components/buttons/BgButton"
 import { Ac, Car, Cart, Coffee, Tv, Wifi } from "@/components/icons"
 import InputCheckbox from "@/components/input/InputCheckbox"
+import Star from "@/components/icons/Star"
+import InputRange from "../../../components/input/InputRange"
+import classNames from "classnames"
+import { useState } from "react"
 
 const bedroomImages = [
   {
@@ -98,9 +102,57 @@ const chooseRooms = [
   },
 ]
 
+const rangeStars = [
+  {
+    id: 1,
+    star: 5,
+    iPWidthIn: "22rem",
+    iPPercent: 80,
+  },
+  {
+    id: 2,
+    star: 4,
+    iPWidthIn: "15rem",
+    iPPercent: 10,
+  },
+  {
+    id: 3,
+    star: 3,
+    iPWidthIn: "10rem",
+    iPPercent: 7,
+  },
+  {
+    id: 4,
+    star: 2,
+    iPWidthIn: "2rem",
+    iPPercent: 3,
+  },
+  {
+    id: 5,
+    star: 1,
+    iPWidthIn: "0rem",
+    iPPercent: 0,
+  },
+]
+
 const BookingDetails = () => {
+  const [showModal, setShowModal] = useState(false)
+  const modalClasses = classNames(
+    "fixed top-0 left-0 right-0 bottom-0 bg-opacity-50 bg-gray-900 flex justify-center items-center z-50",
+    {
+      hidden: !showModal,
+    }
+  )
+
+  const handleModalOpen = () => {
+    setShowModal(true)
+  }
+
+  const handleCloseOpen = () => {
+    setShowModal(false)
+  }
   return (
-    <div className="rounded-md p-4 mt-2 text-textPrimary">
+    <div className="rounded-md p-4 mt-2 mb-20 text-textPrimary">
       <section className="flex gap-4 items-start">
         <figure>
           <Image
@@ -208,7 +260,7 @@ const BookingDetails = () => {
                     </div>
                   </div>
                   <div className="relative">
-                    <div className="absolute top-0 right-0 z-50">
+                    <div className="absolute top-0 right-0 z-30">
                       <InputCheckbox />
                     </div>
                     <figure>
@@ -224,23 +276,64 @@ const BookingDetails = () => {
               </div>
             ))}
           </div>
-          {/* Hotel Policies */}
-          {/* <div className="mt-12 flex gap-4 items-center">
-            <h1 className="font-bold text-lg mb-10">Ratings And Reviews</h1>
-            <div>
-              <h1 className="text-semibold">4.2</h1>
-              <span>363 Reviews</span>
-              <span>Good</span>
+          {/* Rating and Reviews */}
+          <h1 className="mt-12 font-bold text-lg mb-10">Ratings And Reviews</h1>
+          <div className="flex justify-around items-center">
+            <div className="text-center mr-8">
+              <h1 className="font-medium text-5xl mb-2">4.2</h1>
+              <p className="font-medium -mb-1">363 Reviews</p>
+              <span className="font-extralight text-xs">Good</span>
             </div>
-          </div> */}
+            <div>
+              {rangeStars.map((rs: any) => (
+                <div key={rs.id} className="flex gap-2 items-center">
+                  <h1 className="font-semibold text-center w-2">{rs.star}</h1>
+                  <Star width="30" />
+                  <InputRange widthOut="27rem" widthIn={rs.iPWidthIn} />
+                  <span className="text-[10px] font-extralight ml-2">
+                    {rs.iPPercent}%
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* User Comments */}
+          <div className="mt-12">
+            <h4 className="font-semibold">Muhammad Ikrar, 03 Mar 2023</h4>
+            <p className="font-extralight text-xs mt-1">Mantab Djiwa</p>
+            <div className="flex gap-4 items-center mt-4">
+              <span className="text-textPurple text-xs font-medium">
+                See All Reviews
+              </span>
+              <ChevronRight width="10" fill="#7743DB" />
+            </div>
+          </div>
+          {/* Hotel Policy */}
+          <h1 className="mt-12 font-bold text-lg mb-4">Hotel Policy</h1>
+          <div className="flex gap-4 items-center">
+            <h3>
+              Check In : <b>01:30 PM</b>
+            </h3>
+            <h3>
+              Check Out : <b>12:30 PM</b>
+            </h3>
+          </div>
+          <ul className="text-xs mt-1 list-disc ml-4">
+            <li>
+              As a complimentary benefit your stay is now insured by Chubb
+            </li>
+            <li>Guests can check in using any Government issued ID proof</li>
+            <li>
+              As a complimentary benefit, your stay is now insured by Acko.
+            </li>
+          </ul>
         </article>
-        {/* ldkjsdjkbsdk */}
-        <article className="bg-white p-6 shadow w-[34.33%] rounded-md">
+        <article className="bg-white p-6 shadow w-[34.33%] rounded-md sticky top-[6rem]">
           <div className="flex justify-between items-start mb-4">
             <h1 className="font-semibold text-textPurple">
               Sign In to see a lower price
             </h1>
-            <OutlineButton title="Sign In" />
+            <OutlineButton title="Sign In" padding="0.3rem 0.5rem" />
           </div>
           <hr />
           <div className="mt-3 flex justify-between items-center">
@@ -260,13 +353,39 @@ const BookingDetails = () => {
               </h1>
             </div>
           </div>
-          <div className="flex justify-between items-center bg-[#E7F2FF] rounded-md p-6 mt-8">
+          <div className="relative flex justify-between items-center bg-[#E7F2FF] rounded-md p-6 mt-8">
+            <div className="absolute top-0 right-0 z-10">
+              <InputCheckbox width="17px" height="17px" />
+            </div>
             <div className="flex gap-4 items-center">
               <Coupon />
               <span>SAFESTAY45</span>
             </div>
             <h3>{formatRupiah(100000)}</h3>
           </div>
+          {/* Modal */}
+          {/* <div
+            className={modalClasses}
+            onClick={(e: any) => e.stopPropagation()}
+          >
+            <div className="w-1/3 bg-white p-6 rounded-md">
+              <h1 className="text-xl font-semibold">Available Coupons</h1>
+              <div className="flex justify-between items-center bg-[#E7F2FF] rounded-md p-6 mt-4">
+                <div className="flex gap-4 items-center">
+                  <Coupon />
+                  <span>SAFESTAY45</span>
+                </div>
+                <h3>{formatRupiah(100000)}</h3>
+              </div>
+            </div>
+          </div> */}
+          {/* End Modal */}
+          <h4
+            className="bg-rose-400 text-white rounded-md ml-auto text-sm px-2 py-1 mt-3 max-w-max cursor-pointer"
+            onClick={handleModalOpen}
+          >
+            More Offers
+          </h4>
           <div className="flex justify-between items-center my-8 text-sm">
             <span className="font-semibold">Your Saving</span>
             <span className="bg-yellow-300 py-1 px-2 rounded">
