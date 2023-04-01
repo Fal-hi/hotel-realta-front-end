@@ -6,11 +6,15 @@ import Breadcumb from "@/components/breadcumb"
 import { Pencil, Trash } from "@/components/icons"
 
 import { SearchInput } from "@/components/searchInput"
-import { getDataFintech } from "@/redux/PAYMENT/action/fintech"
+import { deleteDataFintech, getDataFintech } from "@/redux/PAYMENT/action/fintech"
 
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { tableConstants } from "./listHeader"
+import { Modal } from "@/components/modal"
+import { FormAdd } from "@/components/payment/frombank/FromAdd"
+import { ConfirmationDelete } from "@/components/payment/frombank/Delete"
+import { FromAddFintech } from "@/components/payment/fromFintech/FromAddFintech"
 
 const Fintech = () => {
   const { fint, refresh } = useSelector((state: any) => state.fintechReducers)
@@ -25,6 +29,22 @@ const Fintech = () => {
     id: 0,
     isShow: false,
   })
+  const handleClose = () => {
+    setIsOpen(prev => {
+      return { ...prev, isShow: false }
+    })
+    
+    setIsDelete(prev => {
+      return { ...prev, isShow: false }
+    })
+  }
+  const handleAddData = () => {
+    setIsOpen({ fintech: "", id: 0, isShow: true })
+  }
+  const handleDelete = (id: number) => {
+    dispatch(deleteDataFintech(id))
+    handleClose()
+  }
   const handleSearchChange = (e: any): void => {
     setSearch(e.target.value)
   }
@@ -44,11 +64,33 @@ const Fintech = () => {
             <SearchInput onChange={handleSearchChange} />
           </div>
           <div className="flex ">
-            <AddButton />
+            <AddButton onClick={handleAddData} />
           </div>
         </div>
 
         <Table cols={tableConstants(setIsOpen, setIsDelete)} data={fint} />
+
+        {isOpen.isShow ? (
+          <Modal onClose={handleClose} header={"Fintech"}>
+            <FromAddFintech id={isOpen.id} fintech={isOpen.fintech} setIsOpen={setIsOpen} />
+          </Modal>
+        ) : null}
+
+        {isDelete.isShow ? (
+          <Modal
+            onClose={handleClose}
+            header={"Hapus Data"}
+          >
+            <ConfirmationDelete
+              data={isDelete.fintech}
+              handleDelete={handleDelete}
+              id={isDelete.id}
+              handleClose={() => {
+                handleClose()
+              }}
+            />
+          </Modal>
+        ) : null}
       </div>
     </div>
   )

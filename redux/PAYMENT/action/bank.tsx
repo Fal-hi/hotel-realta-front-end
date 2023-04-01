@@ -13,3 +13,45 @@ export const getDataBankRespons = (payload:any)=>{
         payload
     }
 }
+
+export const createDataBank =(payload:any)=>{
+    return {
+        type: ActionTypePayment.CREATE_BANK,
+        payload
+    };
+};
+
+export const createDataBankRespons = (payload:any)=>{
+    return{
+        type: ActionTypePayment.CREATE_BANK_RESPONSE,
+        payload
+    }
+}
+
+export const updateDataBank =(payload:any)=>{
+    return {
+        type: ActionTypePayment.UPDATE_BANK,
+        payload
+    };
+};
+
+export const updateDataBankRespons = (payload:any)=>{
+    return{
+        type: ActionTypePayment.UPDATE_BANK_RESPONSE,
+        payload
+    }
+}
+
+export const deleteDataBank =(payload:any)=>{
+    return {
+        type: ActionTypePayment.DELETE_BANK,
+        payload
+    };
+};
+
+export const deleteDataBankRespons = (payload:any)=>{
+    return{
+        type: ActionTypePayment.DELETE_BANK_RESPONSE,
+        payload
+    }
+}

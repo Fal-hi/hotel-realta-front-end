@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { tableConstants } from "./listHeader"
-import { getDataBank } from "@/redux/PAYMENT/action/bank"
+import { deleteDataBank, getDataBank } from "@/redux/PAYMENT/action/bank"
 import Table from "@/components/Table"
 import AddButton from "@/components/addButton"
 import Breadcumb from "@/components/breadcumb"
 import { Modal } from "@/components/modal"
 import { SearchInput } from "@/components/searchInput"
+import { FormAdd } from "@/components/payment/frombank/FromAdd"
+import { ConfirmationDelete } from "@/components/payment/frombank/Delete"
 
 const Bank = () => {
   const { bank, refresh } = useSelector((state: any) => state.bankReducers)
@@ -16,8 +18,10 @@ const Bank = () => {
     id: 0,
     isShow: false,
   })
+  console.log(isOpen);
+  
   const [isDelete, setIsDelete] = useState({
-    bank: "",
+    bank_name: "",
     id: 0,
     isShow: false,
   })
@@ -27,11 +31,15 @@ const Bank = () => {
   const handleAddData = () => {
     setIsOpen({ bank: "", id: 0, isShow: true })
   }
+  const handleDelete = (id: number) => {
+    dispatch(deleteDataBank(id))
+    handleClose()
+  }
   const handleClose = () => {
     setIsOpen(prev => {
       return { ...prev, isShow: false }
     })
-
+    
     setIsDelete(prev => {
       return { ...prev, isShow: false }
     })
@@ -39,7 +47,10 @@ const Bank = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getDataBank(search))
-  }, [dispatch, search])
+    
+  }, [dispatch,refresh])
+
+  
   return (
     <div className="">
       <div>
@@ -55,19 +66,27 @@ const Bank = () => {
           </div>
         </div>
 
-        <Table cols={tableConstants(setIsOpen, setIsDelete)} data={bank} />
-        
+
+        <Table cols={tableConstants(setIsOpen, setIsDelete)} data={bank?.data} />
+
         {isOpen.isShow ? (
-          <Modal onClose={handleClose} header={"Add Bank"}>
-            <p>tes</p>
+          <Modal onClose={handleClose} header={"Bank"}>
+            <FormAdd id={isOpen.id} bank={isOpen.bank} setIsOpen={setIsOpen} />
           </Modal>
         ) : null}
         {isDelete.isShow ? (
           <Modal
             onClose={handleClose}
-            header={"Apakah Anda Ingin Menghapus Data"}
+            header={"Hapus Data"}
           >
-            <p>tes</p>
+            <ConfirmationDelete
+              data={isDelete.bank_name}
+              handleDelete={handleDelete}
+              id={isDelete.id}
+              handleClose={() => {
+                handleClose()
+              }}
+            />
           </Modal>
         ) : null}
       </div>

@@ -13,7 +13,7 @@ const AddButton = ({ onClick }: Props) => {
       onClick={onClick}
       className="flex items-center bg-[#7743DB] hover:bg-[#5f35ac] text-white py-2 px-4 rounded"
     >
-      <Plus />
+      <Plus width="18" />
       <Typography variant={variants.baseregular}>
         <p className="px-2">Add</p>
       </Typography>

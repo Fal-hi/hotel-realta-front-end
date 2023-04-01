@@ -10,6 +10,12 @@ export function fintechReducers(state = initialState, action:any) {
     switch (type) {
         case ActionTypePayment.GET_FINTECH_RESPONSE:
             return{state, fint: payload, refresh: true}
+        case ActionTypePayment.CREATE_FINTECH_RESPONSE:
+                return { fint: payload, refresh: false}
+        case ActionTypePayment.UPDATE_FINTECH_RESPONSE:
+                    return { fint: payload, refresh: false }
+        case ActionTypePayment.DELETE_FINTECH_RESPONSE:
+                return { fint: payload, refresh: true }
         default:
             return state
     }
