@@ -1,11 +1,18 @@
+import { AxiosResponse } from "axios"
 import axios from "../config"
+
+interface Iresponse {
+  statusCode: number
+  message: string
+  data: any
+}
 
 const getEmployee = (
   page: number,
   entry: number,
   search: string = "",
   status: string = ""
-) => {
+): Promise<AxiosResponse<Iresponse, Iresponse>> => {
   return axios.get(
     `/hr/employee?search=${search}&page=${page}&entry=${entry}&status=${status}`
   )
@@ -17,27 +24,37 @@ interface Idata {
   shift: string
   image: any
 }
-const createEmployee = (data: Idata) => {
+
+const createEmployee = (
+  data: Idata
+): Promise<AxiosResponse<Iresponse, any>> => {
   return axios.post(`/hr/employee`, data)
 }
 
-const getEmployeeForUpdate = (id: number) => {
+const getEmployeeForUpdate = (
+  id: number
+): Promise<AxiosResponse<Iresponse, any>> => {
   return axios.get(`/hr/employee/${id}`)
 }
 
-const updateEmployee = (id: number, data: Idata) => {
+const updateEmployee = (
+  id: number,
+  data: Idata
+): Promise<AxiosResponse<Iresponse, any>> => {
   return axios.put(`/hr/employee/${id}`, data)
 }
 
-const getJobRoleOption = () => {
+const getJobRoleOption = (): Promise<AxiosResponse<Iresponse, any>> => {
   return axios.get(`/hr/employee/job_role`)
 }
 
-const getDepartmentOption = () => {
+const getDepartmentOption = (): Promise<AxiosResponse<Iresponse, any>> => {
   return axios.get(`/hr/employee/department`)
 }
 
-const getUsersForSearchOptionEmployee = (search: string) => {
+const getUsersForSearchOptionEmployee = (
+  search: string
+): Promise<AxiosResponse<Iresponse, any>> => {
   return axios.get(`/users/usersByName?search=${search}`)
 }
 
