@@ -5,7 +5,6 @@ import PriceRange from "../../select/PriceRange"
 
 const SidebarBooking = (props: any) => {
   const handlePriceRangeChange = (minPrice: number, maxPrice: number) => {
-    console.log(`Selected price range: ${minPrice} - ${maxPrice}`)
     // Do something with the selected price range
   }
 

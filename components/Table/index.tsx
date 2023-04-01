@@ -24,7 +24,7 @@ const Table = ({cols, data, children}: any) => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                    {data.map((item: any, index: any) => (
+                    {(data || []).map((item: any, index: any) => (
                       <tr key={index}  className="hover:bg-gray-50">
                         {cols.map((col: any, key: any) => (
                           <td
@@ -36,11 +36,15 @@ const Table = ({cols, data, children}: any) => {
                         ))}
                       </tr>
                     ))}
-                    <tr>
-                       <td   className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">{children}</td> 
-                    </tr>
+                   
                   </tbody>
                 </table>
+                <div
+						className="px-5 py-3 text-gray-700 dark:text-gray-200 whitespace-nowrap border-t flex flex-col xs:flex-row items-center xs:justify-between ">
+						<div className="inline-flex mt-2 xs:mt-0">
+            {children}
+						</div>
+					</div>
               </div>
             </div>
           </div>

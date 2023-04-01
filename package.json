@@ -20,6 +20,7 @@
     "dotenv": "^16.0.3",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
+    "moment": "^2.29.4",
     "next": "13.2.4",
     "nuka-carousel": "^5.5.1",
     "react": "18.2.0",
@@ -28,7 +29,6 @@
     "react-hook-form": "^7.43.8",
     "react-icons": "^4.8.0",
     "react-redux": "^8.0.5",
-    "react-tailwindcss-select": "^1.8.5",
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.2.3",
     "typescript": "5.0.2"

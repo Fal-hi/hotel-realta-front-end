@@ -2,25 +2,72 @@ import { useRouter } from "next/router"
 import React from "react"
 import { CiSearch } from "react-icons/ci"
 import { useDispatch, useSelector } from "react-redux"
-import { doRequestGetHotels } from "../../redux/HOTELS/action/actionHotels"
+import {
+  doRequestGetHotels,
+  doRequestGetHotelsByName,
+} from "../../redux/HOTELS/action/actionHotels"
 import { Search, Trash, Pencil } from "@/components/icons/index"
+import RatingStars from "@/functions/ratingStarsFunction"
+import moment from "moment"
+import ModalEditAdd from "../../components/hotel/ModalAdd"
+import ModalEditEdit from "../../components/hotel/ModalEdit"
 
 export default function Hotel() {
-  let { hotels, message } = useSelector(state => state.hotelsReducers)
+  const [showModalAdd, setShowModalAdd] = React.useState(false)
+  const [showModalEdit, setShowModalEdit] = React.useState(false)
+  const [hotelChoseEdit, setHotelChoseEdit] = React.useState("")
+
+  let { hotels, status, totalPagination, refresh } = useSelector(
+    state => state.hotelsReducers
+  )
   const dispatch = useDispatch()
-  const router = useRouter()
-  const cssProps = {
-    enableBackground: "new 0 0 56.966 56.966",
+
+  const [paginationLocation, setPagination] = React.useState(1)
+  // const pagination = Array.from({ length: totalPagination }, (_, index) => {
+  //   const isActive = index + 1 == paginationLocation
+
+  //   const className = isActive
+  //     ? "relative rounded-sm z-10 inline-flex items-center border border-indigo-600 px-4 py-2 text-sm font-semibold text-textPurple focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+  //     : "relative rounded-sm z-10 inline-flex items-center border  px-4 py-2 text-sm font-semibold text-textSecondary focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 "
+
+  //   return (
+  //     <a
+  //       key={index}
+  //       href="#"
+  //       aria-current="page"
+  //       className={className}
+  //       onClick={() => setPagination(index + 1)}
+  //     >
+  //       {index + 1}
+  //     </a>
+  //   )
+  // })
+
+  const handleSearching = e => {
+    const payload = {
+      paginationLocation: paginationLocation,
+      search: e.target.value,
+    }
+
+    dispatch(doRequestGetHotelsByName(payload))
   }
-
   React.useEffect(() => {
-    dispatch(doRequestGetHotels())
-  }, [])
+    dispatch(doRequestGetHotels(paginationLocation))
+  }, [paginationLocation, refresh])
 
-  console.log(hotels)
+  React.useEffect(() => {}, [refresh])
+  // console.log(totalPagination)
+  // console.log(hotels)
 
   return (
     <div className="container px-4 pt-10 ">
+      {showModalAdd && <ModalEditAdd setShowModalAdd={setShowModalAdd} />}
+      {showModalEdit && (
+        <ModalEditEdit
+          hotelChoseEdit={hotelChoseEdit}
+          setShowModalEdit={setShowModalEdit}
+        />
+      )}
       <div className="header flex justify-between">
         <h2>Hotel</h2>
         <h5 className="text-textSecondary">
@@ -35,25 +82,34 @@ export default function Hotel() {
 
       <div className="contain-search-add flex justify-between items-center">
         <div className="search max-w-fit">
-          <div className="pt-2 relative mx-auto text-slate-500">
+          <div className="pt-2 relative mx-auto text-textSecondary">
             <form className="relative flex">
               <button
-                type="submit"
+                type="button"
                 className="absolute inset-y-0 left-0 flex items-center justify-center px-3"
+                onClick={handleSearching}
               >
-                <Search width="20" />
+                <Search width="20" color={"text-textSecondary"} />
               </button>
               <input
                 className="border-2 border-gray-300 bg-white h-10 px-3 pl-10 rounded-lg text-sm focus:outline-none flex-grow"
                 type="search"
                 name="search"
                 placeholder="Search"
+                onChange={e => {
+                  handleSearching(e)
+                }}
               />
             </form>
           </div>
         </div>
         <div className="add-container">
-          <button className="bg-primary text-white px-6 py-2 rounded-lg">
+          <button
+            className="bg-bgPrimary text-white px-6 py-2 rounded-lg"
+            onClick={() => {
+              setShowModalAdd(true)
+            }}
+          >
             + Add
           </button>
         </div>
@@ -65,8 +121,8 @@ export default function Hotel() {
       <div className="tabel-container w-full">
         <table class="table-auto  w-full border-collapse border-x border-slate-200">
           <thead className="bg-bgGray">
-            <tr className="border-t border-slate-200 text-textGray">
-              <th className="font-normal">No</th>
+            <tr className="border-t border-slate-200 text-textGray ">
+              <th className="font-normal p-3">No</th>
               <th className="font-normal">Hotel Name</th>
               <th className="font-normal">Rating Star</th>
               <th className="font-normal">Modified Date</th>
@@ -74,48 +130,72 @@ export default function Hotel() {
             </tr>
           </thead>
           <tbody>
-            {hotels.map(hotel => (
-              <tr className="text-center text-textSecondary font-medium border-t border-slate-200">
-                <td>1</td>
-                <td>{hotel.hotel_name}</td>
-                <td>{hotel.hotel_rating_star}</td>
-                <td>{hotel.hotel_modified_date}</td>
-                <td className="flex justify-center gap-2">
-                  <Pencil width="15" /> |
-                  <Trash width="15" />
-                </td>
-              </tr>
-            ))}
+            {status !== 400 &&
+              hotels?.length > 0 &&
+              hotels.map(hotel => (
+                <tr
+                  className="text-center text-textSecondary font-medium border-t border-slate-200"
+                  key={hotel.hotel_id}
+                >
+                  <td className="p-3">{hotel.row_number}</td>
+                  <td>{hotel.hotel_name}</td>
+
+                  <td className="flex justify-center">
+                    {<RatingStars count={hotel.hotel_rating_star} />}
+                  </td>
+                  <td>{moment(hotel.hotel_modified_date).format("ll")}</td>
+
+                  <td className="flex p-3 justify-center gap-2 items-center content-center w-full h-full">
+                    <div
+                      className="pencil cursor-pointer"
+                      onClick={() => {
+                        setShowModalEdit(true)
+                        setHotelChoseEdit(hotel.hotel_id)
+                      }}
+                    >
+                      <Pencil width="15" />{" "}
+                    </div>
+                    |
+                    <Trash width="15" />
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
-        <div class="flex items-center w-full justify-between border border-slate-200 bg-white px-4 py-3 sm:px-6">
-          <div class="flex flex-1 justify-between sm:hidden">
+        <div className="flex items-center w-full justify-between border border-slate-200 bg-white px-4 py-3 sm:px-6">
+          <div className="flex flex-1 justify-between sm:hidden">
             <a
               href="#"
-              class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+              className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
             >
               Previous
             </a>
             <a
               href="#"
-              class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+              className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
             >
               Next
             </a>
           </div>
-          <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-center">
+          <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-center">
             <div>
               <nav
-                class="isolate inline-flex -space-x-px rounded-md shadow-sm"
+                className="isolate inline-flex -space-x-px rounded-md gap-1 shadow-sm"
                 aria-label="Pagination"
               >
                 <a
                   href="#"
-                  class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+                  className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+                  onClick={e => {
+                    e.preventDefault()
+                    paginationLocation > 1
+                      ? setPagination(paginationLocation - 1)
+                      : ""
+                  }}
                 >
-                  <span class="sr-only">Previous</span>
+                  <span className="sr-only">Previous</span>
                   <svg
-                    class="h-5 w-5"
+                    className="h-5 w-5"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                     aria-hidden="true"
@@ -128,53 +208,39 @@ export default function Hotel() {
                   </svg>
                 </a>
 
+                {Array.from({ length: totalPagination }, (_, index) => {
+                  const isActive = index + 1 == paginationLocation
+
+                  const className = isActive
+                    ? "relative rounded-sm z-10 inline-flex items-center border border-indigo-600 px-4 py-2 text-sm font-semibold text-textPurple focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    : "relative rounded-sm z-10 inline-flex items-center border  px-4 py-2 text-sm font-semibold text-textSecondary focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 "
+
+                  return (
+                    <a
+                      key={index}
+                      href="#"
+                      aria-current="page"
+                      className={className}
+                      onClick={() => setPagination(index + 1)}
+                    >
+                      {index + 1}
+                    </a>
+                  )
+                })}
+
                 <a
                   href="#"
-                  aria-current="page"
-                  class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+                  onClick={e => {
+                    e.preventDefault()
+                    paginationLocation < totalPagination
+                      ? setPagination(paginationLocation + 1)
+                      : ""
+                  }}
                 >
-                  1
-                </a>
-                <a
-                  href="#"
-                  class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-                >
-                  2
-                </a>
-                <a
-                  href="#"
-                  class="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex"
-                >
-                  3
-                </a>
-                <span class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0">
-                  ...
-                </span>
-                <a
-                  href="#"
-                  class="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex"
-                >
-                  8
-                </a>
-                <a
-                  href="#"
-                  class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-                >
-                  9
-                </a>
-                <a
-                  href="#"
-                  class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-                >
-                  10
-                </a>
-                <a
-                  href="#"
-                  class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-                >
-                  <span class="sr-only">Next</span>
+                  <span className="sr-only">Next</span>
                   <svg
-                    class="h-5 w-5"
+                    className="h-5 w-5"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                     aria-hidden="true"
