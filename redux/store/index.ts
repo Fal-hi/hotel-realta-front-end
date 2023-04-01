@@ -10,9 +10,12 @@ import { accountReducers } from "../PAYMENT/reducer/accountsReducer"
 import { bankReducers } from "../PAYMENT/reducer/bankReducer"
 import { fintechReducers } from "../PAYMENT/reducer/fintechReducer"
 import { transactionReducers } from "../PAYMENT/reducer/transactionReducer"
+import vendorReducers from "../PURCHASING/reducer/vendorReducer"
 import { addressReducers } from "../HOTELS/reducer/addressReducers"
+import stockReducers from "../PURCHASING/reducer/stockReducer"
+import listOrderReducers from "../PURCHASING/reducer/listOrderReducer"
 
-const logger = createLogger()
+// const logger = createLogger()
 const saga = createSagaMiddleware()
 
 const reducer = combineReducers({
@@ -23,6 +26,9 @@ const reducer = combineReducers({
   fintechReducers,
   accountReducers,
   transactionReducers,
+  vendorReducers,
+  stockReducers,
+  listOrderReducers,
 })
 
 const store = configureStore({
