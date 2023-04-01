@@ -8,7 +8,7 @@ export interface IEmployee {
 }
 interface Iresponse {
   statusCode: number
-  message: string
+  message: string | unknown
   data: any
 }
 export interface IEmployeeUpdate {

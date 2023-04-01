@@ -6,7 +6,14 @@ import {
   handleGetDepartment,
   handleUpdateDepartment,
 } from "./department"
-import { handleGetEmployee } from "./employee"
+import {
+  handleGetDepartmentOption,
+  handleGetEmployee,
+  handleGetJobRoleOption,
+  handleGetUsersForSearchOptionEmployee,
+  handleUpdateEmployee,
+  handlegetEmployeeForUpdate,
+} from "./employee"
 
 function* watchAll() {
   yield all([
@@ -15,6 +22,14 @@ function* watchAll() {
     takeEvery(ActionTypes.DELETE_DEPARTMENT, handleDeleteDepartment),
     takeEvery(ActionTypes.UPDATE_DEPARTEMENT, handleUpdateDepartment),
     takeEvery(ActionTypes.GET_EMPLOYEE, handleGetEmployee),
+    takeEvery(ActionTypes.GET_EMPLOYEE_FOR_UPDATE, handlegetEmployeeForUpdate),
+    takeEvery(ActionTypes.UPDATE_EMPLOYEE, handleUpdateEmployee),
+    takeEvery(ActionTypes.GET_JOB_ROLE_OPTION, handleGetJobRoleOption),
+    takeEvery(ActionTypes.GET_DEPARTMENT_OPTION, handleGetDepartmentOption),
+    takeEvery(
+      ActionTypes.GET_USERS_FOR_SEARCH_OPTION_EMPLOYEE,
+      handleGetUsersForSearchOptionEmployee
+    ),
   ])
 }
 
