@@ -6,6 +6,7 @@ import {
   handleGetDepartment,
   handleUpdateDepartment,
 } from "./department"
+import { handleGetEmployee } from "./employee"
 
 function* watchAll() {
   yield all([
@@ -13,6 +14,7 @@ function* watchAll() {
     takeEvery(ActionTypes.CREATE_DEPARTMENT, handleCreateDepartment),
     takeEvery(ActionTypes.DELETE_DEPARTMENT, handleDeleteDepartment),
     takeEvery(ActionTypes.UPDATE_DEPARTEMENT, handleUpdateDepartment),
+    takeEvery(ActionTypes.GET_EMPLOYEE, handleGetEmployee),
   ])
 }
 
