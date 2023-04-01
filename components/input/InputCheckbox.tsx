@@ -11,7 +11,7 @@ const InputCheckbox: FC<InputCheckboxProps> = (props: any) => {
       type="checkbox"
       name="checkbox"
       id="checkbox"
-      className="rounded-lg focus:ring-transparent dark:focus:ring-transparent dark:ring-transparent focus:ring-2 dark:bg-transparent dark:border-transparent cursor-pointer"
+      className="rounded-lg cursor-pointer"
       style={{
         width: props.width,
         height: props.height,
