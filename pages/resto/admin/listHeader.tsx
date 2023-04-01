@@ -1,14 +1,17 @@
 import formatRupiah from '@/functions/formatRupiah';
 import React from 'react';
-import {Pencil, Trash} from '@/components/icons'
+import {BsThreeDotsVertical} from 'react-icons/bs';
+import { Menu } from '@headlessui/react';
+
 
 // This is the table constant/settings which needed to render table elements
 export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
   return [
+    
     {
       title: 'ID',
       render: (data:any) => {
-        return <span>{data. reme_id}</span>;
+        return <span>{data.reme_id}</span>;
       },
     },
     {
@@ -34,29 +37,18 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
         render: (data: any) => {
           return (
             <div className="flex">
-              <div
-                className="mx-2 cursor-pointer"
-                onClick={() => {
-                  setIsDelete({
-                    bank: data.paga_name,
-                    id: data.paga_entity_id,
-                    isShow: true,
-                  })
-                }}
-              >
-                <Trash />
-              </div>
+              <Menu/>
               <div
                 className="mx-2 cursor-pointer"
                 onClick={() => {
                   setIsOpen({
-                    bank: data.paga_name,
-                    id: data.paga_entity_id,
+                    resto: data.reme_name,
+                    id: data.reme_id,
                     isShow: true,
                   })
                 }}
               >
-                <Pencil />
+                <BsThreeDotsVertical />
               </div>
             </div>
           )

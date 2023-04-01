@@ -9,7 +9,7 @@ const initialState = {
 
 export function hotelsReducers(state = initialState, action) {
   const { type, payload } = action
-  console.log(payload)
+ 
   switch (type) {
     case ActionTypes.GET_HOTELS_RESPONSE:
       return {

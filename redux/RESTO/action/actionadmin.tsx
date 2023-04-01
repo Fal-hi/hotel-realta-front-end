@@ -1,12 +1,15 @@
 import ActionTypes from "./actionType";
 
-export const doGetRestoMenuAll = ()=>{
-
+export const doGetRestoMenuAll = (search: string, page: number, entry: number)=>{
+    const payload = {
+        search,
+        page,
+        entry,
+      };
     return {
-    
             type: ActionTypes.GET_RESTOMENU,
+            payload,
         }
-    
 };
 
 export const doGetRestoMenuAllResponse = (payload:any)=>{
