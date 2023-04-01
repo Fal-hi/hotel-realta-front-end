@@ -36,11 +36,15 @@ const Table = ({cols, data, children}: any) => {
                         ))}
                       </tr>
                     ))}
-                    <tr>
-                       <td   className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">{children}</td> 
-                    </tr>
+                   
                   </tbody>
                 </table>
+                <div
+						className="px-5 py-3 text-gray-700 dark:text-gray-200 whitespace-nowrap border-t flex flex-col xs:flex-row items-center xs:justify-between ">
+						<div className="inline-flex mt-2 xs:mt-0">
+            {children}
+						</div>
+					</div>
               </div>
             </div>
           </div>

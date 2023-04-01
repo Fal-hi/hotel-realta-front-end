@@ -7,6 +7,7 @@ interface BgButtonProps {
   py?: string
   textSize?: string
   onClick?: () => void; // menambahkan properti onClick ke dalam definisi BgButtonProps
+  width?: string
 }
 
 const BgButton: FC<BgButtonProps> = (props: any) => {
@@ -27,6 +28,7 @@ BgButton.defaultProps = {
   px: "4",
   py: "2",
   textSize: "xs",
+  width: "auto",
 }
 
 export default BgButton

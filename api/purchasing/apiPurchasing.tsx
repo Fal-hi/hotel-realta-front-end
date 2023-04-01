@@ -1,6 +1,7 @@
 import axios from '../config'
 
 //VENDOR
+
 const getAll = (search: any, page: number, entry: number) => {
     return axios.get(`/purchasing/vendor?page=${page}&limit=${entry}&search=${search}`);
 };  
@@ -28,11 +29,18 @@ const search = (search: any) => {
 
 //STOCK
 
-const getAllStock = () => {
-    return axios.get('purchasing/stocks/')
+const getAllStock = (search: any, page: number, entry: number) => {
+    return axios.get(`purchasing/stock?page=${page}&limit=${entry}&search=${search}`);
 }
 
-const ApiVendor = {
+
+//LISTORDER
+
+const getListOrder = (search: any, page: number, entry: number) => {
+    return axios.get(`/purchasing/listOrder?page=${page}&limit=${entry}&search=${search}`)
+}
+
+const apiPurchasing = {
     getAll,
     create,
     product,
@@ -40,6 +48,7 @@ const ApiVendor = {
     update,
     search,
     getAllStock,
+    getListOrder
 }
 
-export default ApiVendor
+export default apiPurchasing

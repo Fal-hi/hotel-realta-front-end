@@ -33,13 +33,18 @@ const listMenu = [
         title: "Vendor",
       },
       {
-        to: "",
-        path: "",
+        to: "/purchasing/stock",
+        path: "/purchasing/stock",
         title: "Stock",
       },
       {
         to: "",
         path: "",
+        title: "Gallery",
+      },
+      {
+        to: "/purchasing/listOrder",
+        path: "/purchasing/listOrder",
         title: "Purchasing Order",
       },
     ],

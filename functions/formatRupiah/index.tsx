@@ -1,4 +1,4 @@
-export const formatRupiah = (value: number): string => {
+const formatRupiah = (value: number): string => {
   const formatter = new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",
@@ -7,3 +7,5 @@ export const formatRupiah = (value: number): string => {
 
   return formatter.format(value)
 }
+
+export default formatRupiah

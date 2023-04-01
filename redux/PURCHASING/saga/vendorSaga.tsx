@@ -1,12 +1,12 @@
 import { call, put } from "redux-saga/effects";
-import ApiVendor from "@/api/purchasing/apiVendor";
+import ApiVendor from "@/api/purchasing/apiPurchasing";
 import { doAddResponse, doDeleteResponse, doGetProductResponse, doGetVendorResponse, doSearchResponse, doUpdateResponse } from "../action/actionVendor";
 
 function* handleGetVendor(action: any): any {
     try {
         const { search, page, entry } = action.payload
         const result = yield call(ApiVendor.getAll, search, page, entry);
-        console.log(result)
+        // console.log(result)
         yield put(doGetVendorResponse(result.data))
     }
     catch (error) {

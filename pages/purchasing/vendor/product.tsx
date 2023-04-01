@@ -25,7 +25,7 @@ export default function Vendor() {
   const { vendor, message, refresh } = useSelector(
     (state: any) => state.vendorReducers
   )
-  console.log(vendor.data)
+  // console.log(vendor.data)
 
   const [isOpen, setIsOpen] = useState(false)
   const dispatch = useDispatch()
