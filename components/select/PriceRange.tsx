@@ -1,4 +1,4 @@
-import { useState, FC, ChangeEvent, Fragment } from 'react'
+import { useState, FC, ChangeEvent, Fragment } from "react"
 
 interface Props {
   onChange: (minPrice: number, maxPrice: number) => void
@@ -78,10 +78,13 @@ const PriceRange: FC<Props> = ({ onChange }) => {
       >
         {minimumPrice.map((min: any) => (
           <Fragment key={min.id}>
-            <option value={min.price}>
-              {new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
+            <option
+              value={min.price}
+              className="p-1 border-2 border-[#8A92A6] rounded-md  outline-none"
+            >
+              {new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
               }).format(min.price)}
             </option>
           </Fragment>
@@ -98,9 +101,9 @@ const PriceRange: FC<Props> = ({ onChange }) => {
         {maximumPrice.map((max: any) => (
           <Fragment key={max.id}>
             <option value={max.price}>
-              {new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
+              {new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
               }).format(max.price)}
             </option>
           </Fragment>

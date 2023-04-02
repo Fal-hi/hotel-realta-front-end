@@ -56,7 +56,9 @@ export default function Hotel() {
   }, [paginationLocation, refresh])
 
   React.useEffect(() => {}, [refresh])
-  console.log(totalPagination)
+  // console.log(totalPagination)
+  // console.log(hotels)
+
   return (
     <div className="container px-4 pt-10 ">
       {showModalAdd && <ModalEditAdd setShowModalAdd={setShowModalAdd} />}

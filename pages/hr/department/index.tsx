@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { deleteDepartment, getDepartment } from "@/redux/action/hr/department"
 import { SearchInput } from "@/components/searchInput"
 import { Pagination } from "@/components/pagination"
 import { Modal } from "@/components/modal"
@@ -10,6 +9,10 @@ import { ConfirmationDeleteDepartment } from "@/components/hr/confirmationDelete
 import AddButton from "@/components/addButton"
 import Typography from "@/components/Typography"
 import variants from "@/components/Typography/textcss"
+import { deleteDepartment, getDepartment } from "@/redux/HR/action/department"
+import Table from "@/components/Table"
+import { tableConstants } from "./listHeader"
+import ShowingResult from "@/components/showingResult"
 
 interface IDepartement {
   id: number
@@ -59,7 +62,7 @@ const Department = () => {
   useEffect(() => {
     dispatch(getDepartment(search, page, entry))
   }, [search, page, entry, refresh, isOpen, dispatch, isDelete])
-
+  // console.log(isDelete)
   return (
     <div className="flex w-full font-poppins-regular">
       <div className="flex flex-col items-start px-5 mt-10 w-full">
@@ -73,96 +76,25 @@ const Department = () => {
         </div>
 
         <div className="py-3">
-          <div className="sm:flex-1 sm:items-center sm:justify-start">
-            <Typography variant={variants.smregular} color={"text-[#ABABAB]"}>
-              <p className="text-sm">
-                Showing <span className="font-medium">{data.from}</span> to{" "}
-                <span className="font-medium">{data.to}</span> of{" "}
-                <span className="font-medium">{data.totalData}</span> results
-              </p>
-            </Typography>
-          </div>
+          <ShowingResult
+            from={data.from}
+            to={data.to}
+            totalData={data.totalData}
+          />
         </div>
 
-        <table className="w-full shadow-lg">
-          <thead className="">
-            <tr className="bg-[#F9FAFB] border">
-              {(header || []).map((h, i) => (
-                <th key={i} className=" py-2 px-4  text-left ">
-                  <Typography
-                    variant={variants.smregular}
-                    color={"text-[#8A92A6]"}
-                  >
-                    {h}
-                  </Typography>
-                </th>
-              ))}
-              <th className=" py-2 px-6 text-right">
-                <Typography
-                  variant={variants.smregular}
-                  color={"text-[#8A92A6]"}
-                >
-                  Action
-                </Typography>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {(data.department || []).map(
-              (department: IDepartement, i: number) => (
-                <tr key={i} className="border">
-                  <td className=" py-4 px-4 ">
-                    <Typography variant={variants.baseregular}>
-                      {department.id}
-                    </Typography>
-                  </td>
-                  <td className=" py-4 px-4 font-poppins-regular">
-                    {department.name}
-                  </td>
-                  <td className=" py-4 px-4  ">
-                    <div className="flex justify-end">
-                      <div
-                        className="mx-2 cursor-pointer"
-                        onClick={() => {
-                          setIsDelete({
-                            department: department.name,
-                            id: department.id,
-                            isShow: true,
-                          })
-                        }}
-                      >
-                        <Trash />
-                      </div>
-                      <div
-                        className="mx-2 cursor-pointer"
-                        onClick={() => {
-                          setIsOpen({
-                            department: department.name,
-                            id: department.id,
-                            isShow: true,
-                          })
-                        }}
-                      >
-                        <Pencil />
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              )
-            )}
-            <tr className="border-t">
-              <td colSpan={3} className="px-4 py-4">
-                <Pagination
-                  pagination={{
-                    totalPage: data.totalPage,
-                    page: data.page,
-                  }}
-                  setPage={setPage}
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <Table
+          cols={tableConstants(setIsOpen, setIsDelete)}
+          data={data.department || []}
+        >
+          <Pagination
+            pagination={{
+              totalPage: data.totalPage,
+              page: data.page,
+            }}
+            setPage={setPage}
+          />
+        </Table>
       </div>
       {isOpen.isShow ? (
         <Modal onClose={handleClose} header={"Add Department"}>
