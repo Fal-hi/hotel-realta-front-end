@@ -48,7 +48,7 @@ const Bank = () => {
   useEffect(() => {
     dispatch(getDataBank(search))
     
-  }, [dispatch,refresh])
+  }, [dispatch,refresh,isOpen,isDelete])
 
   
   return (

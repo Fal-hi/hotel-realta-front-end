@@ -11,6 +11,7 @@ import Table from "@/components/Table"
 import { Modal } from "@/components/modal"
 import { FormAdd } from "@/components/payment/frombank/FromAdd"
 import { ConfirmationDelete } from "@/components/payment/frombank/Delete"
+import { FormAccounts } from "@/components/payment/fromAccounts/fromAccounts"
 
 const Account = () => {
   const { accounts, refresh } = useSelector(
@@ -54,7 +55,7 @@ const Account = () => {
   return (
     <div className="">
       <div>
-        <Breadcumb child={"Bank"} parent={"Dashboard"} detail={"Bank"} />
+        <Breadcumb child={"Accounts"} parent={"Dashboard"} detail={"Accounts"} />
       </div>
       <div className="flex flex-col items-start mt-10 w-full">
         <div className="flex flex-row w-full justify-between">
@@ -69,7 +70,7 @@ const Account = () => {
         <Table cols={tableConstants()} data={accounts} />
         {isOpen.isShow ? (
           <Modal onClose={handleClose} header={"Bank"}>
-            <FormAdd id={isOpen.id} bank={isOpen.accounts} setIsOpen={setIsOpen} />
+            <FormAccounts id={isOpen.id} bank={isOpen.accounts} setIsOpen={setIsOpen} />
           </Modal>
         ) : null}
         {isDelete.isShow ? (

@@ -1,5 +1,6 @@
 
 import { Pencil, Trash } from "@/components/icons"
+import formatRupiah from "@/functions/formatRupiah"
 import React from "react"
 
 // This is the table constant/settings which needed to render table elements
@@ -21,7 +22,7 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
     {
       title: "Balance",
       render: (data: any) => {
-        return <span>{data.balance}</span>
+        return <span>{formatRupiah(data.balance)}</span>
       },
     },
 

@@ -52,7 +52,7 @@ const Fintech = () => {
 
   useEffect(() => {
     dispatch(getDataFintech(search))
-  }, [dispatch, search])
+  }, [dispatch, search, isOpen, isDelete])
 
   return (
     <div>
