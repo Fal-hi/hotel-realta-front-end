@@ -39,7 +39,7 @@ const Transaction = () => {
         </div>
         <div className="py-3"></div>
         <Table cols={tableConstants()} data={transaction}>
-          <Pagination setPage={10} pagination={""} />
+          <Pagination setPage={10} pagination={{totalPage: 100, page:1}} />
         </Table>
       </div>
     </div>

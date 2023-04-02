@@ -1,30 +1,31 @@
-import React from "react";
-import { useForm, FieldErrors, Resolver } from "react-hook-form";
 import {
   createDepartment,
   updateDepartment,
-} from '@';
-import { useDispatch, useSelector } from "react-redux";
+} from "@/redux/HR/action/department"
+import React from "react"
+import { useForm, FieldErrors, Resolver } from "react-hook-form"
+
+import { useDispatch, useSelector } from "react-redux"
 
 type FormValues = {
-  name: string;
-};
-const resolver: Resolver<FormValues> = async (values) => {
-  const { name } = values;
-  const errors: FieldErrors<FormValues> = {};
+  name: string
+}
+const resolver: Resolver<FormValues> = async values => {
+  const { name } = values
+  const errors: FieldErrors<FormValues> = {}
 
   if (!name) {
     errors.name = {
       type: "required",
       message: "This is required.",
-    };
+    }
   }
 
-  return { values: name ? values : {}, errors };
-};
+  return { values: name ? values : {}, errors }
+}
 
 export const FormDepartment = (props: any) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const handleRegistration = (data: any) => {
     if (props.id) {
@@ -32,21 +33,21 @@ export const FormDepartment = (props: any) => {
       const payload = {
         id: props.id,
         data,
-      };
-      dispatch(updateDepartment(payload));
-      props.setIsOpen({ isShow: false });
+      }
+      dispatch(updateDepartment(payload))
+      props.setIsOpen({ isShow: false })
     } else {
-      dispatch(createDepartment(data));
-      props.setIsOpen({ isShow: false });
+      dispatch(createDepartment(data))
+      props.setIsOpen({ isShow: false })
     }
-  };
-  const handleError = (errors: any) => {};
+  }
+  const handleError = (errors: any) => {}
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValues>({ resolver });
+  } = useForm<FormValues>({ resolver })
   return (
     <form onSubmit={handleSubmit(handleRegistration, handleError)}>
       <div className="bg-white   pt-5 pb-4 sm:p-6 sm:pb-4 border-b">
@@ -69,5 +70,5 @@ export const FormDepartment = (props: any) => {
         </button>
       </div>
     </form>
-  );
-};
+  )
+}
