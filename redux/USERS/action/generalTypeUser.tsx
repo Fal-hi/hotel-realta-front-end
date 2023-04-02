@@ -1,0 +1,4 @@
+const ActionTypes = {
+    GET_USERS: "GET_USERS",
+    GET_USERS_RESPONSE: "GET_USERS_RESPONSE",
+}

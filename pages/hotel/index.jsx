@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import { useRouter } from "next/router"
 import React from "react"
 import { CiSearch } from "react-icons/ci"

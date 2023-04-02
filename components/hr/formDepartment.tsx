@@ -3,7 +3,7 @@ import { useForm, FieldErrors, Resolver } from "react-hook-form";
 import {
   createDepartment,
   updateDepartment,
-} from "@/redux/action/hr/department";
+} from '@';
 import { useDispatch, useSelector } from "react-redux";
 
 type FormValues = {
