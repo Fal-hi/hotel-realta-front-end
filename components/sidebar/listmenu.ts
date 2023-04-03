@@ -28,18 +28,23 @@ const listMenu = [
     icon2: Chevron,
     submenu: [
       {
-        to: "",
-        path: "",
+        to: "/purchasing/vendor",
+        path: "/purchasing/vendor",
         title: "Vendor",
       },
       {
-        to: "",
-        path: "",
+        to: "/purchasing/stock",
+        path: "/purchasing/stock",
         title: "Stock",
       },
       {
         to: "",
         path: "",
+        title: "Gallery",
+      },
+      {
+        to: "/purchasing/listOrder",
+        path: "/purchasing/listOrder",
         title: "Purchasing Order",
       },
     ],

@@ -34,7 +34,7 @@ function* handleGetHotelsById(action: any): any {
 }
 
 function* handleGetHotelsByName(action: any): any {
-  console.log(action)
+  // console.log(action)
   try {
     const result = yield call(ApiMethodHotels.getByHotelName, action.payload)
     // console.log("tes" + result)

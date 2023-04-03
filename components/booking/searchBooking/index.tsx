@@ -1,14 +1,26 @@
-import { Search, User } from "@/components/icons"
+import { User } from "@/components/icons"
 import { OutlineButton } from "@/components/buttons/OutlineButton"
 import Logo from "@/assets/image/logo.png"
 import Image from "next/image"
 import Link from "next/link"
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
+import { useState } from "react"
+import { format } from "date-fns"
+import RoomGuest from "@/components/select/RoomGuest"
+
 export default function SearchBooking(props: any) {
+  const [checkinDate, setCheckinDate] = useState<Date | null>(
+    new Date("2023/03/31")
+  )
+  const [checkoutDate, setCheckoutDate] = useState<Date | null>(
+    new Date("2023/04/01")
+  )
+
   return (
     <>
       <div className="sticky top-0 bg-[#FBFBFB] h-6 z-50"></div>
-      <div className="sticky top-6 z-50 w-[84vw] flex justify-between items-center bg-white shadow rounded-md px-4 py-4 text-[#1C2434]">
-        {/* <Search stroke={"#7743DB"} /> */}
+      <div className="sticky top-6 z-50 flex justify-between items-center bg-white shadow rounded-md px-4 py-4 text-[#1C2434]">
         <figure>
           <Image
             width={220}
@@ -28,12 +40,31 @@ export default function SearchBooking(props: any) {
               placeholder="Search Hotel"
             />
           </form>
-          <form className="flex justify-center items-center text-xs">
-            <input type="date" name="checkin" id="checkin" />
-            <input type="date" name="checkout" id="checkout" />
-          </form>
-          <p className="font-semibold">1 Room, 2 Guests</p>
-          <OutlineButton title="Search" />
+          <div className="flex justify-center items-center text-xs">
+            <DatePicker
+              selected={checkinDate}
+              onChange={date => setCheckinDate(date)}
+              selectsStart
+              startDate={checkinDate}
+              endDate={checkoutDate}
+              dateFormat="dd/MM/yyyy"
+              className="px-3 py-1 w-28 text-xs text-[#667085] bg-white border-[#8A92A6] border-2 rounded-md outline-none mr-2"
+              popperPlacement="bottom-start"
+            />
+            <DatePicker
+              selected={checkoutDate}
+              onChange={date => setCheckoutDate(date)}
+              selectsEnd
+              startDate={checkinDate}
+              endDate={checkoutDate}
+              minDate={checkinDate}
+              dateFormat="dd/MM/yyyy"
+              className="px-3 py-1 w-28 text-xs text-[#667085] bg-white border-[#8A92A6] border-2 rounded-md outline-none"
+              popperPlacement="bottom-start"
+            />
+          </div>
+          <RoomGuest />
+          <OutlineButton title="Search" padding="0.3rem" />
         </div>
         <Link href="/" className="flex gap-1 items-center">
           <User width="20" stroke="#7743DB" />

@@ -73,6 +73,8 @@ export default function Hotel() {
     }
   }, [menuOptions])
 
+  React.useEffect(() => {}, [refresh])
+  console.log(totalPagination)
   return (
     <div className="container px-4 pt-10 ">
       {showModalAdd && <ModalEditAdd setShowModalAdd={setShowModalAdd} />}

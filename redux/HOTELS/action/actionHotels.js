@@ -28,6 +28,7 @@ export const doGetHotelsByIdResponse = payload => {
 }
 
 export const doRequestGetHotelsByName = payload => {
+  // console.log(payload)
   return {
     type: ActionTypes.REQ_GET_HOTELS_BY_NAME,
     payload,
