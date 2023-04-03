@@ -1,7 +1,7 @@
 import ActionTypes from "../action/actionType"
 
 const initialState = {
-  hotels: [],
+  facilities: [],
   totalPagination: 0,
   page_size: 0,
   total: 0,
@@ -11,56 +11,43 @@ const initialState = {
   status: "",
 }
 
-export function hotelsReducers(state = initialState, action) {
+export function facilitiesReducers(state = initialState, action) {
   const { type, payload } = action
   console.log(payload)
   switch (type) {
-    case ActionTypes.GET_HOTELS_RESPONSE:
+    case ActionTypes.GET_FACI_RESPONSE:
       return {
         state,
-        hotels: payload.data,
+        facilities: payload.data,
         refresh: true,
         total: payload.data[0].total_rows,
         page_size: payload.page_size,
         totalPagination: Math.ceil(
           parseInt(payload.data[0].total_rows) / payload.page_size
         ),
-        message: payload.message,
-        error: payload.error ? payload.error : "",
-      }
-    case ActionTypes.GET_HOTELS_RESPONSE_BY_ID:
-      return {
-        state,
-        hotels: payload.data,
-        total: payload.data[0].total_rows,
-        page_size: payload.page_size,
-        refresh: true,
-        message: payload.message,
-        error: payload.error ? payload.error : "",
-      }
-    case ActionTypes.GET_HOTELS_RESPONSE_BY_NAME:
-      return {
-        state,
-        hotels: payload.data,
-        total: payload.data[0].total_rows,
-        page_size: payload.page_size,
-        refresh: true,
-        totalPagination: Math.ceil(
-          parseInt(payload.data[0].total_rows) / payload.page_size
-        ),
-        message: payload.message,
-        error: payload.error ? payload.error : "",
+
         status: payload.status,
+        message: payload.message,
+        statusResponse: payload.status,
+        error: payload.error ? payload.error : "",
       }
-    case ActionTypes.ADD_HOTELS_RESPONSE:
-      return { message: payload.message, refresh: false }
-    case ActionTypes.UPDATE_HOTELS_RESPONSE:
-      return { message: payload.message, refresh: false }
-    case ActionTypes.DEL_HOTELS_RESPONSE:
+    case ActionTypes.GET_FACI_BY_NAME_RESPONSE:
       return {
         state,
-        hotels: state.hotels.filter(hotel => hotel.id !== payload.id),
+        facilities: payload.data,
+        total: payload.data[0].total_rows,
+        page_size: payload.page_size,
+        refresh: true,
+        totalPagination: Math.ceil(
+          parseInt(payload.data[0].total_rows) / payload.page_size
+        ),
+
+        status: payload.status,
+        message: payload.message,
+        statusResponse: payload.status,
+        error: payload.error ? payload.error : "",
       }
+
     default:
       return state
   }

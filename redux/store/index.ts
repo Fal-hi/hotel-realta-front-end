@@ -11,14 +11,18 @@ import { bankReducers } from "../PAYMENT/reducer/bankReducer"
 import { fintechReducers } from "../PAYMENT/reducer/fintechReducer"
 import { transactionReducers } from "../PAYMENT/reducer/transactionReducer"
 import { addressReducers } from "../HOTELS/reducer/addressReducers"
+import { facilitiesReducers } from "../HOTELS/reducer/facilitesReducers"
 
 const logger = createLogger()
 const saga = createSagaMiddleware()
 
 const reducer = combineReducers({
   departmentReducers,
+
   hotelsReducers,
   addressReducers,
+  facilitiesReducers,
+
   bankReducers,
   fintechReducers,
   accountReducers,

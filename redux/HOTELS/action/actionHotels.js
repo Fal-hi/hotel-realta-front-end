@@ -8,15 +8,26 @@ export const doRequestGetHotels = payload => {
 }
 
 export const doGetHotelsResponse = payload => {
-  // console.log(payload)
   return {
     type: ActionTypes.GET_HOTELS_RESPONSE,
     payload,
   }
 }
+export const doRequestGetHotelsById = payload => {
+  return {
+    type: ActionTypes.REQ_GET_HOTELS_BY_ID,
+    payload,
+  }
+}
+
+export const doGetHotelsByIdResponse = payload => {
+  return {
+    type: ActionTypes.GET_HOTELS_RESPONSE_BY_ID,
+    payload,
+  }
+}
 
 export const doRequestGetHotelsByName = payload => {
-  console.log(payload)
   return {
     type: ActionTypes.REQ_GET_HOTELS_BY_NAME,
     payload,
