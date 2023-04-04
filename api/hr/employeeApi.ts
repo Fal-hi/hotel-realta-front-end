@@ -28,7 +28,11 @@ interface Idata {
 const createEmployee = (
   data: Idata
 ): Promise<AxiosResponse<Iresponse, any>> => {
-  return axios.post(`/hr/employee`, data)
+  return axios.post(`/hr/employee`, data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  })
 }
 
 const getEmployeeForUpdate = (
@@ -58,6 +62,16 @@ const getUsersForSearchOptionEmployee = (
   return axios.get(`/users/usersByName?search=${search}`)
 }
 
+const getUserForProfiles = (id: number): any => {
+  return axios.get(`/users/profile/${id}`)
+}
+const getShift = (search: string): any => {
+  return axios.get(`/hr/employee/shift?search=${search}`)
+}
+const getShiftById = (id: number): any => {
+  return axios.get(`/hr/employee/shift/${id}`)
+}
+
 const employeeApi = {
   createEmployee,
   getEmployee,
@@ -66,6 +80,9 @@ const employeeApi = {
   getJobRoleOption,
   getDepartmentOption,
   getUsersForSearchOptionEmployee,
+  getUserForProfiles,
+  getShift,
+  getShiftById,
 }
 
 export default employeeApi

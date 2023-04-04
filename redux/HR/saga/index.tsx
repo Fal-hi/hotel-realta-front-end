@@ -10,6 +10,9 @@ import {
   handleGetDepartmentOption,
   handleGetEmployee,
   handleGetJobRoleOption,
+  handleGetShift,
+  handleGetShiftById,
+  handleGetUserForProfiles,
   handleGetUsersForSearchOptionEmployee,
   handleUpdateEmployee,
   handlegetEmployeeForUpdate,
@@ -30,6 +33,9 @@ function* watchAll() {
       ActionTypes.GET_USERS_FOR_SEARCH_OPTION_EMPLOYEE,
       handleGetUsersForSearchOptionEmployee
     ),
+    takeEvery(ActionTypes.GET_USERS_FOR_PPROFILES, handleGetUserForProfiles),
+    takeEvery(ActionTypes.GET_SHIFT, handleGetShift),
+    takeEvery(ActionTypes.GET_SHIFT_BY_ID, handleGetShiftById),
   ])
 }
 

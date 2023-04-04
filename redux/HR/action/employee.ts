@@ -77,35 +77,73 @@ export const updateEmployeeResponse = (payload: Iresponse) => {
 
 export const getJobRoleOption = () => {
   return {
-    type: ActionTypes.GET_EMPLOYEE_FOR_UPDATE,
+    type: ActionTypes.GET_JOB_ROLE_OPTION,
   }
 }
 export const getJobRoleOptionResponse = (payload: Iresponse) => {
   return {
-    type: ActionTypes.GET_EMPLOYEE_FOR_UPDATE_RESPONSE,
+    type: ActionTypes.GET_JOB_ROLE_OPTION_RESPONSE,
     payload,
   }
 }
 export const getDepartmentOption = () => {
   return {
-    type: ActionTypes.GET_EMPLOYEE_FOR_UPDATE,
+    type: ActionTypes.GET_DEPARTMENT_OPTION,
   }
 }
 export const getDepartmentOptionResponse = (payload: Iresponse) => {
   return {
-    type: ActionTypes.GET_EMPLOYEE_FOR_UPDATE_RESPONSE,
+    type: ActionTypes.GET_DEPARTMENT_OPTION_RESPONSE,
     payload,
   }
 }
 export const getUsersForSearchEmployeeOption = (payload: string) => {
   return {
-    type: ActionTypes.GET_EMPLOYEE_FOR_UPDATE,
+    type: ActionTypes.GET_USERS_FOR_SEARCH_OPTION_EMPLOYEE,
     payload,
   }
 }
-export const getUsersForSearchEmployeeOptionResponse = (payload: Iresponse) => {
+export const getUsersForSearchEmployeeOptionResponse = (payload: any) => {
   return {
-    type: ActionTypes.GET_EMPLOYEE_FOR_UPDATE_RESPONSE,
+    type: ActionTypes.GET_USERS_FOR_SEARCH_OPTION_EMPLOYEE_RESPONSE,
+    payload,
+  }
+}
+
+export const geUsersForProfiles = (payload: number) => {
+  return {
+    type: ActionTypes.GET_USERS_FOR_PPROFILES,
+    payload,
+  }
+}
+export const geUsersForProfilesResponse = (payload: string) => {
+  return {
+    type: ActionTypes.GET_USERS_FOR_PPROFILES_RESPONSE,
+    payload,
+  }
+}
+
+export const getShift = (payload: string) => {
+  return {
+    type: ActionTypes.GET_SHIFT,
+    payload,
+  }
+}
+export const getShiftResponse = (payload: any) => {
+  return {
+    type: ActionTypes.GET_SHIFT_RESPONSE,
+    payload,
+  }
+}
+export const getShiftById = (payload: number) => {
+  return {
+    type: ActionTypes.GET_SHIFT_BY_ID,
+    payload,
+  }
+}
+export const getShiftByIdResponse = (payload: any) => {
+  return {
+    type: ActionTypes.GET_SHIFT_BY_ID_RESPONSE,
     payload,
   }
 }

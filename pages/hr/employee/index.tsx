@@ -13,7 +13,9 @@ import { useDispatch, useSelector } from "react-redux"
 const Employee = () => {
   const dispatch = useDispatch()
   const handleSearchChange = () => {}
-  const { data, refresh } = useSelector((state: any) => state.employeeReducers)
+  const { refresh, employee } = useSelector(
+    (state: any) => state.employeeReducers
+  )
   const [update, setUpdate] = useState({
     id: 0,
     isShown: false,
@@ -110,7 +112,7 @@ const Employee = () => {
               },
             },
           ]}
-          data={data.employee || []}
+          data={employee?.employee || []}
         ></Table>
       </div>
       {update.isShown ? (

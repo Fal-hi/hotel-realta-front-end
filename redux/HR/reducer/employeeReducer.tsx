@@ -2,6 +2,12 @@ import ActionTypes from "../action/actionTypes"
 
 const initialState = {
   data: {},
+  employee: [],
+  usersProfiles: {},
+  shifts: [],
+  shift: {},
+  users: [],
+  jobRoles: {},
   statusCode: "200",
   message: "success",
 }
@@ -20,7 +26,7 @@ export function employeeReducers(state = initialState, action: Iaction) {
   switch (type) {
     case ActionTypes.GET_EMPLOYEE_RESPONSE:
       return {
-        data: payload.data,
+        employee: payload.data,
         refresh: true,
       }
     case ActionTypes.CREATE_EMPLOYEE_RESPONSE:
@@ -40,17 +46,37 @@ export function employeeReducers(state = initialState, action: Iaction) {
       }
     case ActionTypes.GET_JOB_ROLE_OPTION_RESPONSE:
       return {
-        data: payload.data,
+        ...state,
+        jobRoles: payload.data,
         refresh: true,
       }
     case ActionTypes.GET_DEPARTMENT_OPTION_RESPONSE:
       return {
-        data: payload.data,
+        ...state,
+        departments: payload.data,
         refresh: true,
       }
     case ActionTypes.GET_USERS_FOR_SEARCH_OPTION_EMPLOYEE_RESPONSE:
       return {
-        data: payload.data,
+        users: payload.data,
+        refresh: true,
+      }
+    case ActionTypes.GET_USERS_FOR_PPROFILES_RESPONSE:
+      return {
+        ...state,
+        usersProfiles: payload.data,
+        refresh: true,
+      }
+    case ActionTypes.GET_SHIFT_RESPONSE:
+      return {
+        ...state,
+        shifts: payload.data,
+        refresh: true,
+      }
+    case ActionTypes.GET_SHIFT_BY_ID_RESPONSE:
+      return {
+        ...state,
+        shift: payload,
         refresh: true,
       }
 
