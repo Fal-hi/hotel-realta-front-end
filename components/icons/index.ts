@@ -54,5 +54,6 @@ export {
   Tv,
   User,
   UserCircleFill,
-  Wifi
+  Wifi,
+  X
 }

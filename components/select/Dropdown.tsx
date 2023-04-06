@@ -31,7 +31,7 @@ const SelectInput = tw.select`
   focus:outline-none
 `
 
-const SelectArrow = tw.div<{ isOpen: boolean }>`
+const SelectArrowContainer = tw.div<{ isopen?: string }>`
   absolute
   inset-y-0
   right-0
@@ -40,8 +40,22 @@ const SelectArrow = tw.div<{ isOpen: boolean }>`
   px-2
   pointer-events-none
   transition: transform 0.2s ease-in-out;
-  transform: ${props => (props.isOpen ? "rotate(180deg)" : "rotate(0deg)")};
+  transform: ${({ isopen }) => (isopen ? "rotate(180deg)" : "rotate(0deg)")};
 `
+
+const SelectArrow = ({
+  isOpen,
+  onClick,
+}: {
+  isOpen: boolean
+  onClick: () => void
+}) => {
+  return (
+    <SelectArrowContainer isopen="false" onClick={onClick}>
+      {isOpen ? <ChevronDown width="10" /> : <ChevronRight width="10" />}
+    </SelectArrowContainer>
+  )
+}
 
 const Dropdown: FC<SelectProps> = (props: any) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -68,9 +82,7 @@ const Dropdown: FC<SelectProps> = (props: any) => {
           </option>
         ))}
       </SelectInput>
-      <SelectArrow isOpen={isOpen} onClick={handleToggleOpen}>
-        {isOpen ? <ChevronDown width="10" /> : <ChevronRight width="10" />}
-      </SelectArrow>
+      <SelectArrow isOpen={isOpen} onClick={handleToggleOpen} />
     </SelectContainer>
   )
 }
