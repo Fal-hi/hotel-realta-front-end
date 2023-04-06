@@ -9,6 +9,8 @@ import formatRupiah from "@/functions/formatRupiah"
 import { useState } from "react"
 import Dropdown from "@/components/select/Dropdown"
 import { OutlineButton } from "@/components/buttons/OutlineButton"
+import classNames from "classnames"
+import { Modal } from "@/components/modal"
 
 const selectType = [
   {
@@ -29,15 +31,123 @@ const selectType = [
   },
 ]
 
+const itemLists = [
+  {
+    id: 1,
+    item: "Coca-Cola",
+    price: 10000,
+  },
+]
+
 const ModifyBooking = () => {
   const [type, setType] = useState<string>("")
+  // const [item, setItem] = useState<any>(itemLists)
+  const [showModal, setShowModal] = useState<boolean>(false)
+  const [itemList, setItemList] = useState<any>([])
 
   const handleChangeType = (value: string) => {
     setType(value)
   }
 
+  // const handleAddItem = (name: string, price: number) => {
+  //   const newItem = {
+  //     name,
+  //     price,
+  //   }
+  //   setItem([...item, newItem])
+  //   setShowModal(false)
+  // }
+
+  // const handleDeleteItem = (index: number) => {
+  //   const newItem = [...item]
+  //   newItem.splice(index, 1)
+  //   setItem(newItem)
+  // }
+
+  const modalClasses = classNames(
+    "fixed top-0 left-0 right-0 bottom-0 bg-opacity-50 bg-gray-900 flex justify-center items-center z-50",
+    {
+      hidden: !showModal,
+    }
+  )
+
+  const addItem = (newItem: any) => {
+    setItemList(itemList.concat(newItem))
+  }
+
+  const handleDeleteItem = (id: number) => {
+    setItemList(itemList.filter((item: any) => item.id !== id))
+  }
+
+  const ModalAddItem = ({ showModal, setShowModal, addItem }: any) => {
+    const [item, setItem] = useState<string>("")
+    const [price, setPrice] = useState<string>("")
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault()
+      const newItem = {
+        id: new Date().getTime(),
+        item: item,
+        price: parseInt(price),
+      }
+      addItem(newItem)
+      setItem("")
+      setPrice("")
+      setShowModal(false)
+    }
+
+    return (
+      <>
+        {showModal && (
+          <section
+            className={modalClasses}
+            onClick={(e: any) => e.stopPropagation()}
+          >
+            <form
+              onSubmit={handleSubmit}
+              className="bg-white w-80 p-6 rounded-md"
+            >
+              <h1 className="text-center text-md font-bold">Add Item</h1>
+              <div className="mt-4">
+                <div className="mt-2 flex flex-col">
+                  <label htmlFor="name" className="mb-1 font-semibold text-xs">
+                    Item Name
+                  </label>
+                  <InputText
+                    placeholder="Item Name"
+                    value={item}
+                    onChange={(e: any) => setItem(e.target.value)}
+                  />
+                </div>
+                <div className="mt-2 flex flex-col">
+                  <label className="mb-1 font-semibold text-xs" htmlFor="price">
+                    Price
+                  </label>
+                  <InputText
+                    placeholder="Price"
+                    value={price}
+                    onChange={(e: any) => setPrice(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="flex justify-end gap-2 items-center mt-4">
+                <OutlineButton
+                  title="Close"
+                  textSize="10px"
+                  padding="5px 10px"
+                  onClick={() => setShowModal(false)}
+                />
+                <BgButton title="Add Item" textSize="10px" padding="5px 10px" />
+              </div>
+            </form>
+          </section>
+        )}
+      </>
+    )
+  }
+
   return (
-    <section>
+    <section className="w-[85vw] mx-auto font-poppins-regular">
       <div className="sticky top-0 bg-[#FBFBFB] h-6 z-50"></div>
       <div className="sticky top-6 z-50 w-[84vw] flex justify-between items-center bg-white shadow rounded-md px-4 py-4 text-[#1C2434]">
         <figure>
@@ -59,8 +169,8 @@ const ModifyBooking = () => {
       <div className="flex justify-around items-start">
         <section className="w-[51.667%]">
           <Link
-            href="/"
-            className="flex gap-4 items-center text-textPurple mt-10"
+            href="/booking/details"
+            className="flex gap-4 items-center text-textPurple mt-6"
           >
             <ChevronLeft width="16" height="16" fill="#7743DB" />
             <h1 className="text-xl font-semibold">Modify Your Booking</h1>
@@ -74,30 +184,30 @@ const ModifyBooking = () => {
                 We will use these details to share your booking information
               </h4>
               <div className="flex justify-between items-start">
-                <div>
+                <div className="flex flex-col">
                   <label
                     htmlFor="fullname"
-                    className="text-[0.75rem] leading-6 ml-1"
+                    className="text-[0.75rem] leading-6 ml-1 font-semibold"
                   >
                     Full Name
                   </label>
                   <InputText placeholder="Full Name" width="15rem" />
                 </div>
-                <div>
+                <div className="flex flex-col">
                   <label
                     htmlFor="fullname"
-                    className="text-[0.75rem] leading-6 ml-1"
+                    className="text-[0.75rem] leading-6 ml-1 font-semibold"
                   >
                     Email
                   </label>
                   <InputEmail placeholder="Email" width="15rem" />
                 </div>
               </div>
-              <div className="flex justify-between items-end mt-8">
-                <div>
+              <div className="flex justify-between items-end mt-4">
+                <div className="flex flex-col">
                   <label
                     htmlFor="fullname"
-                    className="text-[0.75rem] leading-6 ml-1"
+                    className="text-[0.75rem] leading-6 ml-1 font-semibold"
                   >
                     Phone Number
                   </label>
@@ -117,28 +227,39 @@ const ModifyBooking = () => {
               <h1 className="font-medium text-xl">2. Complete Your Booking</h1>
             </header>
             <div className="px-6 mt-4">
-              <header className="flex justify-between items-center text-sm">
+              <header className="flex justify-between items-center text-sm font-semibold">
                 <span className="w-1/3">Item Name</span>
                 <span className="w-1/3 text-left">Price</span>
-                <span className="flex gap-3 items-center">
-                  Add <Plus width="10" stroke="#7743DB" />
-                </span>
+                <OutlineButton
+                  title="Add Item"
+                  padding="0px 7px"
+                  textSize="8px"
+                  onClick={() => setShowModal(true)}
+                />
               </header>
+              <ModalAddItem
+                showModal={showModal}
+                setShowModal={setShowModal}
+                addItem={addItem}
+              />
               <hr className="mt-2" />
-              <div className="flex justify-between items-center text-xs my-3">
-                <span className="w-1/3">Coca-Cola</span>
-                <span className="w-1/3 text-left">{formatRupiah(10000)}</span>
-                <span className="flex gap-3 items-center">
-                  Delete <X width="8" stroke="#7743DB" />
-                </span>
-              </div>
-              <div className="flex justify-between items-center text-xs text-left my-3">
-                <span className="w-1/3">Extra Bed</span>
-                <span className="w-1/3 text-left">{formatRupiah(75000)}</span>
-                <span className="flex gap-3 items-center">
-                  Delete <X width="8" stroke="#7743DB" />
-                </span>
-              </div>
+              {itemList.map((it: any) => (
+                <div
+                  key={it.id}
+                  className="flex justify-between items-center text-xs my-3"
+                >
+                  <span className="w-1/3">{it.item}</span>
+                  <span className="w-1/3 text-left">
+                    {formatRupiah(it.price)}
+                  </span>
+                  <span
+                    onClick={() => handleDeleteItem(it.id)}
+                    className="flex gap-3 items-center cursor-pointer"
+                  >
+                    Delete <X width="8" stroke="#7743DB" />
+                  </span>
+                </div>
+              ))}
               <hr className="mb-2" />
               <footer className="flex justify-between items-center text-sm">
                 <span className="mr-6 font-semibold">Total</span>
@@ -157,7 +278,10 @@ const ModifyBooking = () => {
             </header>
             <div className="flex justify-between items-start mt-4 px-6">
               <div>
-                <label htmlFor="type" className="text-[0.75rem] leading-6 ml-1">
+                <label
+                  htmlFor="type"
+                  className="text-[0.75rem] leading-6 ml-1 font-semibold mb-1"
+                >
                   Type
                 </label>
                 <Dropdown
@@ -166,10 +290,10 @@ const ModifyBooking = () => {
                   onChange={handleChangeType}
                 />
               </div>
-              <div>
+              <div className="flex flex-col">
                 <label
                   htmlFor="fullname"
-                  className="text-[0.75rem] leading-6 ml-1"
+                  className="text-[0.75rem] leading-6 ml-1 font-semibold"
                 >
                   Account Number
                 </label>
@@ -197,7 +321,11 @@ const ModifyBooking = () => {
             <h1 className="font-semibold text-textPurple">
               Sign In to see a lower price
             </h1>
-            <OutlineButton title="Sign In" />
+            <OutlineButton
+              title="Sign In"
+              textSize="10px"
+              padding="0.3rem 0.5rem"
+            />
           </div>
           <hr />
           <div className="mt-3 flex justify-between items-center">
@@ -244,9 +372,11 @@ const ModifyBooking = () => {
             </h1>
             <h1>{formatRupiah(900000)}</h1>
           </div>
-          <div className="mt-8 flex justify-end">
-            <BgButton title="Create Booking Order" width="full" />
-          </div>
+          <Link href="/booking/invoice">
+            <div className="mt-8 flex justify-end">
+              <BgButton title="Create Booking Order" width="full" />
+            </div>
+          </Link>
         </section>
       </div>
     </section>

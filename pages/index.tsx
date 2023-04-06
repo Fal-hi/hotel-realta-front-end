@@ -5,7 +5,7 @@ import styles from "@/styles/Home.module.css"
 import SearchBooking from "@/components/booking/searchBooking"
 import SidebarBooking from "@/components/booking/sidebarBooking"
 import Sidebar from "@/components/sidebar"
-import HomeBooking from "./booking/home"
+import HomeBooking from "./booking"
 
 export default function App() {
   return (

@@ -59,4 +59,5 @@ export {
   User,
   UserCircleFill,
   Wifi,
+  X,
 }

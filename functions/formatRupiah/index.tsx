@@ -4,7 +4,9 @@ const formatRupiah = (value: number): string => {
     currency: "IDR",
     minimumFractionDigits: 0,
   })
-
+  if (!value || isNaN(value)) {
+    return formatter.format(0)
+  }
   return formatter.format(value)
 }
 
