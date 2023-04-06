@@ -25,10 +25,13 @@ import Ac from "./Ac"
 import Tv from "./Tv"
 import Wifi from "./Wifi"
 import RatingStart from "./RatingStart"
+import BgPrimary from "./BgPrimary"
+import ThreeDots from "./ThreeDots"
 import X from "./X"
 
 export {
   Ac,
+  BgPrimary,
   Car,
   Calendar,
   Cart,
@@ -50,10 +53,11 @@ export {
   Plus,
   RatingStart,
   Search,
+  ThreeDots,
   Trash,
   Tv,
   User,
   UserCircleFill,
   Wifi,
-  X
+  X,
 }

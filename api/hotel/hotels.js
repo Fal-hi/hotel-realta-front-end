@@ -4,6 +4,10 @@ const get = offset => {
   return axios.get(`/hotels/pagination/${offset}`)
 }
 
+const getOne = id => {
+  return axios.get(`/hotels/${id}`)
+}
+
 const getByHotelName = payload => {
   // console.log(payload)
   return axios.get(
@@ -33,6 +37,7 @@ const remove = id => {
 
 const ApiMethod = {
   get,
+  getOne,
   create,
   update,
   searchAddress,
