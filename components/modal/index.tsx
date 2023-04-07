@@ -8,7 +8,9 @@ type Props = {
   children: any;
 };
 
+
 export const Modal = ({ header, onClose, children }: Props) => {
+ 
   return (
     <div
       className="relative z-10"

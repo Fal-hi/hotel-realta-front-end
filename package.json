@@ -20,6 +20,7 @@
     "dotenv": "^16.0.3",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
+    "moment": "^2.29.4",
     "next": "13.2.4",
     "nuka-carousel": "^5.5.1",
     "react": "18.2.0",
@@ -31,6 +32,7 @@
     "react-toastify": "^9.1.2",
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.2.3",
+    "slick-carousel": "^1.8.1",
     "typescript": "5.0.2"
   },
   "devDependencies": {

@@ -1,7 +1,8 @@
-import adminApi from '@/api/resto/adminApi'
+import adminApi from '@/api/resto/adminRestoApi'
 import { call, put} from 'redux-saga/effects'
-import { doGetRestoMenuAllResponse, getNamaRestoResponse } from '../action/actionadmin'
+import { addRestoMenuResponse, doGetRestoMenuAllResponse, updateRestoMenu, updateRestoMenuResponse } from '../action/actionadmin'
 
+ /////////////////////UNTUK MENAMPILKAN SEMUA DATA PADA RESTO MENU////////////////////////
 function* handleGetRestoMenuAll(action:any):any{
     try {
         const { search, page, entry } = action.payload
@@ -12,17 +13,39 @@ function* handleGetRestoMenuAll(action:any):any{
     }
 }
 
-function* handleGetNamaResto(action:any):any {
+ /////////////////////UNTUK MENAMBAH DATA PADA RESTO MENU////////////////////////
+function* handleAddRestoMenu(action:any):any {
     try {
-        const result:any = yield call(adminApi.getResto,action.payload);     
-        yield put(getNamaRestoResponse(result.data))
+        const result:any = yield call(adminApi.createRestoMenu,action.payload);     
+        yield put(addRestoMenuResponse(result.data))
     } catch (error) {
-        yield put(getNamaRestoResponse({message: error}))
+        yield put(addRestoMenuResponse({message: error}))
     }
 }
 
+ /////////////////////UNTUK MENGHAPUS DATA PADA RESTO MENU////////////////////////
+function* handleDeleteRestoMenu(action:any):any {
+    try {
+        const result:any = yield call(adminApi.deleteRestoMenu,action.payload);     
+        yield put(addRestoMenuResponse(result.data))
+    } catch (error) {
+        yield put(addRestoMenuResponse({message: error}))
+    }
+}
 
+ /////////////////////UNTUK MENGEDIT DATA PADA RESTO MENU////////////////////////
+ function* handleUpdateRestoMenu(action:any):any {
+ 
+    try {
+        const result:any = yield call(adminApi.updateRestoMenu,action.payload.id, action.payload.dataAll);     
+        yield put(updateRestoMenuResponse(result.data))
+    } catch (error) {
+        yield put(updateRestoMenuResponse({message: error}))
+    }
+}
 export{
     handleGetRestoMenuAll,
-    handleGetNamaResto
+    handleAddRestoMenu,
+    handleDeleteRestoMenu,
+    handleUpdateRestoMenu
 }

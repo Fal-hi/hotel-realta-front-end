@@ -5,53 +5,65 @@ import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { tableConstants } from "./listHeader"
 import Table from "@/components/Table"
-import { doGetRestoMenuAll, getNamaResto } from "@/redux/RESTO/action/actionadmin"
+import { deleteRestoMenu, doGetRestoMenuAll } from "@/redux/RESTO/action/actionadmin"
 import { Pagination } from "@/components/pagination"
+import AddRestoMenu from "./addRestoMenu"
 import { Modal } from "@/components/modal"
-import InputText from "@/components/input/InputText"
+import { Delete } from "./delete"
+import EditRestoMenu from "./editRestoMenu"
+import AddRestoPhoto from "./addRestoPhoto"
 
 
-const Adminresto =()=> {
+const Adminresto =(props:any)=> {
+  const { adminresto, refresh } = useSelector((state: any) => state.adminRestoReducers)
     const [search, setSearch] = useState("")
     const [page, setPage] = useState(1)
     const [entry, setEntry] = useState(5)
+    const [isOpen, setIsOpen] = useState(false)
+    const [isAdd, setIsAdd] = useState(false)
 
-    const { adminresto, refresh } = useSelector(
-        (state: any) => state.adminRestoReducer)
 
+    const dispatch = useDispatch()
 
-        const [isOpen, setIsOpen] = useState({
-            admin: "",
-            id: 0,
-            isShow: false,
-          })
-          const handleClose = () => {
-            setIsOpen(prev => {
-              return { ...prev, isShow: false }
-            })}
-          const [isDelete, setIsDelete] = useState({
-            admin: "",
-            id: 0,
-            isShow: false,
-          })
-
+    const [isDelete, setIsDelete] = useState({
+      id: 0,
+      isShow: false,
+    });
+   
+    const handleDelete = (id:number) => {
+     dispatch(deleteRestoMenu(id))
+     setIsDelete(prev=>{
+      return {...prev, isShow:false }
+     })
+    }
           
-            const [status, setStatus] = useState(false);
-          
-            const handleStatusChange = () => {
-              setStatus(!status);
-            };
-          
+    const [isEdit, setIsEdit] = useState({
+      status: false,
+      id: 0,
+      data: {}
+    })
+
+    
+    const editOpen = (id: number, data: any) => {
+      setIsEdit(prev => {
+        return { ...prev, status: true, id: id, data: data }
+      })
+    }
       const handleSearchChange = (e: any): void => {
         setSearch(e.target.value)
       }
-      const dispatch = useDispatch()
-   
+
+      const handleClose = () => {
+        setIsDelete(prev => ({ ...prev, isShow: false }));
+      }
+
+
       useEffect(() => {
         dispatch(doGetRestoMenuAll(search, page, entry))
-      }, [refresh, search, page, entry])
+      }, [refresh, search, page, entry, dispatch,isOpen])
 
-    
+   
+
   return (
     <div className="">
     <div>
@@ -63,66 +75,44 @@ const Adminresto =()=> {
           <SearchInput onChange={handleSearchChange} />
         </div>
         <div className="flex ">
-          <AddButton />
+          <AddButton onClick={() => setIsOpen(true)}/>
         </div>
       </div>
       <div className="py-3"></div>
-      <Table cols={tableConstants(setIsOpen, setIsDelete)} data={adminresto?.data} >
+      {adminresto && <Table cols={tableConstants( editOpen, setIsDelete, setIsAdd)} data={adminresto.data} >
         <Pagination pagination={{totalPage: adminresto?.totalPage, page: adminresto?.currentPage}} setPage={setPage}/>
-        </Table >
-        {isOpen.isShow ? (
-          <Modal onClose={handleClose} header={"Edit Resto Menu"}>
-              <div className="flex justify-center">
-              <div className="flex-col space-y-2">
-                <div className="flex items-center mt-2">
-                  <p className="text-gray-700 font-medium">Resto Menu</p>
-                  <div className=" ml-8">
-                  <InputText/>
-                    </div>
-                    </div>
-                <div className="flex items-center mt-2">
-                  <p className="text-gray-700 font-medium">Price</p>
-                  <div className=" ml-20">
-                  <InputText/>
-                    </div>
-                </div>
-                <div className="flex items-center">
-                <p className="text-gray-700 font-medium">Status</p>
-                  <label htmlFor="toggle" className="flex items-center cursor-pointer">
-                    <div className="relative ml-20 ">
-                      <input
-                        id="toggle"
-                        type="checkbox"
-                        className="sr-only"
-                        checked={status}
-                        onChange={handleStatusChange}
-                      />
-                      <div className="block bg-gray-600 w-14 h-8 rounded-full"></div>
-                      <div
-                        className={`dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition ${
-                          status ? 'translate-x-6' : ''
-                        }`}
-                      ></div>
-                    </div>
-                    <div className="ml-3 text-gray-700 font-medium">{status ? 'Available' : 'Empty'}</div>
-                  </label>
-                </div>
-              </div>
-            </div>
+          </Table >}
+
+        {
+      isOpen ? (
+        <Modal  header="ADD MENU RESTO" onClose={() => setIsOpen(false)}>
+          <AddRestoMenu isOpen={isOpen} setIsOpen={setIsOpen} onClose={() => setIsOpen(false)} />
+        </Modal>
+      ) : null}
+
+        {
+        isDelete.isShow ? (
+          <Modal header="Konfirmasi Hapus" onClose={() => setIsDelete(prev=>{
+            return {...prev, isShow:false }
+          })}>
+            <Delete handleDelete={handleDelete} id={isDelete.id} onClose={handleClose}/>
 
           </Modal>
         ) : null}
-        {isDelete.isShow ? (
-          <Modal
-            onClose={handleClose}
-            header={"Apakah Anda Ingin Menghapus Data"}
-          >
-          </Modal>
-        ) : null}
 
-    </div>
+        {
+           isEdit.status ? (
+            <Modal  header="EDIT MENU RESTO"  onClose={() => setIsEdit(prev => {return {...prev, status: false}})}>
+            <EditRestoMenu isEdit={isEdit} dataResto={isEdit.data} closeModal={() => setIsEdit(prev => {return {...prev, status: false}})} />
+             </Modal> ):null
+        }
 
-    <div>
+        {
+      isAdd ? (
+        <Modal  header="ADD MENU RESTO PHOTO" onClose={() => setIsAdd(false)}>
+          <AddRestoPhoto dataId={isAdd} setIsAdd={setIsAdd} closeModal={() => setIsAdd(false)} />
+        </Modal>
+      ) : null}
     </div>
   </div>
   )

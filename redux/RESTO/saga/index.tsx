@@ -1,11 +1,23 @@
 import { all, takeEvery } from "redux-saga/effects"
 import ActionTypes from "../action/actionType"
-import { handleGetNamaResto, handleGetRestoMenuAll } from "./adminsaga"
+import {  handleAddRestoMenu, handleDeleteRestoMenu, handleGetRestoMenuAll, handleUpdateRestoMenu } from "./adminsaga"
+import { handleAddRestoPhotos, handleGetGuest } from "./restomenusaga";
 
 function* watchAll(){
     yield all([
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////// RESTO MENUS ////////////////////////
         takeEvery(ActionTypes.GET_RESTOMENU,handleGetRestoMenuAll),
-        takeEvery(ActionTypes.GET_RESTO,handleGetNamaResto)
+        takeEvery(ActionTypes.ADD_RESTOMENU,handleAddRestoMenu),
+        takeEvery(ActionTypes.DEL_RESTOMENU,handleDeleteRestoMenu),
+        takeEvery(ActionTypes.UPDATE_RESTOMENU,handleUpdateRestoMenu),
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////// RESTO MENUS PHOTOS ////////////////////////
+        takeEvery(ActionTypes.ADD_RESTOMENU_PHOTOS,handleAddRestoPhotos),
+        takeEvery(ActionTypes.GET_GUEST,handleGetGuest)
     ]);
 }
 

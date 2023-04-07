@@ -1,5 +1,6 @@
 import ActionTypes from "./actionType";
 
+////////////////////////UNTUK MENAMPILKAN SEMUA DATA PADA RESTO MENU/////////////////////
 export const doGetRestoMenuAll = (search: string, page: number, entry: number)=>{
     const payload = {
         search,
@@ -19,16 +20,49 @@ export const doGetRestoMenuAllResponse = (payload:any)=>{
             payload
    }
 };
-export const getNamaResto =(payload:any)=>{
+
+////////////////////////UNTUK MENAMBAHKAN DATA PADA RESTO MENU////////////////////////
+export const addRestoMenu =(payload:any)=>{
     return {
-        type: ActionTypes.GET_RESTO,
+        type: ActionTypes.ADD_RESTOMENU,
         payload
     };
 };
 
-export const getNamaRestoResponse = (payload:any)=>{
+export const addRestoMenuResponse = (payload:any)=>{
     return{
-        type: ActionTypes.GET_RESTOMENU_RESPONSE,
+        type: ActionTypes.ADD_RESTOMENU_RESPONSE,
+        payload
+    }
+}
+
+/////////////////////UNTUK MENGHAPUS DATA PADA RESTO MENU////////////////////////
+export const deleteRestoMenu =(payload:any)=>{
+    return {
+        type: ActionTypes.DEL_RESTOMENU,
+        payload
+    };
+};
+
+export const deleteRestoMenuResponse = (payload:any)=>{
+    return{
+        type: ActionTypes.DEL_RESTOMENU_RESPONSE,
+        payload
+    }
+}
+
+/////////////////////UNTUK MENGEDIT DATA PADA RESTO MENU////////////////////////
+export const updateRestoMenu =({...payload})=>{
+    
+    return {
+        type: ActionTypes.UPDATE_RESTOMENU,
+        payload
+    };
+};
+
+export const updateRestoMenuResponse = (payload:any)=>{
+    return{
+        type: ActionTypes.UPDATE_RESTOMENU_RESPONSE,
         payload
     }
 }

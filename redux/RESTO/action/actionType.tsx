@@ -1,15 +1,32 @@
 const ActionTypes ={
-UPDATE_RESTOMENU: 'UPDATE_RESTOMENU',
-UPDATE_RESTOMENU_RESPONSE: 'UPDATE_RESTOMENU_RESPONSE',
-GET_RESTOMENU: 'GET_RESTOMENU',
-GET_RESTOMENU_RESPONSE: 'GET_RESTOMENU_RESPONSE',
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////UNTUK MENAMPILKAN SEMUA DATA PADA RESTO MENU////////////////////////
+    GET_RESTOMENU: 'GET_RESTOMENU',
+    GET_RESTOMENU_RESPONSE: 'GET_RESTOMENU_RESPONSE',
+    
+    /////////////////////UNTUK MENAMBAH DATA PADA RESTO MENU////////////////////////
+    ADD_RESTOMENU: 'ADD_RESTOMENU',
+    ADD_RESTOMENU_RESPONSE: 'ADD_RESTOMENU_RESPONSE',
+    
+    /////////////////////UNTUK MENGEDIT DATA PADA RESTO MENU////////////////////////
+    UPDATE_RESTOMENU: 'UPDATE_RESTOMENU',
+    UPDATE_RESTOMENU_RESPONSE: 'UPDATE_RESTOMENU_RESPONSE',
+    
+    /////////////////////UNTUK MENGHAPUS DATA PADA RESTO MENU////////////////////////
+    DEL_RESTOMENU: 'DEL_RESTOMENU',
+    DEL_RESTOMENU_RESPONSE: 'DEL_RESTOMENU_RESPONSE',
 
-GET_RESTO: 'GET_RESTO',
-GET_RESTO_RESPONSE: 'GET_RESTO_RESPONSE',
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////UNTUK MENAMBAHKAN DATA PADA RESTO MENU PHOTOS////////////////////////
+    ADD_RESTOMENU_PHOTOS: 'ADD_RESTOMENU_PHOTOS',
+    ADD_RESTOMENU_PHOTOS_RESPONSE: 'ADD_RESTOMENU_PHOTOS_RESPONSE',
 
-ADD_RESTOMENU: 'ADD_RESTOMENU',
-ADD_RESTOMENU_RESPONSE: 'ADD_RESTOMENU_RESPONSE',
-DEL_RESTOMENU: 'DEL_RESTOMENU',
-DEL_RESTOMENU_RESPONSE: 'DEL_RESTOMENU_RESPONSE',
+
+    /////////////////////UNTUK MENAMPILKAN SEMUA DATA PADA MENU GUEST////////////////////////
+    GET_GUEST: 'GET_GUEST',
+    GET_GUEST_RESPONSE: 'GET_GUEST_RESPONSE',
+
 };
 export default ActionTypes;

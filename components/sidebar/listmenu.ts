@@ -27,9 +27,14 @@ const listMenu = [
         title: "Resto Admin",
       },
       {
-        to: "/resto/menus",
-        path: "/resto/menus",
+        to: "/resto/restomenus",
+        path: "/resto/restomenus",
         title: "Resto Menu",
+      },
+      {
+        to: "/resto/restoorder",
+        path: "/resto/restorder",
+        title: "Resto Order",
       },
     ],
   },
@@ -42,18 +47,23 @@ const listMenu = [
     icon2: Chevron,
     submenu: [
       {
-        to: "",
-        path: "",
+        to: "/purchasing/vendor",
+        path: "/purchasing/vendor",
         title: "Vendor",
       },
       {
-        to: "",
-        path: "",
+        to: "/purchasing/stock",
+        path: "/purchasing/stock",
         title: "Stock",
       },
       {
         to: "",
         path: "",
+        title: "Gallery",
+      },
+      {
+        to: "/purchasing/listOrder",
+        path: "/purchasing/listOrder",
         title: "Purchasing Order",
       },
     ],
