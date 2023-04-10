@@ -1,23 +1,30 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { tableConstants } from "./listHeader"
-import { getDataBank } from "@/redux/PAYMENT/action/bank"
+import { deleteDataBank, getDataBank } from "@/redux/PAYMENT/action/bank"
 import Table from "@/components/Table"
 import AddButton from "@/components/addButton"
 import Breadcumb from "@/components/breadcumb"
 import { Modal } from "@/components/modal"
 import { SearchInput } from "@/components/searchInput"
+import { FormAdd } from "@/pages/payment/bank/frombank/FromAdd"
+import { ConfirmationDelete } from "@/pages/payment/bank/frombank/Delete"
+import Swal from "sweetalert2"
 
 const Bank = () => {
   const { bank, refresh } = useSelector((state: any) => state.bankReducers)
   const [search, setSearch] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
   const [isOpen, setIsOpen] = useState({
+    code: "",
     bank: "",
     id: 0,
     isShow: false,
   })
+  console.log(isOpen)
+
   const [isDelete, setIsDelete] = useState({
-    bank: "",
+    bank_name: "",
     id: 0,
     isShow: false,
   })
@@ -25,7 +32,16 @@ const Bank = () => {
     setSearch(e.target.value)
   }
   const handleAddData = () => {
-    setIsOpen({ bank: "", id: 0, isShow: true })
+    setIsOpen({ code:"", bank: "", id: 0, isShow: true })
+  }
+  const handleDelete = (id: number) => {
+    dispatch(deleteDataBank(id))
+    Swal.fire({
+      title: "Sukses",
+      text: `Berhasil Hapus Data`,
+      icon: "success",
+    })
+    handleClose()
   }
   const handleClose = () => {
     setIsOpen(prev => {
@@ -38,8 +54,14 @@ const Bank = () => {
   }
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(getDataBank(search))
-  }, [dispatch, search])
+    const fetchData = async () => {
+      setIsLoading(true)
+       await dispatch(getDataBank(search))
+      setIsLoading(false)
+    }
+    fetchData()
+  }, [dispatch,search, refresh])
+
   return (
     <div className="">
       <div>
@@ -51,23 +73,32 @@ const Bank = () => {
             <SearchInput onChange={handleSearchChange} />
           </div>
           <div className="flex ">
-            <AddButton onClick={handleAddData} />
+          <AddButton className={'transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-300 shadow-md'} onClick={handleAddData} />
           </div>
         </div>
 
-        <Table cols={tableConstants(setIsOpen, setIsDelete)} data={bank} />
-        
+       
+          <Table
+          cols={tableConstants(setIsOpen, setIsDelete)}
+          data={bank?.data}
+        />
+      
+
         {isOpen.isShow ? (
-          <Modal onClose={handleClose} header={"Add Bank"}>
-            <p>tes</p>
+          <Modal onClose={handleClose} header={"Bank"}>
+            <FormAdd id={isOpen.id} name={isOpen.bank} code={isOpen.code} setIsOpen={setIsOpen} />
           </Modal>
         ) : null}
         {isDelete.isShow ? (
-          <Modal
-            onClose={handleClose}
-            header={"Apakah Anda Ingin Menghapus Data"}
-          >
-            <p>tes</p>
+          <Modal onClose={handleClose} header={"Hapus Data"}>
+            <ConfirmationDelete
+              data={isDelete.bank_name}
+              handleDelete={handleDelete}
+              id={isDelete.id}
+              handleClose={() => {
+                handleClose()
+              }}
+            />
           </Modal>
         ) : null}
       </div>
@@ -76,3 +107,6 @@ const Bank = () => {
 }
 
 export default Bank
+
+
+

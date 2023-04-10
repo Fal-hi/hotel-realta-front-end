@@ -22,7 +22,7 @@ export const Modal: FC<ModalProps> = ({
 }: Props) => {
   return (
     <div
-      className="relative z-10"
+      className="relative z-10 transition ease-in-out delay-150"
       aria-labelledby="modal-title"
       role="dialog"
       aria-modal="true"
