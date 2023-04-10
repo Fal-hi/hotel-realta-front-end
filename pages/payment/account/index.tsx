@@ -9,10 +9,10 @@ import { useDispatch, useSelector } from "react-redux"
 import { tableConstants } from "./listHeader"
 import Table from "@/components/Table"
 import { Modal } from "@/components/modal"
-import { FormAdd } from "@/components/payment/frombank/FromAdd"
-import { ConfirmationDelete } from "@/components/payment/frombank/Delete"
-import { FormAccounts } from "@/components/payment/fromAccounts/fromAccounts"
-import { FormAccountsEdit } from "@/components/payment/fromAccounts/fromAccountsEdit"
+import { FormAdd } from "@/pages/payment/bank/frombank/FromAdd"
+import { ConfirmationDelete } from "@/pages/payment/bank/frombank/Delete"
+import { FormAccounts } from "@/pages/payment/account/fromAccounts/fromAccounts"
+import { FormAccountsEdit } from "@/pages/payment/account/fromAccounts/fromAccountsEdit"
 
 const Account = () => {
   const { accounts, refresh } = useSelector(

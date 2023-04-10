@@ -7,8 +7,8 @@ import AddButton from "@/components/addButton"
 import Breadcumb from "@/components/breadcumb"
 import { Modal } from "@/components/modal"
 import { SearchInput } from "@/components/searchInput"
-import { FormAdd } from "@/components/payment/frombank/FromAdd"
-import { ConfirmationDelete } from "@/components/payment/frombank/Delete"
+import { FormAdd } from "@/pages/payment/bank/frombank/FromAdd"
+import { ConfirmationDelete } from "@/pages/payment/bank/frombank/Delete"
 import Swal from "sweetalert2"
 
 const Bank = () => {

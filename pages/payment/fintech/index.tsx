@@ -12,9 +12,9 @@ import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { tableConstants } from "./listHeader"
 import { Modal } from "@/components/modal"
-import { FormAdd } from "@/components/payment/frombank/FromAdd"
-import { ConfirmationDelete } from "@/components/payment/frombank/Delete"
-import { FromAddFintech } from "@/components/payment/fromFintech/FromAddFintech"
+import { FormAdd } from "@/pages/payment/bank/frombank/FromAdd"
+import { ConfirmationDelete } from "@/pages/payment/bank/frombank/Delete"
+import { FromAddFintech } from "@/pages/payment/fintech/fromFintech/FromAddFintech"
 import Swal from "sweetalert2"
 
 const Fintech = () => {
