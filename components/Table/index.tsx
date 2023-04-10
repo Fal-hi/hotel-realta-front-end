@@ -1,14 +1,14 @@
 import React from "react"
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types"
 
-const Table = ({cols, data, children}: any) => {
+const Table = ({ cols, data, children }: any) => {
   return (
     <>
       <section className="container">
         <div className="flex flex-col">
           <div className="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
             <div className="w-full py-2 align-middle md:px-6 lg:px-8 ">
-              <div className="overflow-auto border border-gray-200 dark:border-gray-700 md:rounded-lg shadow-md">
+              <div className=" border border-gray-200 dark:border-gray-700 md:rounded-lg shadow-md">
                 <table className="w-full ">
                   <thead className="bg-gray-50 dark:bg-gray-800">
                     <tr>
@@ -25,7 +25,7 @@ const Table = ({cols, data, children}: any) => {
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                     {(data || []).map((item: any, index: any) => (
-                      <tr key={index}  className="hover:bg-gray-50">
+                      <tr key={index} className="hover:bg-gray-50">
                         {cols.map((col: any, key: any) => (
                           <td
                             key={key}
@@ -36,15 +36,11 @@ const Table = ({cols, data, children}: any) => {
                         ))}
                       </tr>
                     ))}
-                   
                   </tbody>
                 </table>
-                <div
-						className="px-5 py-3 text-gray-700 dark:text-gray-200 whitespace-nowrap border-t flex flex-col xs:flex-row items-center xs:justify-between ">
-						<div className="inline-flex mt-2 xs:mt-0">
-            {children}
-						</div>
-					</div>
+                <div className="px-5 py-3 text-gray-700 dark:text-gray-200 whitespace-nowrap border-t flex flex-col xs:flex-row items-center xs:justify-between ">
+                  <div className="inline-flex mt-2 xs:mt-0">{children}</div>
+                </div>
               </div>
             </div>
           </div>
@@ -55,8 +51,8 @@ const Table = ({cols, data, children}: any) => {
 }
 
 Table.propTypes = {
-    cols: PropTypes.array.isRequired,
-    data: PropTypes.array.isRequired,
-    children: PropTypes.any,
+  cols: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
+  children: PropTypes.any,
 }
 export default Table
