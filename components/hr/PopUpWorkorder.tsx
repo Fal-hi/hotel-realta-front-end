@@ -1,13 +1,14 @@
 import React from "react"
 import { Menu } from "@headlessui/react"
 import DotsVertical from "../icons/DotsVertical"
+import Link from "next/link"
 
 interface Iprops {
   active?: boolean
   handleEdit: () => void
 }
 
-const PopUpWorkorder = ({ onEditClick }: any) => {
+const PopUpWorkorder = ({ onEditClick, idWorkOrder }: any) => {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <Menu.Button className="px-5 ">
@@ -22,7 +23,7 @@ const PopUpWorkorder = ({ onEditClick }: any) => {
           Edit
         </Menu.Item>
         <Menu.Item as="div" className="py-2 px-2 cursor-pointer">
-          Workorder Detail
+          <Link href={`/hr/workorder/${idWorkOrder}`}>Workorder Detail</Link>
         </Menu.Item>
       </Menu.Items>
     </Menu>

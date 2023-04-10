@@ -59,8 +59,7 @@ function* handleupdateWorkOrder(action: any): any {
 }
 function* handlegetWorkOrderDetail(action: any): any {
   try {
-    const { id } = action.payload
-    const result = yield call(workOrderApi.getWorkOrderDetail, id)
+    const result = yield call(workOrderApi.getWorkOrderDetail, action.payload)
 
     yield put(getWorkOrderDetailResponse(result.data))
   } catch (error) {

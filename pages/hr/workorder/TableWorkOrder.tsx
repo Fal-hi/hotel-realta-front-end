@@ -36,7 +36,10 @@ const TableWorkOrder = ({
           title: "Action",
           render: (data: any) => {
             return (
-              <PopUpWorkorder onEditClick={() => onEditClick(data.startDate)} />
+              <PopUpWorkorder
+                onEditClick={() => onEditClick(data.startDate)}
+                idWorkOrder={data.id}
+              />
             )
           },
         },
