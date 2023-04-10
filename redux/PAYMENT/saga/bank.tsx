@@ -15,7 +15,6 @@ function* handleGetBank(action:any):any {
 function* handleCreateBank(action:any):any {
     try {
         const result:any = yield call(BankApi.createBank,action.payload);
-        console.log("Handle =>",result.data)
         yield put(createDataBankRespons(result.data))
     } catch (err) {
         yield put(createDataBankRespons({message: err}))
@@ -24,7 +23,7 @@ function* handleCreateBank(action:any):any {
 
 function* handleUpdateBank(action:any):any {
     try {
-        const result:any = yield call(BankApi.createBank,action.payload);
+        const result:any = yield call(BankApi.updateBank,action.payload.id, action.payload.data);
         yield put(updateDataBankRespons(result.data))
     } catch (err) {
         yield put(updateDataBankRespons({message: err}))

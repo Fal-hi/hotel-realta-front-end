@@ -9,17 +9,20 @@ import { Modal } from "@/components/modal"
 import { SearchInput } from "@/components/searchInput"
 import { FormAdd } from "@/components/payment/frombank/FromAdd"
 import { ConfirmationDelete } from "@/components/payment/frombank/Delete"
+import Swal from "sweetalert2"
 
 const Bank = () => {
   const { bank, refresh } = useSelector((state: any) => state.bankReducers)
   const [search, setSearch] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
   const [isOpen, setIsOpen] = useState({
+    code: "",
     bank: "",
     id: 0,
     isShow: false,
   })
-  console.log(isOpen);
-  
+  console.log(isOpen)
+
   const [isDelete, setIsDelete] = useState({
     bank_name: "",
     id: 0,
@@ -29,28 +32,36 @@ const Bank = () => {
     setSearch(e.target.value)
   }
   const handleAddData = () => {
-    setIsOpen({ bank: "", id: 0, isShow: true })
+    setIsOpen({ code:"", bank: "", id: 0, isShow: true })
   }
   const handleDelete = (id: number) => {
     dispatch(deleteDataBank(id))
+    Swal.fire({
+      title: "Sukses",
+      text: `Berhasil Hapus Data`,
+      icon: "success",
+    })
     handleClose()
   }
   const handleClose = () => {
     setIsOpen(prev => {
       return { ...prev, isShow: false }
     })
-    
+
     setIsDelete(prev => {
       return { ...prev, isShow: false }
     })
   }
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(getDataBank(search))
-    
-  }, [dispatch,refresh,isOpen,isDelete])
+    const fetchData = async () => {
+      setIsLoading(true)
+       await dispatch(getDataBank(search))
+      setIsLoading(false)
+    }
+    fetchData()
+  }, [dispatch,search, refresh])
 
-  
   return (
     <div className="">
       <div>
@@ -62,23 +73,24 @@ const Bank = () => {
             <SearchInput onChange={handleSearchChange} />
           </div>
           <div className="flex ">
-            <AddButton onClick={handleAddData} />
+          <AddButton className={'transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-300 shadow-md'} onClick={handleAddData} />
           </div>
         </div>
 
-
-        <Table cols={tableConstants(setIsOpen, setIsDelete)} data={bank?.data} />
+       
+          <Table
+          cols={tableConstants(setIsOpen, setIsDelete)}
+          data={bank?.data}
+        />
+      
 
         {isOpen.isShow ? (
           <Modal onClose={handleClose} header={"Bank"}>
-            <FormAdd id={isOpen.id} bank={isOpen.bank} setIsOpen={setIsOpen} />
+            <FormAdd id={isOpen.id} name={isOpen.bank} code={isOpen.code} setIsOpen={setIsOpen} />
           </Modal>
         ) : null}
         {isDelete.isShow ? (
-          <Modal
-            onClose={handleClose}
-            header={"Hapus Data"}
-          >
+          <Modal onClose={handleClose} header={"Hapus Data"}>
             <ConfirmationDelete
               data={isDelete.bank_name}
               handleDelete={handleDelete}
@@ -95,3 +107,6 @@ const Bank = () => {
 }
 
 export default Bank
+
+
+

@@ -4,7 +4,7 @@ import formatRupiah from "@/functions/formatRupiah"
 import React from "react"
 
 // This is the table constant/settings which needed to render table elements
-export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
+export const tableConstants = (setIsOpen?: any, setIsDelete?: any, setIsEdit?:any) => {
   return [
     {
       title: "Account Number",
@@ -42,8 +42,8 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
               className="mx-2 cursor-pointer"
               onClick={() => {
                 setIsDelete({
-                  bank: data.name,
-                  id: data.bank_entity_id,
+                  accounts: data.accountNumber,
+                  id: data.accountNumber,
                   isShow: true,
                 })
               }}
@@ -53,9 +53,13 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
             <div
               className="mx-2 cursor-pointer"
               onClick={() => {
-                setIsOpen({
-                  bank: data.bank_name,
-                  id: data.bank_entity_id,
+                setIsEdit({
+                  types:data.paymentType,
+                  usac_expyear:data.expYear,
+                  usac_expmonth: data.expMonth,
+                  saldo: data.balance,
+                  accounts: data.accountNumber,
+                  id: data.accountNumber,
                   isShow: true,
                 })
               }}

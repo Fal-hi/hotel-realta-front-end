@@ -13,7 +13,6 @@ function* handleGetFintech(action:any):any {
     }
 }
 
-
 function* handleCreateFintech(action:any):any {
     try {
         const result:any = yield call(FintechApi.createFintech,action.payload);
@@ -23,14 +22,14 @@ function* handleCreateFintech(action:any):any {
     }
 }
 
-// function* handleUpdateFintech(action:any):any {
-//     try {
-//         const result:any = yield call(FintechApi.,action.payload);
-//         yield put(updateDataFintechRespons(result.data))
-//     } catch (err) {
-//         yield put(updateDataFintechRespons({message: err}))
-//     }
-// }
+function* handleUpdateFintech(action:any):any {
+    try {
+        const result:any = yield call(FintechApi.updateFintech, action.payload.id, action.payload.data);
+        yield put(updateDataFintechRespons(result.data))
+    } catch (err) {
+        yield put(updateDataFintechRespons({message: err}))
+    }
+}
 
 
 
@@ -46,5 +45,6 @@ function* handleDeleteFintech(action:any):any {
 export {
     handleGetFintech,
     handleCreateFintech,
+    handleUpdateFintech,
     handleDeleteFintech
 }

@@ -1,5 +1,5 @@
 import { createDataBank, updateDataBank } from "@/redux/PAYMENT/action/bank";
-import { createDataFintech } from "@/redux/PAYMENT/action/fintech";
+import { createDataFintech, updateDataFintech } from "@/redux/PAYMENT/action/fintech";
 import React from "react";
 import { useForm, FieldErrors, Resolver } from "react-hook-form";
 
@@ -37,7 +37,7 @@ export const FromAddFintech = (props: any) => {
         id: props.id,
         data,
       };
-      dispatch(updateDataBank(payload));
+      dispatch(updateDataFintech(payload));
       props.setIsOpen({ isShow: false });
     } else {
       dispatch(createDataFintech(data));
@@ -52,23 +52,26 @@ export const FromAddFintech = (props: any) => {
     formState: { errors },
   } = useForm<FormValues>({ resolver });
   return (
+    <div className="max-w-md mx-auto">
     <form onSubmit={handleSubmit(handleFrom, handleError)}>
-      <div className="bg-white   pt-5 pb-4 sm:p-6 sm:pb-4 border-b">
+       <div className="mb-4">
         <div className="w-full mb-3">Fintech Code</div>
         <input
           type="text"
-          className="border rounded-md p-1.5 block w-full mb-3 bg-[#F9FAFB] focus:border-[#DADADA] focus:outline-none"
-          defaultValue={props.paga_code}
+          className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
+          placeholder="Masukkan Kode Fintech"
+          defaultValue={props.code}
           {...register("paga_code")}
         />
         {errors?.paga_code && <p>{errors.paga_code.message}</p>}
       </div>
 
-      <div className="bg-white   pt-5 pb-4 sm:p-6 sm:pb-4">
+      <div className="mb-4">
         <div className="w-full mb-3">Fintech Name</div>
         <input
           type="text"
-          className="border rounded-md p-1.5 block w-full mb-3 bg-[#F9FAFB] focus:border-[#DADADA] focus:outline-none"
+          className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
+          placeholder="Masukkan Nama Fintech"
           defaultValue={props.fintech}
           {...register("paga_name")}
         />
@@ -84,5 +87,6 @@ export const FromAddFintech = (props: any) => {
         </button>
       </div>
     </form>
+    </div>
   );
 };

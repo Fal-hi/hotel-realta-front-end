@@ -8,38 +8,27 @@ import { getDataFintech } from "@/redux/PAYMENT/action/fintech"
 import {
   createDataAccounts,
   getDataAccountsFintech,
+  updateDataAccounts,
 } from "@/redux/PAYMENT/action/userAccounts"
-import classNames from "classnames"
+
 import React, { useEffect, useState } from "react"
 import { useForm, FieldErrors, Resolver, Controller } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
 import Select from "react-select"
 
-export const FormAccounts = (props: any) => {
+export const FormAccountsEdit = (props: any) => {
   const { bank, refresh } = useSelector((state: any) => state.bankReducers)
   const { fint } = useSelector((state: any) => state.fintechReducers)
   const { userfintech } = useSelector((state: any) => state.accountReducers)
   const dispatch = useDispatch()
   const [search, setSearch] = useState("")
-  const handleFrom = (data: any) => {
-    const result = {
-      usac_user_id: 2,
-      usac_entity_id: data.bankcode.value,
-      usac_account_number: data.accounts,
-      usac_saldo: data.saldo,
-      usac_expmonth: data.usac_expmonth,
-      usac_expyear: data.usac_expyear,
-      usac_type: data.type,
-    }
-    dispatch(createDataAccounts(result))
-    props.setIsOpen({ isShow: false })
-  }
+ 
   const handleError = (errors: any) => {}
 
   type FormValues = {
     accounts: string
     saldo: string
-    type: string
+    types: string
     bankcode: string
     control: any
     usac_expmonth: string
@@ -49,40 +38,75 @@ export const FormAccounts = (props: any) => {
     register,
     handleSubmit,
     setValue,
-    control,
     formState: { errors },
   } = useForm<FormValues>({})
-
-  const [options, setOptions] = useState([
-    { value: "debet", label: "Debet" },
-    { value: "credit", label: "Credit" },
-    { value: "fintech", label: "Fintech" },
-  ])
+  const handleFrom = (data: any) => {
+    if(data.types !== "fintech"){
+      const payload = {
+        id: props.id,
+        usac_user_id: 2,
+        // usac_entity_id: data.bankcode.value,
+        usac_account_number: data.accounts,
+        usac_saldo: data.saldo,
+        usac_type: data.types,
+        usac_expmonth: data.usac_expmonth,
+        usac_expyear: data.usac_expyear,
+      }
+      console.log(payload);
+      
+        dispatch(updateDataAccounts(props.id, payload))
+        //   props.setIsEdit({ isShow: false })
+    }else{
+      const payload = {
+        usac_user_id: 2,
+        usac_account_number: data.accounts,
+        usac_saldo: data.saldo,
+        usac_type: data.types,
+        usac_expmonth: data.usac_expmonth,
+        usac_expyear: data.usac_expyear,
+      }
+      console.log(payload);
+      
+        dispatch(updateDataAccounts(props.id, payload))
+      //  props.setIsEdit({ isShow: false })
+    }
+   
+ 
+    // dispatch(updateDataAccounts(result))
+    // props.setIsEdit({ isShow: false })
+  }
+  console.log("tes=>", props.types);
+  
+  // const [options, setOptions] = useState([
+  //   { value: "debet", label: "Debet" },
+  //   { value: "credit", label: "Credit" },
+  //   { value: "fintech", label: "Fintech" },
+  // ])
 
   const [typeCodeOptions, setTypeCodeOptions]: any = useState([])
   const [fintechCodeOptions, setFintechCodeOptions] = useState([])
 
-  const [selectedOption, setSelectedOption] = useState("")
-  const [stype, setType] = useState("")
-  const [accountfintech, setFintech] = useState(" ")
-  const [banks, setBank] = useState()
+  // const [selectedOption, setSelectedOption] = useState("")
+  const [types, setTypes] = useState(props.types)
+  const [accountfintech, setFintech] = useState(props.accounts)
+  // const [banks, setBank] = useState()
 
   const handleInputChange = (event: any) => {
     const value = event.target.value
     setFintech(value)
     setValue("accounts", value)
   }
-  const handleSelectChange = (selectedOption: any) => {
-    const separate = selectedOption.label
-    const [code, label] = separate.split(",")
-    const concat = code + userfintech.data.user_phone_number
-    setFintech(concat)
-    setValue("accounts", concat)
-  }
+  // const handleSelectChange = (selectedOption: any) => {
+  //   const separate = selectedOption.label
+  //   const [code, label] = separate.split(",")
+  //   const concat = code + userfintech.data.user_phone_number
+  //   setFintech(concat)
+  //   setValue("accounts", concat)
+  // }
 
-  const handleTypeChange = (event: any) => {
-    const type = event.target.value
-    setType(type)
+  const handleTypeChange = (event: any):any => {
+    const type = event
+    // setType(type)
     switch (type) {
       case "debet":
         setTypeCodeOptions(typeCodeOptions)
@@ -115,6 +139,7 @@ export const FormAccounts = (props: any) => {
     dispatch(getDataAccountsFintech(2))
 
     setValue("accounts", accountfintech)
+    setValue("types", types)
   }, [dispatch, search, refresh])
 
   return (
@@ -129,14 +154,14 @@ export const FormAccounts = (props: any) => {
             <input
               type="text"
               className={`text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-16 text-sm border-gray-300 rounded border  ${
-                stype === "Fintech"
+                props.type === "fintech"
                   ? "disabled:bg-gray-100 disabled:cursor-not-allowed"
                   : ""
               } `}
               placeholder="Masukkan Nomor Account Number"
+          
               value={accountfintech}
-              defaultValue={props.accounts}
-              disabled={stype === "fintech"}
+              disabled={props.type === "fintech"}
               {...register("accounts")}
               onChange={handleInputChange}
             />
@@ -163,66 +188,23 @@ export const FormAccounts = (props: any) => {
 
         <div className="mb-4">
           <div className="w-full mb-3">Type</div>
-
-          <select
-            className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none 
-          focus:shadow-outline-indigo"
-            defaultValue={props.type}
-            {...register("type")}
-            onChange={handleTypeChange}
-          >
-            <option value="">- Select Type -</option>
-            {options.map((data, i) => (
-              <option key={i} value={data.value}>
-                {data.label}
-              </option>
-            ))}
-          </select>
-          {errors?.type && <p>{errors.type.message}</p>}
+          <input
+                type="text"
+                className={`w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none 
+                focus:shadow-outline-indigo   ${
+                  props.types === "fintech" || props.types === "debet" || props.types === "credit"
+                    ? "disabled:bg-gray-100 disabled:cursor-not-allowed"
+                    : ""
+                }`}
+                disabled
+                defaultValue={props.types && props.types}
+                {...register("types")}
+              />
+     
+          {errors?.types && <p>{errors.types.message}</p>}
         </div>
 
-        <div className="mb-4">
-          <div className="w-full mb-3">Type Code</div>
-          {stype === "debet" || stype === "credit" ? (
-            <Controller
-              name="bankcode"
-              control={control}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <Select
-                  options={typeCodeOptions}
-                  onChange={selectedOption => onChange(selectedOption)}
-                  onBlur={onBlur}
-                  value={value}
-                />
-              )}
-            />
-          ) : stype === "fintech" ? (
-            <Controller
-              name="bankcode"
-              control={control}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <Select
-                  options={fintechCodeOptions}
-                  onChange={handle => {
-                    onChange(handle)
-                    handleSelectChange(handle)
-                  }}
-                  onBlur={onBlur}
-                  value={value}
-                />
-              )}
-            />
-          ) : (
-            <Controller
-              name="bankcode"
-              control={control}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <Select onBlur={onBlur} value={value} />
-              )}
-            />
-          )}
-        </div>
-        {stype !== "fintech" ? (
+        {props.type !== "fintech" ? (
           <div className="mb-4">
             <div className="w-full mb-3">Expiry Date</div>
             <div className="flex gap-3">
@@ -249,7 +231,7 @@ export const FormAccounts = (props: any) => {
             type="submit"
             className="inline-flex w-full justify-center rounded-md bg-[#1D4ED8] px-3 py-2   text-white shadow-sm hover:bg-[#143694] sm:ml-3 sm:w-auto"
           >
-            Save
+            Update
           </button>
         </div>
       </form>

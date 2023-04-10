@@ -15,12 +15,14 @@ import { Modal } from "@/components/modal"
 import { FormAdd } from "@/components/payment/frombank/FromAdd"
 import { ConfirmationDelete } from "@/components/payment/frombank/Delete"
 import { FromAddFintech } from "@/components/payment/fromFintech/FromAddFintech"
+import Swal from "sweetalert2"
 
 const Fintech = () => {
   const { fint, refresh } = useSelector((state: any) => state.fintechReducers)
   const [search, setSearch] = useState("")
   const [isOpen, setIsOpen] = useState({
-    fintech: "",
+    code:"",
+    name: "",
     id: 0,
     isShow: false,
   })
@@ -39,10 +41,15 @@ const Fintech = () => {
     })
   }
   const handleAddData = () => {
-    setIsOpen({ fintech: "", id: 0, isShow: true })
+    setIsOpen({code:"", name: "", id: 0, isShow: true })
   }
   const handleDelete = (id: number) => {
     dispatch(deleteDataFintech(id))
+    Swal.fire({
+      title: "Sukses",
+      text: `Berhasil Hapus Data`,
+      icon: "success",
+    })
     handleClose()
   }
   const handleSearchChange = (e: any): void => {
@@ -52,7 +59,7 @@ const Fintech = () => {
 
   useEffect(() => {
     dispatch(getDataFintech(search))
-  }, [dispatch, search, isOpen, isDelete])
+  }, [dispatch, search,refresh])
 
   return (
     <div>
@@ -64,7 +71,7 @@ const Fintech = () => {
             <SearchInput onChange={handleSearchChange} />
           </div>
           <div className="flex ">
-            <AddButton onClick={handleAddData} />
+            <AddButton className={'transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-300 shadow-md'} onClick={handleAddData} />
           </div>
         </div>
 
@@ -72,7 +79,7 @@ const Fintech = () => {
 
         {isOpen.isShow ? (
           <Modal onClose={handleClose} header={"Fintech"}>
-            <FromAddFintech id={isOpen.id} fintech={isOpen.fintech} setIsOpen={setIsOpen} />
+            <FromAddFintech id={isOpen.id} code={isOpen.code} fintech={isOpen.name} setIsOpen={setIsOpen} />
           </Modal>
         ) : null}
 

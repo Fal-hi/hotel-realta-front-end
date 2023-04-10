@@ -4,10 +4,15 @@ import axios from "../config";
 const getUserAccount = ()=>{
     return axios.get(`/user-accounts`);
 }
+
+const geAccountFintech = (id:number)=>{
+    return axios.get(`/user-accounts/users/${id}`);
+}
+
 const createAccount = (data:any)=>{
     return axios.post(`/user-accounts`,data);
 }
-const updateAccount = (id: number, data:any) => {
+const updateAccount = (id: string, data:any) => {
     return axios.put(`/user-accounts/${id}`, data);
 };
 
@@ -17,6 +22,7 @@ const deleteAccount = (id: number) => {
 
 const AccountApi ={
     getUserAccount,
+    geAccountFintech,
     createAccount,
     updateAccount,
     deleteAccount

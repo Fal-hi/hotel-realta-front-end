@@ -3,7 +3,7 @@ import variants from "@/components/Typography/textcss"
 import AddButton from "@/components/addButton"
 import Breadcumb from "@/components/breadcumb"
 import { SearchInput } from "@/components/searchInput"
-import { getDataUserAccounts } from "@/redux/PAYMENT/action/userAccounts"
+import { deleteDataAccounts, getDataUserAccounts } from "@/redux/PAYMENT/action/userAccounts"
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { tableConstants } from "./listHeader"
@@ -12,6 +12,7 @@ import { Modal } from "@/components/modal"
 import { FormAdd } from "@/components/payment/frombank/FromAdd"
 import { ConfirmationDelete } from "@/components/payment/frombank/Delete"
 import { FormAccounts } from "@/components/payment/fromAccounts/fromAccounts"
+import { FormAccountsEdit } from "@/components/payment/fromAccounts/fromAccountsEdit"
 
 const Account = () => {
   const { accounts, refresh } = useSelector(
@@ -19,6 +20,17 @@ const Account = () => {
   )
 
   const [isOpen, setIsOpen] = useState({
+  
+    accounts: "",
+    id: 0,
+    isShow: false,
+  })
+
+  const [isEdit, setIsEdit] = useState({
+    types:"",
+    usac_expyear: "",
+    usac_expmonth:"",
+    saldo: "",
     accounts: "",
     id: 0,
     isShow: false,
@@ -29,11 +41,15 @@ const Account = () => {
     isShow: false,
   })
   const handleDelete = (id: number) => {
-    // dispatch(deleteDataBank(id))
+    dispatch(deleteDataAccounts(id))
     handleClose()
   }
   const handleClose = () => {
     setIsOpen(prev => {
+      return { ...prev, isShow: false }
+    })
+
+    setIsEdit(prev => {
       return { ...prev, isShow: false }
     })
     
@@ -48,9 +64,12 @@ const Account = () => {
     setIsOpen({ accounts: "", id: 0, isShow: true })
   }
 
+  // const handleEditData = () => {
+  //   setIsEdit({ type:"",usac_expyear:"",  usac_expmonth:"", saldo:"", accounts: "", id: 0, isShow: true })
+  // }
   useEffect(() => {
     dispatch(getDataUserAccounts())
-  }, [dispatch])
+  }, [dispatch, refresh])
 
   return (
     <div className="">
@@ -60,19 +79,27 @@ const Account = () => {
       <div className="flex flex-col items-start mt-10 w-full">
         <div className="flex flex-row w-full justify-between">
           <div>
-            <SearchInput />
+ 
           </div>
           <div className="flex ">
             <AddButton onClick={handleAddData} />
           </div>
         </div>
         <div className="py-3"></div>
-        <Table cols={tableConstants()} data={accounts} />
+        <Table cols={tableConstants(setIsOpen, setIsDelete, setIsEdit)} data={accounts} />
         {isOpen.isShow ? (
-          <Modal onClose={handleClose} header={"Bank"}>
-            <FormAccounts id={isOpen.id} bank={isOpen.accounts} setIsOpen={setIsOpen} />
+          <Modal onClose={handleClose} header={"Accounts"}>
+            <FormAccounts id={isOpen.id}  accounts={isOpen.accounts}  setIsOpen={setIsOpen} />
           </Modal>
         ) : null}
+
+        {
+          isEdit.isShow ? (
+            <Modal onClose={handleClose} header={"Edit Accounts"}>
+            <FormAccountsEdit  id={isEdit.id} usac_expmonth={isEdit.usac_expmonth} usac_expyear={isEdit.usac_expyear} accounts={isEdit.accounts} saldo={isEdit.saldo}   types={isEdit.types} setIsEdit={setIsEdit}/>
+            </Modal>
+          ): null
+        }
         {isDelete.isShow ? (
           <Modal
             onClose={handleClose}

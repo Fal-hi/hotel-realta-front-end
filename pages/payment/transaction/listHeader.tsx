@@ -14,7 +14,7 @@ export const tableConstants = (handleEdit?:any) => {
     {
       title: 'Trx Date',
       render: (data:any) => {
-        return <span>{moment(data.part_modified_date).format("ll")}</span>;
+        return <span>{moment(data.part_modified_date).format("llll")}</span>;
       },
     },
     {
@@ -68,7 +68,7 @@ export const tableConstants = (handleEdit?:any) => {
       {
         title: 'User',
         render: (data:any) => {
-          return <span>{data.part_user_id}</span>;
+          return <span>{data.user.user_full_name}</span>;
         },
       },
   ];
