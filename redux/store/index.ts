@@ -7,11 +7,13 @@ import { employeeReducers } from "../HR/reducer/employeeReducer"
 import { workorderReducers } from "../HR/reducer/workorderReducer"
 
 import { createLogger } from "redux-logger"
-import { addressReducers } from "../HOTELS/reducer/addressReducers"
-
-import { facilitiesReducers } from "../HOTELS/reducer/facilitesReducers"
 import rootSaga from "../sagaPublic/index"
 import { accountReducers } from "../PAYMENT/reducer/accountsReducer"
+import vendorReducers from "../PURCHASING/reducer/vendorReducer"
+import { addressReducers } from "../HOTELS/reducer/addressReducers"
+import { facilitiesReducers } from "../HOTELS/reducer/facilitesReducers"
+import stockReducers from "../PURCHASING/reducer/stockReducer"
+import listOrderReducers from "../PURCHASING/reducer/listOrderReducer"
 import { bankReducers } from "../PAYMENT/reducer/bankReducer"
 import { fintechReducers } from "../PAYMENT/reducer/fintechReducer"
 import { transactionReducers } from "../PAYMENT/reducer/transactionReducer"
@@ -31,6 +33,9 @@ const reducer = combineReducers({
   facilitiesReducers,
 
   bankReducers,
+  vendorReducers,
+  stockReducers,
+  listOrderReducers,
   fintechReducers,
   accountReducers,
   transactionReducers,
