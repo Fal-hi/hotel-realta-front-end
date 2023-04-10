@@ -1,5 +1,6 @@
 const variants = {
     xl2semibold: 'text-2xl font-poppins-semibold',
+    xlsemibold: 'text-xl font-poppins-semibold',
     lgbold: 'text-lg font-poppins-bold',
     xlbold: 'text-xl font-poppins-bold',
     smsemibold: 'text-sm font-poppins-semibold',

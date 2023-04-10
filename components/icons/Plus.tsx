@@ -18,7 +18,7 @@ const Plus: FC<PlusProps> = (props: any) => {
       <path
         d="M7 1.16663V12.8333M1.16667 6.99996H12.8333"
         stroke={props.stroke}
-        strokeWidth="1.67"
+        strokeWidth="1.32"
         strokeLinecap="round"
         strokeLinejoin="round"
       />

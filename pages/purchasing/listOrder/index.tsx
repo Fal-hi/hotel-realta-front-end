@@ -58,101 +58,99 @@ export default function ListOrder() {
   }
 
   return (
-    <>
+    <div>
       <Breadcumb
         child="List Order"
         parent="Dashboard"
         detail="List Order"
       ></Breadcumb>
-      <div className="items-center">
+      <div className="flex items-center">
         <div className="flex flex-row w-full justify-between py-4 mb-4">
-          <div className="flex flex-row w-full justify-between py-4 mb-4">
-            <div>
-              <SearchInput onChange={handleSearchChange} />
-            </div>
-            <div className="grid grid-cols-1 gap-4 max-w-xl m-auto">
-              <select
-                id="pohe_status"
-                className="bg-violet-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+          <div>
+            <SearchInput onChange={handleSearchChange} />
+          </div>
+          <div className="grid grid-cols-1 gap-4 max-w-xl m-auto">
+            <select
+              id="pohe_status"
+              className="bg-violet-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
             dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                onChange={handleSearchStatChange}
-                value={searchStat}
-              >
-                <option selected value="">
-                  Choose a status
-                </option>
-                <option value="1">Pending</option>
-                <option value="2">Approved</option>
-                <option value="3">Rejected</option>
-                <option value="4">Received</option>
-                <option value="5">Completed</option>
-              </select>
-            </div>
-            <div className="flex ">
-              <AddButton onClick={() => setIsOpen(true)} />
-            </div>
+              onChange={handleSearchStatChange}
+              value={searchStat}
+            >
+              <option selected value="">
+                Choose a status
+              </option>
+              <option value="1">Pending</option>
+              <option value="2">Approved</option>
+              <option value="3">Rejected</option>
+              <option value="4">Received</option>
+              <option value="5">Completed</option>
+            </select>
+          </div>
+          <div className="flex ">
+            <AddButton onClick={() => setIsOpen(true)} />
           </div>
         </div>
+      </div>
 
-        <Table
-          cols={tableConstants(editOpen, deleteOpen)}
-          data={listOrder?.data?.data}
+      <Table
+        cols={tableConstants(editOpen, deleteOpen)}
+        data={listOrder?.data?.data}
+      >
+        <Pagination
+          pagination={{
+            totalPage: listOrder?.data?.totalPage,
+            page: listOrder?.data?.currentPage,
+          }}
+          setPage={setPage}
+        />
+      </Table>
+
+      {isOpen ? (
+        <Modal header="Add List Order" onClose={() => setIsOpen(false)}>
+          <AddListOrder isOpen={isOpen} closeModal={() => setIsOpen(false)} />
+        </Modal>
+      ) : null}
+
+      {isEdit.status ? (
+        <Modal
+          header="Switch Status"
+          onClose={() =>
+            setIsEdit(prev => {
+              return { ...prev, status: false }
+            })
+          }
         >
-          <Pagination
-            pagination={{
-              totalPage: listOrder?.data?.totalPage,
-              page: listOrder?.data?.currentPage,
-            }}
-            setPage={setPage}
-          />
-        </Table>
-
-        {isOpen ? (
-          <Modal header="Add List Order" onClose={() => setIsOpen(false)}>
-            <AddListOrder isOpen={isOpen} closeModal={() => setIsOpen(false)} />
-          </Modal>
-        ) : null}
-
-        {isEdit.status ? (
-          <Modal
-            header="Switch Status"
-            onClose={() =>
+          <SwitchStatus
+            isEdit={isEdit}
+            closeModal={() =>
               setIsEdit(prev => {
                 return { ...prev, status: false }
               })
             }
-          >
-            <SwitchStatus
-              isEdit={isEdit}
-              closeModal={() =>
-                setIsEdit(prev => {
-                  return { ...prev, status: false }
-                })
-              }
-            />
-          </Modal>
-        ) : null}
+          />
+        </Modal>
+      ) : null}
 
-        {isDelete.status ? (
-          <Modal
-            header="Delete List Order"
-            onClose={() =>
+      {isDelete.status ? (
+        <Modal
+          header="Delete List Order"
+          onClose={() =>
+            setIsDelete(prev => {
+              return { ...prev, status: false }
+            })
+          }
+        >
+          <DeleteListOrder
+            isDelete={isDelete}
+            closeModal={() =>
               setIsDelete(prev => {
                 return { ...prev, status: false }
               })
             }
-          >
-            <DeleteListOrder
-              isDelete={isDelete}
-              closeModal={() =>
-                setIsDelete(prev => {
-                  return { ...prev, status: false }
-                })
-              }
-            />
-          </Modal>
-        ) : null}
-      </div>
-    </>
+          />
+        </Modal>
+      ) : null}
+    </div>
   )
 }

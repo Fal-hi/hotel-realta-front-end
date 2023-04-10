@@ -55,7 +55,7 @@ const Sidebar = forwardRef(({ showNav, setShownav }: any, ref) => {
                 <Link
                   key={menu.name}
                   href={menu.to}
-                  className={`flex rounded-md py-1 cursor-pointer ${
+                  className={`flex rounded-md py-1 cursor-pointer hover:bg-bgGray ${
                     router.pathname === menu.to
                       ? "bg-bgGray text-textPrimary "
                       : ""
