@@ -8,7 +8,7 @@ type Props = {
 
 export const SearchInput = ({ onChange }: Props) => {
   return (
-    <div className="flex">
+    <div className="flex"> 
       <span className="inline-flex items-center pl-3 text-sm border border-r-0 border-gray-400 rounded-l-md  dark:text-gray-400 ">
         <Magnifier />
       </span>

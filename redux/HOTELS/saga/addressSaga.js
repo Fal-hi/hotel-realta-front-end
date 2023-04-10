@@ -18,7 +18,7 @@ function* handleGetAddress(action) {
 }
 
 function* handleGetAddressById(action) {
-  console.log(action)
+  // console.log(action)
   try {
     const result = yield call(ApiMethodHotels.getAddress, action.payload)
     // console.log("tes" + result)
