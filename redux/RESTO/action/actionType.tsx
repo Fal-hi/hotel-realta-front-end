@@ -28,5 +28,10 @@ const ActionTypes ={
     GET_GUEST: 'GET_GUEST',
     GET_GUEST_RESPONSE: 'GET_GUEST_RESPONSE',
 
+
+    /////////////////////UNTUK MEMBUAT ORDER////////////////////////
+    ADD_ORDER: 'ADD_ORDER',
+    ADD_ORDER_RESPONSE: 'ADD_ORDER_RESPONSE',
+
 };
 export default ActionTypes;

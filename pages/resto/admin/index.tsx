@@ -113,7 +113,7 @@ const Adminresto =(props:any)=> {
           <AddRestoPhoto dataId={isAdd} setIsAdd={setIsAdd} closeModal={() => setIsAdd(false)} />
         </Modal>
       ) : null}
-    </div>
+    </div>``
   </div>
   )
 }
