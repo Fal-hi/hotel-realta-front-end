@@ -8,15 +8,15 @@ import { Pagination } from "@/components/pagination"
 import BgButton from "@/components/buttons/BgButton"
 
 export default function Gallery() {
-  const dispatch = useDispatch()
-  const [search, setSearch] = useState("")
-  const [page, setPage] = useState(1)
-  const [entry, setEntry] = useState(5)
   const { gallery, message, refresh } = useSelector(
     (state: any) => state.galleryReducers
-  )
-
-  console.log(gallery?.data?.data)
+    )
+    
+    const dispatch = useDispatch()
+    const [search, setSearch] = useState("")
+    const [page, setPage] = useState(1)
+    const [entry, setEntry] = useState(2)
+  console.log(gallery?.data)
 
   useEffect(() => {
     dispatch(doReqGetPhotos(search, page, entry))
@@ -64,7 +64,10 @@ export default function Gallery() {
             <h3 className="my-1 text-sm text-gray-700">
               {`Reorder: ${photo.stock.stock_reorder_point}`}
             </h3>
-            <p className="mt-1 text-lg font-medium text-gray-900">{`Rp. ${photo.stock.vendor_product.vepro_price}`}</p>
+            <p className="mt-1 text-lg font-medium text-gray-900">
+              <span>{Intl.NumberFormat('id-ID', {style: 'currency', currency: 'IDR'}).format(photo.stock.vendor_product.vepro_price)}</span>
+              </p>
+
             <div style={{ marginTop: "1rem" }}>
               <BgButton
                 title="Add To Cart"
@@ -86,14 +89,15 @@ export default function Gallery() {
                 </div> */}
           </a>
         ))}
-        {/* <Pagination
-          pagination={{
-            totalPage: gallery?.data?.totalPage,
-            page: gallery?.data?.currentPage,
-          }}
-          setPage={setPage}
-        /> */}
       </div>
+      <div style={{ marginTop: "1rem" }}></div>
+      <Pagination
+        pagination={{
+          totalPage: gallery?.data?.totalPage,
+          page: gallery?.data?.currentPage,
+        }}
+        setPage={setPage}
+      />
     </div>
   )
 }
