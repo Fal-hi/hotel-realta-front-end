@@ -11,39 +11,39 @@ const SidebarBooking = (props: any) => {
   const hotelFacilities = [
     {
       id: 1,
-      checkbox: <InputCheckbox />,
+      checkbox: <InputCheckbox width="13px" height="13px" />,
       faci: "Parking Facility",
     },
     {
       id: 2,
-      checkbox: <InputCheckbox />,
+      checkbox: <InputCheckbox width="13px" height="13px" />,
       faci: "Security",
     },
     {
       id: 3,
-      checkbox: <InputCheckbox />,
+      checkbox: <InputCheckbox width="13px" height="13px" />,
       faci: "Restaurant",
     },
     {
       id: 4,
-      checkbox: <InputCheckbox />,
+      checkbox: <InputCheckbox width="13px" height="13px" />,
       faci: "Swimming Pool",
     },
     {
       id: 5,
-      checkbox: <InputCheckbox />,
+      checkbox: <InputCheckbox width="13px" height="13px" />,
       faci: "Gym",
     },
   ]
 
   return (
     <aside className="fixed top-26 text-[#1C2434] max-w-max h-screen bg-white shadow rounded px-4 py-3">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-start">
         <div className="flex gap-1 items-center mb-4">
           <Filter width="15" />
           <h1 className="font-semibold">FILTERS</h1>
         </div>
-        <OutlineButton title="Clear All" />
+        <OutlineButton title="Clear All" padding="0.3rem 0.2rem" />
       </div>
       <h3 className="font-semibold text-sm mt-2 mb-2">Price Range</h3>
       <PriceRange onChange={handlePriceRangeChange} />

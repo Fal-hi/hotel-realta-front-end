@@ -17,9 +17,28 @@ const listMenu = [
   {
     to: "",
     path: "",
-    icon: Hotel,
+    icon: Cart,
     name: "Resto",
+    icon2: Chevron,
+    submenu: [
+      {
+        to: "/resto/admin",
+        path: "/resto/admin",
+        title: "Resto Admin",
+      },
+      {
+        to: "/resto/restomenus",
+        path: "/resto/restomenus",
+        title: "Resto Menu",
+      },
+      {
+        to: "/resto/restoorder",
+        path: "/resto/restorder",
+        title: "Resto Order",
+      },
+    ],
   },
+
   {
     to: "#",
     path: "#",

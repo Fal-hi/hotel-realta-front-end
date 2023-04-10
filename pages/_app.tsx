@@ -8,7 +8,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <BaseLayout>
-        <Component {...pageProps} />
+      <Component {...pageProps} />
       </BaseLayout>
     </Provider>
   )
