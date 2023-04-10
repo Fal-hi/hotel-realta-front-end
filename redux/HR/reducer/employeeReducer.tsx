@@ -26,22 +26,26 @@ export function employeeReducers(state = initialState, action: Iaction) {
   switch (type) {
     case ActionTypes.GET_EMPLOYEE_RESPONSE:
       return {
+        ...state,
         employee: payload.data,
         refresh: true,
       }
     case ActionTypes.CREATE_EMPLOYEE_RESPONSE:
       return {
-        data: payload.data,
+        ...state,
+        createResponse: payload.data,
         refresh: true,
       }
     case ActionTypes.GET_EMPLOYEE_FOR_UPDATE_RESPONSE:
       return {
-        data: payload.data,
+        ...state,
+        oneEmployee: payload.data,
         refresh: true,
       }
     case ActionTypes.UPDATE_EMPLOYEE_RESPONSE:
       return {
-        data: payload.data,
+        ...state,
+        updateResponse: payload.data,
         refresh: true,
       }
     case ActionTypes.GET_JOB_ROLE_OPTION_RESPONSE:
@@ -58,6 +62,7 @@ export function employeeReducers(state = initialState, action: Iaction) {
       }
     case ActionTypes.GET_USERS_FOR_SEARCH_OPTION_EMPLOYEE_RESPONSE:
       return {
+        ...state,
         users: payload.data,
         refresh: true,
       }

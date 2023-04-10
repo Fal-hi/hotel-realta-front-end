@@ -4,6 +4,7 @@ import createSagaMiddleware from "@redux-saga/core"
 import { departmentReducers } from "../HR/reducer/departmentReducer"
 import { hotelsReducers } from "../HOTELS/reducer/hotelsReducers"
 import { employeeReducers } from "../HR/reducer/employeeReducer"
+import { workorderReducers } from "../HR/reducer/workorderReducer"
 
 import { createLogger } from "redux-logger"
 import rootSaga from "../sagaPublic/index"
@@ -20,6 +21,7 @@ const logger = createLogger()
 const saga = createSagaMiddleware()
 
 const reducer = combineReducers({
+  workorderReducers,
   departmentReducers,
   employeeReducers,
   hotelsReducers,

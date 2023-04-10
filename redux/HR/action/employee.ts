@@ -37,15 +37,15 @@ export const getEmployeeResponse = (payload: Iresponse) => {
   }
 }
 
-export const createEmployee = (payload: ICreate) => {
+export const createEmployee = (payload: any) => {
   return {
-    type: ActionTypes.GET_EMPLOYEE_RESPONSE,
+    type: ActionTypes.CREATE_EMPLOYEE,
     payload,
   }
 }
 export const createEmployeeResponse = (payload: Iresponse) => {
   return {
-    type: ActionTypes.GET_EMPLOYEE_RESPONSE,
+    type: ActionTypes.CREATE_EMPLOYEE_RESPONSE,
     payload,
   }
 }

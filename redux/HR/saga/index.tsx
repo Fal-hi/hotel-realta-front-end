@@ -7,6 +7,7 @@ import {
   handleUpdateDepartment,
 } from "./department"
 import {
+  handleCreateEmployee,
   handleGetDepartmentOption,
   handleGetEmployee,
   handleGetJobRoleOption,
@@ -17,6 +18,16 @@ import {
   handleUpdateEmployee,
   handlegetEmployeeForUpdate,
 } from "./employee"
+import {
+  handleGetWorkOrder,
+  handlecreateWorkOrder,
+  handlecreateWorkOrderDetail,
+  handlegetEmployeeNameOption,
+  handlegetTaskName,
+  handlegetWorkOrderDetail,
+  handlegetWorkOrderForUpdate,
+  handleupdateWorkOrder,
+} from "./workorder"
 
 function* watchAll() {
   yield all([
@@ -36,6 +47,21 @@ function* watchAll() {
     takeEvery(ActionTypes.GET_USERS_FOR_PPROFILES, handleGetUserForProfiles),
     takeEvery(ActionTypes.GET_SHIFT, handleGetShift),
     takeEvery(ActionTypes.GET_SHIFT_BY_ID, handleGetShiftById),
+    takeEvery(ActionTypes.CREATE_EMPLOYEE, handleCreateEmployee),
+    takeEvery(ActionTypes.GET_WORKORDER, handleGetWorkOrder),
+    takeEvery(
+      ActionTypes.GET_WORKORDER_FOR_UPDATE,
+      handlegetWorkOrderForUpdate
+    ),
+    takeEvery(ActionTypes.CREATE_WORK_ORDER, handlecreateWorkOrder),
+    takeEvery(ActionTypes.UPDATE_WORKORDER, handleupdateWorkOrder),
+    takeEvery(ActionTypes.GET_WORKORDER_DETAIL, handlegetWorkOrderDetail),
+    takeEvery(ActionTypes.CREATE_WORKORDER_DETAIL, handlecreateWorkOrderDetail),
+    takeEvery(
+      ActionTypes.GET_EMPLOYEE_NAME_OPTION,
+      handlegetEmployeeNameOption
+    ),
+    takeEvery(ActionTypes.GET_TASK_NAME, handlegetTaskName),
   ])
 }
 

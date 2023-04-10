@@ -44,20 +44,16 @@ function* handleGetEmployee(action: IAction): Generator<any, void, any> {
   }
 }
 
-function* handleCreateEmployee(action: IAction): Generator<any, void, any> {
+function* handleCreateEmployee(action: any): Generator<any, void, any> {
   try {
-    const { image, general, salary, assigment, shift } =
-      action.payload as ICreate
-    const data = {
-      image,
-      general,
-      salary,
-      assigment,
-      shift,
-    }
+    const data = action.payload
     const result = yield call(employeeApi.createEmployee, data)
     yield put(createEmployeeResponse(result.data))
-  } catch (error) {}
+  } catch (error) {
+    yield put(
+      createEmployeeResponse({ message: error, statusCode: 400, data: [] })
+    )
+  }
 }
 
 function* handlegetEmployeeForUpdate(

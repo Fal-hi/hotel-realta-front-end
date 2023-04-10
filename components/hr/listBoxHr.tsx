@@ -23,7 +23,7 @@ const ListBoxHr = ({ value, onChange, data, setData }: any) => {
           </div>
         </div>
       </Listbox.Button>
-      <Listbox.Options className="absolute bg-white rounded-md shadow-lg ring-black ring-opacity-5 focus:outline-none">
+      <Listbox.Options className="absolute bg-white z-10 rounded-md shadow-lg ring-black ring-opacity-5 focus:outline-none">
         {data.map((data: any, i: number) => (
           <Listbox.Option
             key={i}

@@ -9,6 +9,7 @@ import ListBoxHr from "./listBoxHr"
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
 import {
+  createEmployee,
   geUsersForProfiles,
   getDepartmentOption,
   getJobRoleOption,
@@ -51,7 +52,6 @@ const FormEmployee = () => {
     value: "Not defined",
     option: "Select",
   })
-  console.log("usersProfiles", usersProfiles)
   const [salariedFlag, setSalariedFlag] = useState({
     value: "Not defined",
     option: "Select",
@@ -161,17 +161,6 @@ const FormEmployee = () => {
     setUsersData(usersData)
   }, [dispatch, users, selectedPerson])
 
-  const [muchShift, setMuchShift] = useState([{}])
-
-  const handlePlusShift = () => {
-    setMuchShift([...muchShift, {}])
-  }
-
-  const handleMinShift = () => {
-    const lastIndex = muchShift.length - 1
-    setMuchShift(muchShift.slice(0, lastIndex))
-  }
-
   const [shiftId, setShiftId] = useState<number[]>([])
 
   const handleSetShiftId = (id: number, index: number) => {
@@ -180,45 +169,90 @@ const FormEmployee = () => {
     setShiftId(updatedShiftId)
   }
 
-  const [shiftStartTime, setShiftStartTime] = useState<string[]>([])
-  const [shiftEndTime, setShiftEndTime] = useState<string[]>([])
-  const handleStart = (startTime: string, index: number) => {
-    const updateStart = [...shiftStartTime]
-    updateStart[index] = startTime
-
-    setShiftStartTime(updateStart)
+  const [shiftTime, setShiftTime] = useState<any>([])
+  const handleShiftTIme = (nomor: number, val: any) => {
+    // setShiftTime({
+    //   startTime: val.shift_start_time,
+    //   endTime: val.shift_end_time,
+    // })
+    console.log("val", val)
+    // const updatedShiftTime = [...shiftTime]
+    // updatedShiftTime[index] = {
+    //   startTime: val.shift_start_time,
+    //   endTime: val.shift_end_time,
+    // }
+    // // console.log(index)
+    // setShiftTime(updatedShiftTime)
+    // // console.log("updatedShiftTime", updatedShiftTime)
   }
-  const handleEnd = (endTime: string, index: number) => {
-    const updateStart = [...shiftEndTime]
-    updateStart[index] = endTime
 
-    setShiftEndTime(updateStart)
+  const handlePlusShift = () => {
+    setShiftTime((prev: any) => {
+      return [...prev, { id: shiftTime.length + 1 }]
+    })
+  }
+
+  React.useEffect(() => {
+    setShiftTime([
+      {
+        id: 1,
+      },
+    ])
+  }, [])
+
+  const handleMinShift = () => {
+    const lastIndex = shiftTime.length - 1
+    setShiftTime(shiftTime.slice(0, lastIndex))
+    const updatedShiftId = [...shiftId]
+    updatedShiftId.pop()
+    setShiftId(updatedShiftId)
+  }
+
+  console.log(shiftTime)
+
+  const arrShift = []
+
+  for (let i = 0; i < shiftTime.length; i++) {
+    console.log(shiftTime[i])
+    const element = shiftTime[i]
+    arrShift.push(
+      <Shift
+        key={i}
+        id={shiftTime[i].id}
+        handle={handleSetShiftId}
+        shiftTime={shiftTime}
+        setShiftTime={setShiftTime}
+        handleShiftTIme={handleShiftTIme}
+        nomor={i}
+      />
+    )
   }
 
   const handleRegistration = (data: any) => {
-    console.log(shiftId)
     const employeValue = {
-      // user_id: usersProfiles.user_id,
-      // nationalId: usersProfiles.uspro_national_id,
-      // birth: birthDate,
-      // hireDate: hireDate,
-      // status: maritalValue.value,
-      // gender: gender.value,
-      // salariedFlag: salariedFlag.value,
-      // currentFlag: salariedFlag.value,
-      // vacationHours: data.vacationHours,
-      // sickLeaveHours: data.sickLeaveHours,
-      // jobRole: jobRole.value,
-      // department: department.value,
-      // startDate: data.startDate,
-      // endDate: data.endDate,
+      user_id: usersProfiles.user_id,
+      nationalId: usersProfiles.uspro_national_id,
+      birth: birthDate,
+      hireDate: hireDate,
+      status: maritalValue.value,
+      gender: gender.value,
+      salariedFlag: salariedFlag.value,
+      currentFlag: salariedFlag.value,
+      vacationHours: data.vacationHours,
+      sickLeaveHours: data.sickLeaveHours,
+      jobRole: jobRole.value,
+      department: department.value,
+      startDate: data.startDate,
+      endDate: data.endDate,
 
-      // salary: data.salaryRate,
-      // frequency: frequency.value,
+      salary: data.salaryRate,
+      frequency: frequency.value,
+      image: fileName,
 
-      shift_id: [19, 12],
+      shift_id: JSON.stringify(shiftId),
     }
     console.log("employeValue => ", employeValue)
+    dispatch(createEmployee(employeValue))
   }
   return (
     <>
@@ -447,17 +481,17 @@ const FormEmployee = () => {
               -
             </div>
           </div>
-          {(muchShift || []).map((sh: any, i: number) => (
+
+          {arrShift}
+          {/* {(muchShift || []).map((sh: any, i: number) => (
             <Shift
               key={i}
               handle={handleSetShiftId}
-              handleStart={handleStart}
-              handleEnd={handleEnd}
-              shiftEndTime={shiftEndTime}
-              shiftStartTime={shiftStartTime}
+              shiftTime={shiftTime}
+              handleShiftTIme={handleShiftTIme}
               index={i}
             />
-          ))}
+          ))} */}
         </div>
         <div className="bg-gray-50  py-5 sm:flex sm:flex-row-reverse sm:px-6">
           <button

@@ -25,9 +25,8 @@ interface Idata {
   image: any
 }
 
-const createEmployee = (
-  data: Idata
-): Promise<AxiosResponse<Iresponse, any>> => {
+const createEmployee = (data: any): Promise<AxiosResponse<Iresponse, any>> => {
+  console.log("data", data)
   return axios.post(`/hr/employee`, data, {
     headers: {
       "Content-Type": "multipart/form-data",
