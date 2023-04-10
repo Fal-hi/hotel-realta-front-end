@@ -14,6 +14,7 @@ import vendorReducers from "../PURCHASING/reducer/vendorReducer"
 import { addressReducers } from "../HOTELS/reducer/addressReducers"
 import stockReducers from "../PURCHASING/reducer/stockReducer"
 import listOrderReducers from "../PURCHASING/reducer/listOrderReducer"
+import galleryReducers from "../PURCHASING/reducer/galleryReducer"
 
 // const logger = createLogger()
 const saga = createSagaMiddleware()
@@ -29,6 +30,7 @@ const reducer = combineReducers({
   vendorReducers,
   stockReducers,
   listOrderReducers,
+  galleryReducers,
 })
 
 const store = configureStore({

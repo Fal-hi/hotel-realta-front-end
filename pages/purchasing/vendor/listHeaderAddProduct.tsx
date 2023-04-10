@@ -1,8 +1,9 @@
-import { Menu, Transition } from "@headlessui/react"
-import { BsThreeDotsVertical } from "react-icons/bs"
-import { Pencil, Plus, Trash } from "@/components/icons"
 import React, { Fragment } from "react"
 import { useRouter } from "next/router"
+import formatRupiah from "@/functions/formatRupiah"
+import { Menu, Transition } from "@headlessui/react"
+import { BsThreeDotsVertical } from "react-icons/bs"
+import { Pencil, Trash } from "@/components/icons"
 
 // This is the table constant/settings which needed to render table elements
 export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
@@ -10,48 +11,34 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
   const router = useRouter()
   return [
     {
-      title: "Vendor Name",
+      title: "Stock",
       render: (data: any) => {
-        return <span>{data.vendor_name}</span>
+        // console.log(data)
+        return <span>{data.stock?.stock_name}</span>
       },
     },
     {
-      title: "Status",
+      title: "QTY Stocked",
       render: (data: any) => {
-        return <span>{data.vendor_active === "1" ? "Active" : "InActive"}</span>
+        return <span>{data.vepro_qty_stocked}</span>
       },
     },
 
     {
-      title: "Priority",
+      title: "QTY Remaining",
       render: (data: any) => {
         return (
-          <span>
-            {data.vendor_priority == "1" ? "Priority" : "No Priority"}
-          </span>
+          <span>{data.vepro_qty_remaining}</span>
         )
       },
     },
 
     {
-      title: "Register At",
+      title: "Price",
       render: (data: any) => {
         return (
-          <span>
-            {new Date(data.vendor_register_date).toLocaleDateString("en-GB", {
-              day: "numeric",
-              month: "short",
-              year: "numeric",
-            })}
-          </span>
+          <span>{formatRupiah(data.vepro_price)}</span>
         )
-      },
-    },
-
-    {
-      title: "Web URL",
-      render: (data: any) => {
-        return <span>{data.vendor_weburl}</span>
       },
     },
 
@@ -85,7 +72,7 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
                               ? "bg-violet-500 text-white"
                               : "text-gray-900"
                           } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                          onClick={() => setIsOpen(data.vendor_entity_id)}
+                          onClick={() => setIsOpen(data.vepro_id)}
                         >
                           {active ? (
                             <div className="pr-3">
@@ -111,41 +98,7 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
                               ? "bg-violet-500 text-white"
                               : "text-gray-900"
                           } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                          onClick={() => {
-                            router.push({
-                              pathname: "/purchasing/vendor/addProduct",
-                              query: {
-                                vendor_entity_id: data.vendor_entity_id,
-                                vendor_name: data.vendor_name,
-                              },
-                            })
-                          }}
-                        >
-                          {active ? (
-                            <div className="pr-3">
-                              <Plus width="24" />
-                            </div>
-                          ) : (
-                            <div className="pr-3">
-                              <Plus stroke="#667085" width="18" />
-                            </div>
-                          )}
-                          Add Item Product
-                        </button>
-                      )}
-                    </Menu.Item>
-                  </div>
-
-                  <div className="px-1 py-1">
-                    <Menu.Item>
-                      {({ active }) => (
-                        <button
-                          className={`${
-                            active
-                              ? "bg-violet-500 text-white"
-                              : "text-gray-900"
-                          } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                          onClick={() => setIsDelete(data.vendor_entity_id)}
+                          onClick={() => setIsDelete(data.vepro_id)}
                         >
                           {active ? (
                             <div className="pr-3">
@@ -161,6 +114,7 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
                       )}
                     </Menu.Item>
                   </div>
+
                 </Menu.Items>
               </Transition>
             </Menu>

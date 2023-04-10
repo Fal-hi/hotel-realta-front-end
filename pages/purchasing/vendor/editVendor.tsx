@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect, useState } from "react"
-import { Dialog, Transition } from "@headlessui/react"
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
 import { doUpdate } from "@/redux/PURCHASING/action/actionVendor"
@@ -23,6 +22,7 @@ export default function EditVendor(props: any) {
   const dispatch = useDispatch()
 
   const [data, setData] = useState<any>({})
+  console.log(data)
 
   const handleEdit = async (data: any) => {
     const hari = new Date(selectedDate ? selectedDate : "").getDate()
@@ -37,6 +37,7 @@ export default function EditVendor(props: any) {
       vendor_register_date: fullDate,
       vendor_weburl: data.vendor_weburl,
     }
+    console.log(props.isEdit.id)
     dispatch(doUpdate(props.isEdit.id, dataAll))
     props.closeModal()
   }
@@ -77,156 +78,107 @@ export default function EditVendor(props: any) {
 
   return (
     <div>
-      <Transition appear show={props.isEdit.status} as={Fragment}>
-        <Dialog as="div" className="relative z-10" static onClose={() => null}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
+      <div className="px-5">
+        <form onSubmit={handleSubmit(handleEdit, handleError)}>
+          <div
+            className="grid grid-cols-1 gap-4 max-w-xl m-auto"
+            style={{ marginTop: "1rem" }}
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
-                  >
-                    Edit Vendor
-                  </Dialog.Title>
-                  <div className="mt-2">
-                    <form onSubmit={handleSubmit(handleEdit, handleError)}>
-                      <div className="grid grid-cols-1 gap-4 max-w-xl m-auto">
-                        <label>Name</label>
-                        <input
-                          className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
+            <label>Name</label>
+            <input
+              className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
                             text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
-                          type="text"
-                          defaultValue={data?.vendor_name}
-                          {...register(
-                            "vendor_name",
-                            registerOptions.vendor_name
-                          )}
-                        />
-                        <small className="text-danger">
-                          {errors?.vendor_name && errors.vendor_name.message}
-                        </small>
-                      </div>
+              type="text"
+              defaultValue={data?.vendor_name}
+              {...register("vendor_name", registerOptions.vendor_name)}
+            />
+            <small className="text-danger">
+              {errors?.vendor_name && errors.vendor_name.message}
+            </small>
+          </div>
 
-                      <div
-                        className="grid grid-cols-1 gap-4 max-w-xl m-auto relative"
-                        style={{ marginBottom: "1rem" }}
-                      >
-                        <label>Status</label>
-                        <select
-                          id="vendor_active"
-                          className="bg-violet-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+          <div
+            className="grid grid-cols-1 gap-4 max-w-xl m-auto relative"
+            style={{ marginBottom: "1rem" }}
+          >
+            <label>Status</label>
+            <select
+              id="vendor_active"
+              className="bg-violet-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
             dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          {...register(
-                            "vendor_active",
-                            registerOptions.vendor_active
-                          )}
-                        >
-                          <option selected>Choose a status</option>
-                          <option value="1">Active</option>
-                          <option value="0">Inactive</option>
-                        </select>
-                      </div>
+              {...register("vendor_active", registerOptions.vendor_active)}
+            >
+              <option selected>Choose a status</option>
+              <option value="1">Active</option>
+              <option value="0">Inactive</option>
+            </select>
+          </div>
 
-                      <div
-                        className="grid grid-cols-1 gap-4 max-w-xl m-auto relative"
-                        style={{ marginBottom: "1rem" }}
-                      >
-                        <label>Priority</label>
-                        <select
-                          id="vendor_priority"
-                          className="bg-violet-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+          <div
+            className="grid grid-cols-1 gap-4 max-w-xl m-auto relative"
+            style={{ marginBottom: "1rem" }}
+          >
+            <label>Priority</label>
+            <select
+              id="vendor_priority"
+              className="bg-violet-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
             dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          {...register(
-                            "vendor_priority",
-                            registerOptions.vendor_priority
-                          )}
-                        >
-                          <option selected>Choose a status</option>
-                          <option value="1">Priority</option>
-                          <option value="0">No Priority</option>
-                        </select>
-                      </div>
+              {...register("vendor_priority", registerOptions.vendor_priority)}
+            >
+              <option selected>Choose a status</option>
+              <option value="1">Priority</option>
+              <option value="0">No Priority</option>
+            </select>
+          </div>
 
-                      <div className="grid grid-cols-1 gap-4 max-w-xl m-auto relative">
-                        <label>Register Date</label>
-                        <div className="grid grid-cols-1 gap-4 max-w-xl relative">
-                          <DatePicker
-                            dateFormat="yyyy/MM/dd"
-                            className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
+          <div className="grid grid-cols-1 gap-4 max-w-xl m-auto relative">
+            <label>Register Date</label>
+            <div className="grid grid-cols-1 gap-4 max-w-xl relative">
+              <DatePicker
+                dateFormat="yyyy/MM/dd"
+                className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
                             text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
-                            selected={selectedDate}
-                            onChange={handleDateChange}
-                          />
-                          {errors.vendor_register_date && (
-                            <span className="text-red-500">
-                              {errors.vendor_register_date.message}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 gap-4 max-w-xl m-auto">
-                        <label>Web URL</label>
-                        <input
-                          className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
-                            text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
-                          type="text"
-                          defaultValue={data?.vendor_weburl}
-                          {...register(
-                            "vendor_weburl",
-                            registerOptions.vendor_weburl
-                          )}
-                        />
-                        <small className="text-danger">
-                          {errors?.vendor_weburl &&
-                            errors.vendor_weburl.message}
-                        </small>
-                      </div>
-
-                      <div className="flex-row space-x-4 mt-4 text-right">
-                        <button
-                          className="inline-flex justify-center rounded-md border-transparent bg-blue-100 px-4 py-2 text-sm font-medium
-                            text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
-                        >
-                          Submit
-                        </button>
-                        <button
-                          className="inline-flex justify-center rounded-md border-transparent bg-red-100 px-4 py-2 text-sm font-medium
-                            text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
-                          onClick={props.closeModal}
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
+                selected={selectedDate}
+                onChange={handleDateChange}
+              />
+              {errors.vendor_register_date && (
+                <span className="text-red-500">
+                  {errors.vendor_register_date.message}
+                </span>
+              )}
             </div>
           </div>
-        </Dialog>
-      </Transition>
+
+          <div
+            className="grid grid-cols-1 gap-4 max-w-xl m-auto"
+            style={{ marginTop: "1rem" }}
+          >
+            <label>Web URL</label>
+            <input
+              className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
+                            text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+              type="text"
+              defaultValue={data?.vendor_weburl}
+              {...register("vendor_weburl", registerOptions.vendor_weburl)}
+            />
+            <small className="text-danger">
+              {errors?.vendor_weburl && errors.vendor_weburl.message}
+            </small>
+          </div>
+
+          <div className="flex justify-end items-center mt-4 p-5">
+            <button className="flex items-center bg-[#7743DB] hover:bg-[#5f35ac] text-white py-2 px-4 rounded mr-4">
+              Submit
+            </button>
+            <button
+              className="flex items-center bg-[#7743DB] hover:bg-[#5f35ac] text-white py-2 px-4 rounded mr-4"
+              onClick={props.closeModal}
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   )
 }
