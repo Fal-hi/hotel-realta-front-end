@@ -7,9 +7,9 @@ import BaseLayout from "./baselayout/baselayout"
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
-      <BaseLayout>
-        <Component {...pageProps} />
-      </BaseLayout>
+      {/* <BaseLayout> */}
+      <Component {...pageProps} />
+      {/* </BaseLayout> */}
     </Provider>
   )
 }

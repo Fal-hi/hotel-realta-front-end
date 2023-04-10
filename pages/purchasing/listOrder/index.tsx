@@ -42,8 +42,8 @@ export default function ListOrder() {
 
   useEffect(() => {
     dispatch(doReqGetListOrder(search, page, entry))
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[refresh, search, page, entry])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refresh, search, page, entry])
 
   const handleSearchChange = (e: any): void => {
     setSearch(e.target.value)
@@ -51,18 +51,30 @@ export default function ListOrder() {
 
   return (
     <div>
-      <Breadcumb child="List Order" parent="Dashboard" detail="List Order"></Breadcumb>
+      <Breadcumb
+        child="List Order"
+        parent="Dashboard"
+        detail="List Order"
+      ></Breadcumb>
       <div className="flex items-center">
-      <div className="flex flex-row w-full justify-between py-4 mb-4">
+        <div className="flex flex-row w-full justify-between py-4 mb-4">
           <div>
             <SearchInput onChange={handleSearchChange} />
           </div>
         </div>
       </div>
 
-      <Table cols={tableConstants(editOpen,deleteOpen)} data={listOrder?.data?.data}>
-      <Pagination pagination={{totalPage: listOrder?.data?.totalPage, 
-          page: listOrder?.data?.currentPage}} setPage={setPage}/>
+      <Table
+        cols={tableConstants(editOpen, deleteOpen)}
+        data={listOrder?.data?.data}
+      >
+        <Pagination
+          pagination={{
+            totalPage: listOrder?.data?.totalPage,
+            page: listOrder?.data?.currentPage,
+          }}
+          setPage={setPage}
+        />
       </Table>
 
       {/* 

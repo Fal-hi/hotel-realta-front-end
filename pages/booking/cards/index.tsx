@@ -1,4 +1,4 @@
-import { Fragment } from "react"
+import { Fragment, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import BgButton from "@/components/buttons/BgButton"
@@ -7,7 +7,7 @@ import { ChevronRight, Plus } from "@/components/icons"
 import formatRupiah from "@/functions/formatRupiah"
 import { cardHotel } from "./data"
 
-const CardBooking = (props: any) => {
+const CardBooking = ({ onViewDetails }: any) => {
   return (
     <div className="w-auto ml-80">
       {cardHotel.map((item: any) => (
@@ -87,16 +87,26 @@ const CardBooking = (props: any) => {
                     <span className="text-xs font-normal">{hf.desc}</span>
                   </div>
                 ))}
-                <div className="flex gap-2 items-center font-light text-textPrimary">
-                  <Plus width="15" />
-                </div>
+                {/* Mengarah ke file booking details */}
+                <Link href="/">
+                  <div className="flex gap-2 items-center text-xs font-semibold text-textPurple">
+                    <Plus width="10" height="10" stroke="#5B33A8" />
+                    <span>All Facilities</span>
+                  </div>
+                </Link>
               </div>
             </section>
             <section className="mr-1">
-              <div className="flex gap-2 justify-end items-center mb-8 text-xs text-textPurple">
-                <Link href="/">Lihat Detail</Link>
-                <ChevronRight width="7" fill="#7743DB" />
-              </div>
+              {/* Pergi ke detail booking */}
+              <Link href="booking/details" target="_blank">
+                <div
+                  className="flex gap-2 justify-end items-center mb-8 text-xs text-textPurple cursor-pointer"
+                  onClick={onViewDetails}
+                >
+                  <span>Lihat Detail</span>
+                  <ChevronRight width="7" fill="#7743DB" />
+                </div>
+              </Link>
               <div>
                 <span className="text-rose-500 text-xs line-through mr-2">
                   {formatRupiah(item.hotelFaciRatePrice)}
@@ -108,9 +118,12 @@ const CardBooking = (props: any) => {
                   {formatRupiah(item.hotelFaciLowPrice)}
                 </h1>
               </div>
-              <div className="mt-7 text-right">
-                <BgButton px="4" py="2" title="Booking Now" />
-              </div>
+              {/* Pergi ke modify booking */}
+              <Link href="booking/modify" target="_blank">
+                <div className="mt-7 text-right cursor-pointer">
+                  <BgButton padding="0.5rem 1rem" title="Booking Now" />
+                </div>
+              </Link>
             </section>
           </article>
         </section>

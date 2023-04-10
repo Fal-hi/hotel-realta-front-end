@@ -3,7 +3,9 @@ import { combineReducers, Middleware } from "redux"
 import createSagaMiddleware from "@redux-saga/core"
 import { departmentReducers } from "../HR/reducer/departmentReducer"
 import { hotelsReducers } from "../HOTELS/reducer/hotelsReducers"
-import { addressReducers } from "../HOTELS/reducer/addressReducers"
+import { employeeReducers } from "../HR/reducer/employeeReducer"
+import { workorderReducers } from "../HR/reducer/workorderReducer"
+
 import { createLogger } from "redux-logger"
 import rootSaga from "../sagaPublic/index"
 import { accountReducers } from "../PAYMENT/reducer/accountsReducer"
@@ -14,13 +16,17 @@ import { adminRestoReducers } from "../RESTO/reducer/adminReducer"
 import{ restomenureducers} from "../RESTO/reducer/restomenuReducer"
 import { orderrestoreducers } from "../RESTO/reducer/orderReducer"
 
-// const logger = createLogger()
+const logger = createLogger()
 const saga = createSagaMiddleware()
 
 const reducer = combineReducers({
+  workorderReducers,
   departmentReducers,
+  employeeReducers,
   hotelsReducers,
   addressReducers,
+  facilitiesReducers,
+
   bankReducers,
   fintechReducers,
   accountReducers,
@@ -37,7 +43,7 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     })
-      // .concat(logger)
+      .concat(logger)
       .concat(saga),
 })
 
