@@ -20,6 +20,7 @@ import { transactionReducers } from "../PAYMENT/reducer/transactionReducer"
 import { adminRestoReducers } from "../RESTO/reducer/adminReducer"
 import { restomenureducers } from "../RESTO/reducer/restomenuReducer"
 import { orderrestoreducers } from "../RESTO/reducer/orderReducer"
+import galleryReducers from "../PURCHASING/reducer/galleryReducer"
 
 const logger = createLogger()
 const saga = createSagaMiddleware()
@@ -42,6 +43,7 @@ const reducer = combineReducers({
   adminRestoReducers,
   restomenureducers,
   orderrestoreducers,
+  galleryReducers,
 })
 
 const store = configureStore({

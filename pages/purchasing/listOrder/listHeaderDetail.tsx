@@ -1,60 +1,60 @@
 import { Menu, Transition } from "@headlessui/react"
 import { BsThreeDotsVertical } from "react-icons/bs"
-import { Folder, Magnifier, Pencil, Plus, Trash } from "@/components/icons"
+import { Pencil, Plus, Trash } from "@/components/icons"
 import React, { Fragment } from "react"
 import { useRouter } from "next/router"
+import formatRupiah from "@/functions/formatRupiah"
 
 // This is the table constant/settings which needed to render table elements
-export const tableConstants = (setIsOpen?: any, setIsDelete?: any, setIsPhotos?: any) => {
+export const tableConstants = (
+  setIsGenerate?: any,
+  setIsOpen?: any,
+  setIsDelete?: any
+) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter()
   return [
     {
       title: "Stock Name",
       render: (data: any) => {
-        // console.log(data.stock_id)
-        return <span>{data.stock_name}</span>
+        console.log(data)
+        return <span>{data.stock.stock_name}</span>
       },
     },
     {
-      title: "Re-Order Point",
+      title: "Qty",
       render: (data: any) => {
-        return <span>{data.stock_reorder_point}</span>
-      },
-    },
-
-    {
-      title: "QTY",
-      render: (data: any) => {
-        return <span>{data.stock_quantity}</span>
+        return <span>{data.pode_order_qty}</span>
       },
     },
 
     {
-      title: "Used",
+      title: "Price",
       render: (data: any) => {
-        return <span>{data.stock_used}</span>
+        return <span>{formatRupiah(data.pode_price)}</span>
       },
     },
 
     {
-      title: "Scrap",
+      title: "Receive Qty",
       render: (data: any) => {
-        return <span>{data.stock_scrap}</span>
+        const receivedQty = parseInt(data.pode_received_qty)
+        return <span>{receivedQty}</span>
       },
     },
 
     {
-      title: "Size",
+      title: "Reject Qty",
       render: (data: any) => {
-        return <span>{data.stock_size}</span>
+        const rejectQty = parseInt(data.pode_rejected_qty)
+        return <span>{rejectQty}</span>
       },
     },
 
     {
-      title: "Color",
+      title: "Total",
       render: (data: any) => {
-        return <span>{data.stock_color}</span>
+        return <span>{formatRupiah(data.pode_line_total)}</span>
       },
     },
 
@@ -66,7 +66,7 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any, setIsPhotos?:
             <Menu as="div" className="inline-block text-left">
               <div>
                 <Menu.Button>
-                  <BsThreeDotsVertical/>
+                  <BsThreeDotsVertical />
                 </Menu.Button>
               </div>
               <Transition
@@ -88,12 +88,50 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any, setIsPhotos?:
                               ? "bg-violet-500 text-white"
                               : "text-gray-900"
                           } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                          onClick={() => setIsOpen(data.stock_id)}
+                          onClick={() => {
+                            setIsGenerate(data.stock.stock_id)
+                            router.push({
+                              query: {
+                                stock_id: data.stock.stock_id,
+                                pohe_id: data.pode_pohe_id,
+                              },
+                            })
+                          }}
                         >
                           {active ? (
-                            <div className="pr-3"><Pencil stroke="#FFF" width="24"/></div>
+                            <div className="pr-3">
+                              <Plus width="24" />
+                            </div>
                           ) : (
-                            <div className="pr-3"><Pencil/></div>
+                            <div className="pr-3">
+                              <Plus stroke="#667085" width="18" />
+                            </div>
+                          )}
+                          Generate Barcode
+                        </button>
+                      )}
+                    </Menu.Item>
+                  </div>
+
+                  <div className="px-1 py-1 ">
+                    <Menu.Item>
+                      {({ active }) => (
+                        <button
+                          className={`${
+                            active
+                              ? "bg-violet-500 text-white"
+                              : "text-gray-900"
+                          } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                          onClick={() => setIsOpen(data.pode_id)}
+                        >
+                          {active ? (
+                            <div className="pr-3">
+                              <Pencil stroke="#FFF" width="24" />
+                            </div>
+                          ) : (
+                            <div className="pr-3">
+                              <Pencil />
+                            </div>
                           )}
                           Edit
                         </button>
@@ -101,7 +139,7 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any, setIsPhotos?:
                     </Menu.Item>
                   </div>
 
-                  <div className="px-1 py-1">
+                  <div className="px-1 py-1 ">
                     <Menu.Item>
                       {({ active }) => (
                         <button
@@ -110,78 +148,22 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any, setIsPhotos?:
                               ? "bg-violet-500 text-white"
                               : "text-gray-900"
                           } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                          onClick={() => {
-                            setIsPhotos(data.stock_id)
-                            router.push({
-                              query: {
-                                stock_id: data.stock_id,
-                              },
-                            })
-                          }}
+                          onClick={() => setIsDelete(data.pode_id)}
                         >
                           {active ? (
-                            <div className="pr-3"><Folder width="24"/></div>
+                            <div className="pr-3">
+                              <Trash stroke="#FFF" width="24" />
+                            </div>
                           ) : (
-                            <div className="pr-3"><Folder stroke="#667085" width="18"/></div>
-                          )}
-                          Upload Photo
-                        </button>
-                      )}
-                    </Menu.Item>
-                  </div>
-
-                  <div className="px-1 py-1">
-                    <Menu.Item>
-                      {({ active }) => (
-                        <button
-                          className={`${
-                            active
-                              ? "bg-violet-500 text-white"
-                              : "text-gray-900"
-                          } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                          onClick={() => setIsDelete(data.stock_id)}
-                        >
-                          {active ? ( 
-                            <div className="pr-3"><Trash stroke="#FFF"/></div>
-                          ) : (
-                            <div className="pr-3"><Trash/></div>
+                            <div className="pr-3">
+                              <Trash />
+                            </div>
                           )}
                           Delete
                         </button>
                       )}
                     </Menu.Item>
                   </div>
-
-                  <div className="px-1 py-1">
-                    <Menu.Item>
-                      {({ active }) => (
-                        <button
-                          className={`${
-                            active
-                              ? "bg-violet-500 text-white"
-                              : "text-gray-900"
-                          } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                          onClick={() => {
-                            router.push({
-                              pathname: "/purchasing/stock/stockDetail",
-                              query: {
-                                stock_id: data.stock_id,
-                                stock_name: data.stock_name
-                              },
-                            });
-                          }}
-                        >
-                          {active ? (
-                            <div className="pr-3"><Magnifier width="24"/></div>
-                          ) : (
-                            <div className="pr-3"><Magnifier stroke="#667085" width="18"/></div>
-                          )}
-                          Detail Info Stock
-                        </button>
-                      )}
-                    </Menu.Item>
-                  </div>
-
                 </Menu.Items>
               </Transition>
             </Menu>

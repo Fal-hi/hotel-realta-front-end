@@ -57,8 +57,8 @@ const listMenu = [
         title: "Stock",
       },
       {
-        to: "",
-        path: "",
+        to: "/purchasing/gallery",
+        path: "/purchasing/gallery",
         title: "Gallery",
       },
       {

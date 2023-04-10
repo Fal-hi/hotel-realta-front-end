@@ -13,6 +13,7 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
     {
       title: "PO Number",
       render: (data: any) => {
+        console.log(data)
         return <span>{data.pohe_number}</span>
       },
     },
@@ -50,6 +51,7 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
     {
       title: "Total Amount",
       render: (data: any) => {
+        // console.log(data)
         return <span>{formatRupiah(data.pohe_total_amount)}</span>
       },
     },
@@ -78,8 +80,6 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
             status = "Unknow";
             break;
         }
-        // console.log(typeof data.pohe_status)
-        // console.log(`data.pohe_status: ${data.pohe_status}, status: ${status}`);
         return <span>{status}</span>
       },
     },
@@ -91,7 +91,7 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
       render: (data: any) => {
         return (
           <div className="w-full text-left">
-            <Menu as="div" className="relative inline-block text-left">
+            <Menu as="div" className="inline-block text-left">
               <div>
                 <Menu.Button>
                   <BsThreeDotsVertical/>
@@ -106,7 +106,7 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
               >
-                <Menu.Items className="absolute right-0 mt-2 w-56 z-10 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <Menu.Items className="absolute right-40 mt-2 w-56 z-10 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <div className="px-1 py-1 ">
                     <Menu.Item>
                       {({ active }) => (
@@ -116,7 +116,21 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
                               ? "bg-violet-500 text-white"
                               : "text-gray-900"
                           } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                          onClick={() => setIsOpen(data.vendor_entity_id)}
+                          onClick={() => {
+                            router.push({
+                              pathname: "/purchasing/listOrder/detailListOrder",
+                              query: {
+                                pohe_id: data.pohe_id,
+                                pohe_number: data.pohe_number,
+                                pohe_order_date: data.pohe_order_date,
+                                vendor_name: data.vendor.vendor_name,
+                                pohe_status: data.pohe_status,
+                                pohe_subtotal: data.pohe_subtotal,
+                                pohe_total_amount: data.pohe_total_amount,
+                                pohe_tax: data.pohe_tax
+                              },
+                            });
+                          }}
                         >
                           {active ? (
                             <div className="pr-3"><Magnifier width="24"/></div>
@@ -138,9 +152,7 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
                               ? "bg-violet-500 text-white"
                               : "text-gray-900"
                           } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                          onClick={() => {
-                            router.push("/purchasing/vendor/product")
-                          }}
+                          onClick={() => setIsOpen(data.pohe_id)}
                         >
                           {active ? (
                             <div className="pr-3"><Chevron width="24"/></div>
@@ -162,7 +174,7 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
                               ? "bg-violet-500 text-white"
                               : "text-gray-900"
                           } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                          onClick={() => setIsDelete(data.vendor_entity_id)}
+                          onClick={() => setIsDelete(data.pohe_id)}
                         >
                           {active ? ( 
                             <div className="pr-3"><Trash stroke="#FFF"/></div>
