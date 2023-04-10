@@ -7,13 +7,16 @@ import { employeeReducers } from "../HR/reducer/employeeReducer"
 import { workorderReducers } from "../HR/reducer/workorderReducer"
 
 import { createLogger } from "redux-logger"
+import { addressReducers } from "../HOTELS/reducer/addressReducers"
+
+import { facilitiesReducers } from "../HOTELS/reducer/facilitesReducers"
 import rootSaga from "../sagaPublic/index"
 import { accountReducers } from "../PAYMENT/reducer/accountsReducer"
 import { bankReducers } from "../PAYMENT/reducer/bankReducer"
 import { fintechReducers } from "../PAYMENT/reducer/fintechReducer"
 import { transactionReducers } from "../PAYMENT/reducer/transactionReducer"
 import { adminRestoReducers } from "../RESTO/reducer/adminReducer"
-import{ restomenureducers} from "../RESTO/reducer/restomenuReducer"
+import { restomenureducers } from "../RESTO/reducer/restomenuReducer"
 import { orderrestoreducers } from "../RESTO/reducer/orderReducer"
 
 const logger = createLogger()
@@ -33,8 +36,7 @@ const reducer = combineReducers({
   transactionReducers,
   adminRestoReducers,
   restomenureducers,
-  orderrestoreducers
-
+  orderrestoreducers,
 })
 
 const store = configureStore({
