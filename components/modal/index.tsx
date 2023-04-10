@@ -1,14 +1,25 @@
-import React from "react";
-import Typography from "../Typography";
-import variants from "../Typography/textcss";
+import { FC } from "react"
+import Typography from "../Typography"
+import variants from "../Typography/textcss"
 
 type Props = {
-  header: string;
-  onClose: any;
-  children: any;
-};
-
-export const Modal = ({ header, onClose, children }: Props) => {
+  header: string
+  onClose: any
+  children: any
+  terserah?: string
+}
+type ModalProps = {
+  header: string
+  onClose: any
+  children: any
+  terserah?: string
+}
+export const Modal: FC<ModalProps> = ({
+  header,
+  onClose,
+  children,
+  terserah,
+}: Props) => {
   return (
     <div
       className="relative z-10 transition ease-in-out delay-150"
@@ -20,7 +31,9 @@ export const Modal = ({ header, onClose, children }: Props) => {
 
       <div className="fixed inset-0 z-10 overflow-y-auto">
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-          <div className="relative transform rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+          <div
+            className={`overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full ${terserah}`}
+          >
             <div className="flex justify-between border-b">
               <div className="bg-white  px-4 pt-5 pb-4 sm:p-6 sm:pb-4 font-bold ">
                 <Typography variant={variants.lgbold}>{header}</Typography>
@@ -38,8 +51,9 @@ export const Modal = ({ header, onClose, children }: Props) => {
         </div>
       </div>
     </div>
-  );
-};
-function dispatch(arg0: { type: string; payload: any }) {
-  throw new Error("Function not implemented.");
+  )
+}
+
+Modal.defaultProps = {
+  terserah: "sm:max-w-lg",
 }

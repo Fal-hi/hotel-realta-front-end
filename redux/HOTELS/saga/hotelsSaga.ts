@@ -6,8 +6,8 @@ import {
   doGetHotelsResponse,
   doDeleteHotelsResponse,
   doUpdateHotelsResponse,
-  doRequestGetHotelsByName,
   doRequestGetHotelsByNameResponse,
+  doGetHotelsByIdResponse,
 } from "../action/actionHotels"
 
 function* handleGetHotels(action: any): any {
@@ -18,6 +18,18 @@ function* handleGetHotels(action: any): any {
   } catch (error: any) {
     // console.log(error)
     yield put(doGetHotelsResponse(error.response.data))
+  }
+}
+
+function* handleGetHotelsById(action: any): any {
+  console.log(action)
+  try {
+    const result = yield call(ApiMethodHotels.getOne, action.payload)
+    // console.log("tes" + result)
+    yield put(doGetHotelsByIdResponse(result.data))
+  } catch (error: any) {
+    // console.log(error)
+    yield put(doGetHotelsByIdResponse(error.response.data))
   }
 }
 
@@ -65,6 +77,7 @@ function* handleDelHotels(action: any): any {
 
 export {
   handleGetHotels,
+  handleGetHotelsById,
   handleAddHotels,
   handleUpdateHotels,
   handleDelHotels,

@@ -1,5 +1,5 @@
 import { Menu, Transition } from "@headlessui/react"
-import { BsThreeDots, BsThreeDotsVertical } from "react-icons/bs"
+import { BsThreeDotsVertical } from "react-icons/bs"
 import { Pencil, Plus, Trash } from "@/components/icons"
 import React, { Fragment } from "react"
 import { useRouter } from "next/router"
@@ -9,12 +9,6 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter()
   return [
-    // {
-    //   title: "No",
-    //   render: (index: number) => {
-    //     return <span>{index + 1}</span>
-    //   },
-    // },
     {
       title: "Vendor Name",
       render: (data: any) => {
@@ -48,9 +42,7 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
               day: "numeric",
               month: "short",
               year: "numeric",
-            }
-            ) 
-            }
+            })}
           </span>
         )
       },
@@ -68,7 +60,7 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
       render: (data: any) => {
         return (
           <div className="w-full text-left">
-            <Menu as="div" className="relative inline-block text-left">
+            <Menu as="div" className="inline-block text-left">
               <div>
                 <Menu.Button>
                   <BsThreeDotsVertical />
@@ -83,7 +75,7 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
               >
-                <Menu.Items className="absolute right-0 mt-2 w-56 z-10 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <Menu.Items className="absolute right-40 mt-2 w-56 z-10 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <div className="px-1 py-1 ">
                     <Menu.Item>
                       {({ active }) => (
@@ -96,9 +88,13 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
                           onClick={() => setIsOpen(data.vendor_entity_id)}
                         >
                           {active ? (
-                            <div className="pr-3"><Pencil stroke="#FFF" width="24"/></div>
+                            <div className="pr-3">
+                              <Pencil stroke="#FFF" width="24" />
+                            </div>
                           ) : (
-                            <div className="pr-3"><Pencil/></div>
+                            <div className="pr-3">
+                              <Pencil />
+                            </div>
                           )}
                           Edit
                         </button>
@@ -116,13 +112,23 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
                               : "text-gray-900"
                           } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                           onClick={() => {
-                            router.push("/purchasing/vendor/product")
+                            router.push({
+                              pathname: "/purchasing/vendor/addProduct",
+                              query: {
+                                vendor_entity_id: data.vendor_entity_id,
+                                vendor_name: data.vendor_name,
+                              },
+                            })
                           }}
                         >
                           {active ? (
-                            <div className="pr-3"><Plus width="24"/></div>
+                            <div className="pr-3">
+                              <Plus width="24" />
+                            </div>
                           ) : (
-                            <div className="pr-3"><Plus stroke="#667085" width="18"/></div>
+                            <div className="pr-3">
+                              <Plus stroke="#667085" width="18" />
+                            </div>
                           )}
                           Add Item Product
                         </button>
@@ -141,10 +147,14 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
                           } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                           onClick={() => setIsDelete(data.vendor_entity_id)}
                         >
-                          {active ? ( 
-                            <div className="pr-3"><Trash stroke="#FFF"/></div>
+                          {active ? (
+                            <div className="pr-3">
+                              <Trash stroke="#FFF" />
+                            </div>
                           ) : (
-                            <div className="pr-3"><Trash/></div>
+                            <div className="pr-3">
+                              <Trash />
+                            </div>
                           )}
                           Delete
                         </button>

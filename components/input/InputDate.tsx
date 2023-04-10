@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { format } from 'date-fns'
+import { useState } from "react"
+import { format } from "date-fns"
 
 interface InputDateProps {
   name: string
@@ -26,20 +26,18 @@ const InputDate: React.FC<InputDateProps> = (props: any) => {
   }
 
   return (
-    <form className="flex items-center">
-      <div className={`input-date ${focused ? 'focused' : ''}`}>
-        <input
-          type="date"
-          id={props.name}
-          name={props.name}
-          value={props.value ? format(props.value, 'yyyy-MM-dd') : ''}
-          onClick={props.onClick}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onChange={handleChange}
-        />
-      </div>
-    </form>
+    <div className={`input-date ${focused ? "focused" : ""}`}>
+      <input
+        type="date"
+        id={props.name}
+        name={props.name}
+        value={props.value ? format(props.value, "yyyy-MM-dd") : ""}
+        onClick={props.onClick}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        onChange={handleChange}
+      />
+    </div>
   )
 }
 
