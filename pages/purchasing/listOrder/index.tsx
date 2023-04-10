@@ -66,7 +66,13 @@ export default function ListOrder() {
         parent="Dashboard"
         detail="List Order"
       ></Breadcumb>
+      <Breadcumb
+        child="List Order"
+        parent="Dashboard"
+        detail="List Order"
+      ></Breadcumb>
       <div className="flex items-center">
+        <div className="flex flex-row w-full justify-between py-4 mb-4">
         <div className="flex flex-row w-full justify-between py-4 mb-4">
           <div>
             <SearchInput onChange={handleSearchChange} />
@@ -95,6 +101,17 @@ export default function ListOrder() {
         </div>
       </div>
 
+      <Table
+        cols={tableConstants(editOpen, deleteOpen)}
+        data={listOrder?.data?.data}
+      >
+        <Pagination
+          pagination={{
+            totalPage: listOrder?.data?.totalPage,
+            page: listOrder?.data?.currentPage,
+          }}
+          setPage={setPage}
+        />
       <Table
         cols={tableConstants(editOpen, deleteOpen)}
         data={listOrder?.data?.data}
@@ -156,3 +173,4 @@ export default function ListOrder() {
     </div>
   )
 }
+
