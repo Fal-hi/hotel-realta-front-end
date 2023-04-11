@@ -6,7 +6,7 @@ const nextConfig = {
     BACKEND_URL: process.env.BACKEND_URL,
   },
   images: {
-    domains: ['localhost'],
+    domains: ['localhost',"images.unsplash.com"],
   },
 }
 
