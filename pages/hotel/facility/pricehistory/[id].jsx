@@ -1,62 +1,86 @@
 import React from "react"
+// import { doRequestGetHotelsById } from "@/redux/HOTELS/action/actionfaphlites"
 
 import { useDispatch, useSelector } from "react-redux"
-import {
-  doRequestGetHotels,
-  doRequestGetHotelsByName,
-} from "../../redux/HOTELS/action/actionHotels"
-import { Search, ThreeDots } from "@/components/icons/index"
+
+import { doRequestGetAddressById } from "@/redux/HOTELS/action/actionAddress"
+import { Search, BgPrimary, ThreeDots, Sort } from "@/components/icons/index"
 import RatingStars from "@/functions/ratingStarsFunction"
 import moment from "moment"
-import ModalEditAdd from "../../components/hotel/hotels/ModalAddHotels"
-import ModalEditEdit from "../../components/hotel/hotels/ModalEditHotels"
+
+import ModalAddFacility from "@/components/hotel/facilities/ModalAddFacility"
+import ModalEditFacility from "@/components/hotel/facilities/ModalEditFacility"
+import ModalAddPhoto from "@/components/hotel/facilities/ModalAddPhoto"
 import Link from "next/link"
+import {
+  doRequestGetFaciByOrder,
+  doRequestGetFaciHistory,
+} from "@/redux/HOTELS/action/actionFacilityPriceHistory"
 import { useRouter } from "next/router"
-import ModalSwitchStatus from "../../components/hotel/SwitchSatusHotels"
 
-export default function Hotel() {
-  const [showModalAdd, setShowModalAdd] = React.useState(false)
-  const [showModalEdit, setShowModalEdit] = React.useState(false)
-  const [showModalSwitchStatus, setShowModalSwitchStatus] =
-    React.useState(false)
-  const [hotelChoseEdit, setHotelChoseEdit] = React.useState("")
-  const [search, setSearch] = React.useState("")
-  const [options, setOptions] = React.useState(null)
-  const menuOptions = React.useRef(null)
-
-  let { hotels, status, totalPagination, refresh, page_size, total } =
-    useSelector(state => state.hotelsReducers)
+function Index() {
   const dispatch = useDispatch()
 
+  let { facyHistory, status, totalPagination, page_size, total, refresh } =
+    useSelector(state => state.facilitiesHistoryReducers)
+
+  const [showModalAdd, setShowModalAdd] = React.useState(false)
+  const [showModalEdit, setShowModalEdit] = React.useState(false)
+  const [showModalPhoto, setShowModalPhoto] = React.useState(false)
+  const [facilityChoseEdit, setfacilityChoseEdit] = React.useState("")
+  const [search, setSearch] = React.useState("")
+
   const [paginationLocation, setPagination] = React.useState(1)
+  console.log(facyHistory)
 
   const handleSearching = e => {
     const payload = {
+      hotel_id: hotel.hotel_id,
       paginationLocation: paginationLocation,
-      search: e.target.value,
+      faciname: e.target.value,
     }
 
     setSearch(e.target.value)
-    dispatch(doRequestGetHotelsByName(payload))
+
+    dispatch(doRequestGetFaciHistory(payload))
     if (search.length == 0) {
       setPagination(1)
     }
   }
 
+  const [facility, setfacility] = React.useState()
+
+  const [options, setOptions] = React.useState(null)
+  const menuOptions = React.useRef(null)
+
   const router = useRouter()
+  console.log(facility)
 
   React.useEffect(() => {
+    setfacilityChoseEdit("")
+
     if (search.length > 0) {
       const payload = {
+        faci_id: facility.faci_id,
         paginationLocation: paginationLocation,
-        search,
+        orderby: "ASC",
       }
 
-      dispatch(doRequestGetHotelsByName(payload))
+      dispatch(doRequestGetFaciByOrder(payload))
     } else {
-      dispatch(doRequestGetHotels(paginationLocation))
+      const routerId = window.location.pathname
+      const id = routerId.split("/").pop()
+      console.log(id)
+      setfacility(id)
+      const payload = {
+        faci_id: +id,
+        paginationLocation,
+        orderby: "ASC",
+      }
+
+      id && dispatch(doRequestGetFaciByOrder(payload))
     }
-  }, [paginationLocation, refresh, router.pathname])
+  }, [paginationLocation, refresh])
 
   React.useEffect(() => {
     function handleClickOutsideOptionsMenu(event) {
@@ -72,34 +96,42 @@ export default function Hotel() {
     }
   }, [menuOptions])
 
-  React.useEffect(() => {}, [refresh])
-  console.log(totalPagination)
   return (
     <div className="container px-4 pt-10 ">
-      {showModalAdd && <ModalEditAdd setShowModalAdd={setShowModalAdd} />}
+      {showModalAdd && <ModalAddFacility setShowModalAdd={setShowModalAdd} />}
       {showModalEdit && (
-        <ModalEditEdit
-          hotelChoseEdit={hotelChoseEdit}
+        <ModalEditFacility
+          facilityChoseEdit={facilityChoseEdit}
           setShowModalEdit={setShowModalEdit}
         />
       )}
-      {showModalSwitchStatus && (
-        <ModalSwitchStatus
-          hotelChoseEdit={hotelChoseEdit}
-          setShowModalSwitchStatus={setShowModalSwitchStatus}
+      {showModalPhoto && (
+        <ModalAddPhoto
+          facilityChoseEdit={facilityChoseEdit}
+          setShowModalPhoto={setShowModalPhoto}
         />
       )}
       <div className="header flex justify-between mb-5">
         <h2>Hotel</h2>
         <h5 className="text-textSecondary">
           Dashboard /{" "}
-          <span className="text-primary font-poppins-semibold"> Hotel</span>{" "}
+          <span className="text-primary font-poppins-semibold">
+            <Link href={"/hotel"}> Hotel /</Link>
+          </span>{" "}
+          <span className="text-primary font-poppins-semibold">
+            {" "}
+            <Link href={`/hotel/facility/${facility}`}>Facility /</Link>
+          </span>
+          <span className="text-primary font-poppins-semibold">
+            {" "}
+            Facility Price History
+          </span>
         </h5>
       </div>
 
-      <div className="contain-search-add flex justify-between items-center">
+      <div className="contain-search-add flex justify-between items-center mb-5">
         <div className="search max-w-fit">
-          <div className="pt-2 relative mx-auto text-textSecondary">
+          {/* <div className="pt-2 relative mx-auto text-textSecondary">
             <form className="relative flex">
               <button
                 type="button"
@@ -118,112 +150,87 @@ export default function Hotel() {
                 }}
               />
             </form>
-          </div>
+          </div> */}
         </div>
         <div className="add-container">
-          <button
-            className="bg-bgPrimary text-white px-6 py-2 rounded-lg"
-            onClick={() => {
-              setShowModalAdd(true)
-            }}
-          >
-            + Add
-          </button>
+          {/* <button className="flex gap-3 bg-bgPrimary text-white py-2 px-3 rounded-md">
+            <p>Filter</p>
+            <Sort fill="#fff" width="20" height="20" />
+          </button> */}
         </div>
       </div>
-      <div className="info-data mt-5 mb-3">
-        <p className="text-textGray">
-          Showing 1 to {page_size} of {total ? total : "0"} Result
-        </p>
-      </div>
 
-      <div className="tabel-container w-full">
+      <div className="tabel-container w-full ">
         <table class="table-auto  w-full border-collapse border-x border-slate-200">
           <thead className="bg-bgGray">
-            <tr className="border-t border-slate-200 text-textGray ">
-              <th className="font-normal px-3 py-5">No</th>
-              <th className="font-normal">Hotel Name</th>
-              <th className="font-normal">Rating Star</th>
-              <th className="font-normal">Modified Date</th>
-              <th className="font-normal">Aksi</th>
+            <tr className="border-t border-slate-200 text-textGray text-sm text-start">
+              <th className="font-normal px-3 py-5 text-center">No</th>
+
+              <th className="font-normal text-start">Start - End Date</th>
+
+              <th className="font-normal text-start">Range Price</th>
+              <th className="font-normal text-start">Discount</th>
+              <th className="font-normal text-start">Rate Price</th>
+              <th className="font-normal text-start">Tax</th>
+              <th className="font-normal text-start">Created</th>
             </tr>
           </thead>
           <tbody>
-            {status !== 400 &&
-              hotels?.length > 0 &&
-              hotels.map(hotel => (
+            {status != 400 &&
+              facyHistory?.length > 0 &&
+              facyHistory.map(faph => (
                 <tr
-                  className={`text-center text-textSecondary font-regular border-t border-slate-200 relative ${
-                    hotel.row_number % 2 == 0 ? "bg-bgPrimary/5" : "bg-inherit"
-                  }`}
-                  key={hotel.hotel_id}
+                  className={`text-justify text-textSecondary text-sm font-regular border-t border-slate-200 relative ${
+                    faph.row_number % 2 == 0 ? "bg-bgPrimary/5" : "bg-inherit"
+                  } `}
+                  key={faph.faph_id}
                 >
-                  <td className="px-3 py-4">{hotel.row_number}</td>
-                  <td>
-                    <Link href={`/hotel/facility/${hotel.hotel_id}`}>
-                      {hotel.hotel_name}
-                    </Link>
+                  <td className=" px-3 py-5 text-center">{faph.row_number}</td>
+
+                  <td className="text-justify break-words leading-6">
+                    <p>{moment(faph.faph_startdate).format("LL")}</p>
+                    <p>{moment(faph.faph_enddate).format("LL")}</p>
                   </td>
 
-                  <td className="flex justify-center">
-                    {<RatingStars count={hotel.hotel_rating_star} />}
-                  </td>
-                  <td>{moment(hotel.hotel_modified_date).format("ll")}</td>
+                  <td className="text-justify break-words tracking-wider leading-6">
+                    <p>{faph.faph_low_price}</p>
 
-                  {/* <td className="flex p-3 justify-center gap-2 items-center content-center w-full h-full">
-                    <td className="flex pt-3 justify-start gap-2 items-center content-center w-full h-full">
-                      <div onClick={() => setOptions(faci.faci_id)}>
-                        <ThreeDots />
-                      </div>
-                    </td>
-                    <div
-                      className="pencil cursor-pointer"
-                      onClick={() => {
-                        setShowModalEdit(true)
-                        setHotelChoseEdit(hotel.hotel_id)
-                      }}
-                    >
-                      <Pencil width="15" />{" "}
-                    </div>
-                    |
-                    <Trash width="15" />
-                  </td> */}
-                  <td className="flex pt-3 justify-center gap-2 items-center content-center w-full h-full">
-                    <div onClick={() => setOptions(hotel.hotel_id)}>
-                      <ThreeDots />
-                    </div>
+                    <p>{faph.faph_high_price}</p>
                   </td>
+                  <td>{faph.faph_discount}</td>
+                  <td className="tracking-wider">{faph.faph_rate_price}</td>
+                  <td>{faph.faph_tax_rate}</td>
+                  <td>{moment(faph.faph_modified_date).format("LL")}</td>
 
-                  {options == hotel.hotel_id && (
+                  {options == faph.faph_id && (
                     <ul
                       ref={menuOptions}
-                      className="text-sm text-start menu-options absolute z-10 shadow-lg border w-44 rounded-lg  right-8 top-5 bg-white"
+                      className="menu-options absolute z-10 shadow-lg border w-44 rounded-lg  right-6 top-4 bg-white"
                     >
                       <li
                         className="hover:bg-neutral-100 p-2 px-3 cursor-pointer"
                         onClick={() => {
                           setShowModalEdit(true)
-                          setHotelChoseEdit(hotel.hotel_id)
-                          setOptions(null)
+                          setfacilityChoseEdit(faph.faph_id)
                         }}
                       >
                         edit
                       </li>
-                      <Link href={`/hotel/facility/${hotel.hotel_id}`}>
-                        <li className="hover:bg-neutral-100 p-2 px-3 cursor-pointer">
-                          Facility
-                        </li>
-                      </Link>
+
                       <li
                         className="hover:bg-neutral-100 p-2 px-3 cursor-pointer"
                         onClick={() => {
-                          setShowModalSwitchStatus(true)
-                          setHotelChoseEdit(hotel.hotel_id)
-                          setOptions(null)
+                          setShowModalPhoto(true)
+                          setfacilityChoseEdit(faph.faph_id)
                         }}
                       >
-                        Switch Status
+                        upload photo
                       </li>
+                      <Link href={`pricehistory/${faph.faph_id}`}>
+                        <li className="hover:bg-neutral-100 p-2 px-3 cursor-pointer">
+                          Price History
+                        </li>
+                      </Link>
                     </ul>
                   )}
                 </tr>
@@ -289,7 +296,10 @@ export default function Hotel() {
                       href="#"
                       aria-current="page"
                       className={className}
-                      onClick={() => setPagination(index + 1)}
+                      onClick={e => {
+                        e.preventDefault()
+                        setPagination(index + 1)
+                      }}
                     >
                       {index + 1}
                     </a>
@@ -326,5 +336,10 @@ export default function Hotel() {
         </div>
       </div>
     </div>
+
+    // <div className="div">tes</div>
   )
 }
+// }
+
+export default Index

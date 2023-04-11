@@ -23,7 +23,7 @@ const Table = ({ cols, data, children }: any) => {
                       ))}
                     </tr>
                   </thead>
-                  <tbody className=" divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                  <tbody className=" divide-gray-200 divide-y dark:divide-gray-700 dark:bg-gray-900">
                     {(data || []).map((item: any, index: any) => (
                       <tr key={index} className="hover:bg-gray-50">
                         {cols.map((col: any, key: any) => (

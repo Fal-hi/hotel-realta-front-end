@@ -157,14 +157,14 @@ export default function ModalAdd(props) {
 
                   {showAddress && address?.length > 0 && (
                     <div className="flex items-center">
-                      <div className="space w-1/5"></div>
+                      <div className="space w-1/6"></div>
                       <ul
                         ref={textSearchRef}
-                        className="list mt-3 bg-white text-textPrimary rounded-md border"
+                        className="list mt-3 bg-white text-textPrimary rounded-md border w-full"
                       >
                         {address.map(add => (
                           <li
-                            className="py-2 px-5 hover:bg-bgPrimary/10 cursor-pointer"
+                            className="py-2 px-5 hover:bg-bgPrimary/10 cursor-pointe cursor-pointer"
                             onClick={e => {
                               setNewHotel(prev => {
                                 return {
