@@ -1,7 +1,7 @@
 import { all, takeEvery } from "redux-saga/effects"
 import ActionTypes from "../action/actionType"
 import {  handleAddRestoMenu, handleDeleteRestoMenu, handleGetRestoMenuAll, handleUpdateRestoMenu } from "./adminsaga"
-import { handleAddRestoPhotos, handleGetGuest } from "./restomenusaga";
+import { handleAddRestoPhotos } from "./restomenusaga";
 import { handleAddOrderResto } from "./orderSaga";
 
 function* watchAll(){
@@ -18,7 +18,7 @@ function* watchAll(){
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////// RESTO MENUS PHOTOS ////////////////////////
         takeEvery(ActionTypes.ADD_RESTOMENU_PHOTOS,handleAddRestoPhotos),
-        takeEvery(ActionTypes.GET_GUEST,handleGetGuest),
+        // takeEvery(ActionTypes.GET_GUEST,handleGetGuest),
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

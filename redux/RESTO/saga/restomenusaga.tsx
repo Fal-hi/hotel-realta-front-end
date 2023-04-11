@@ -1,6 +1,6 @@
 import restoMenuApi from '@/api/resto/restoMenuApi'
 import { call, put} from 'redux-saga/effects'
-import { addRestoMenuPhotoResponse, getGuestMenuPhoto, getGuestMenuPhotoResponse } from '../action/actionrestomenu'
+import { addRestoMenuPhotoResponse } from '../action/actionrestomenu'
 
 function* handleAddRestoPhotos(action:any):any{
     try {
@@ -11,18 +11,18 @@ function* handleAddRestoPhotos(action:any):any{
     }
 }
 
-function* handleGetGuest():any {
+// function* handleGetGuest():any {
     
-    try {
-        const result = yield call(restoMenuApi.getaallguest)
+//     try {
+//         const result = yield call(restoMenuApi.getaallguest)
         
-        yield put(getGuestMenuPhotoResponse(result.data))
-    } catch (error) {
-        yield put(getGuestMenuPhotoResponse({message:error}))
-    }
-}
+//         yield put(getGuestMenuPhotoResponse(result.data))
+//     } catch (error) {
+//         yield put(getGuestMenuPhotoResponse({message:error}))
+//     }
+// }
 
 export {
     handleAddRestoPhotos,
-    handleGetGuest
+    // handleGetGuest
 }

@@ -25,8 +25,8 @@ const ActionTypes ={
 
 
     /////////////////////UNTUK MENAMPILKAN SEMUA DATA PADA MENU GUEST////////////////////////
-    GET_GUEST: 'GET_GUEST',
-    GET_GUEST_RESPONSE: 'GET_GUEST_RESPONSE',
+    // GET_GUEST: 'GET_GUEST',
+    // GET_GUEST_RESPONSE: 'GET_GUEST_RESPONSE',
 
 
     /////////////////////UNTUK MEMBUAT ORDER////////////////////////

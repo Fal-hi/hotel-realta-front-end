@@ -1,22 +1,27 @@
 import React, { Fragment, useEffect, useState } from 'react'
-//import Carousel from "nuka-carousel"
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Breadcumb from "@/components/breadcumb"
 import { useDispatch, useSelector } from 'react-redux'
-import { getGuestMenuPhoto } from '@/redux/RESTO/action/actionrestomenu'
+// import { getGuestMenuPhoto } from '@/redux/RESTO/action/actionrestomenu'
 import { GiShoppingCart } from 'react-icons/gi'
 import { doAddOrderResto } from '@/redux/RESTO/action/actionOrder'
-
-
+import { doGetRestoMenuAll } from '@/redux/RESTO/action/actionadmin';
+import { SearchInput } from "@/components/searchInput"
+import { Pagination } from "@/components/pagination"
 
 
 const RestoMenusTampil = () => {
-  const { restophotos, refresh } = useSelector((state: any) => state.restomenureducers);
+  const { restophotos } = useSelector((state: any) => state.restomenureducers);
   const dispatch = useDispatch();
- 
+  const { adminresto, refresh } = useSelector((state: any) => state.adminRestoReducers)
   const [cart, setCart] = useState<any[]>([]);
   const [discount, setDiscount] = useState<number>(0);
+
+  const [search, setSearch] = useState("")
+  const [page, setPage] = useState(1)
+  const [entry, setEntry] = useState(4)
+  const [isOpen, setIsOpen] = useState(false)
 
 
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -28,6 +33,10 @@ const RestoMenusTampil = () => {
   const handleNextClick = () => {
     setCurrentSlide((prevSlide) => (prevSlide === restophotos.data.length - 1 ? 0 : prevSlide + 1));
   };
+
+  const handleSearchChange = (e: any): void => {
+    setSearch(e.target.value)
+  }
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
@@ -63,10 +72,14 @@ const RestoMenusTampil = () => {
     }
   }
 
+  // useEffect(() => {
+  //   dispatch(getGuestMenuPhoto());
+  // }, [dispatch, refresh]);
   useEffect(() => {
-    dispatch(getGuestMenuPhoto());
-  }, [dispatch, refresh]);
- 
+    dispatch(doGetRestoMenuAll(search, page, entry))
+  }, [refresh, search, page, entry, dispatch,isOpen])
+
+  
 
 
   return (
@@ -76,6 +89,10 @@ const RestoMenusTampil = () => {
       </div>
       <div className="bg-white flex flex-col gap-4 items-start lg:flex-row">
         <div className="w-full lg:w-3/4">
+
+        <div className='w-60'>
+          <SearchInput onChange={handleSearchChange} />
+        </div>
 
           {/* <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
             {(restophotos.data || []).map((menu: any) => (
@@ -110,8 +127,8 @@ const RestoMenusTampil = () => {
                     ))}
                   </Carousel>
                   </div> */}
-<div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-  {(restophotos.data || []).map((menu: any, index: number) => (
+<div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-2 xl:gap-x-8">
+  {(adminresto.data || []).map((menu: any, index: number) => (
     <div key={menu.reme_id} className={`group relative ${index === currentSlide ? 'current-slide' : ''}`}>
       <div className="min-h-80 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
       <Carousel
@@ -167,7 +184,9 @@ const RestoMenusTampil = () => {
               </div>
             ))}
           </div>
-
+          <div className='mt-8'>
+          <Pagination pagination={{totalPage: adminresto?.totalPage, page: adminresto?.currentPage}} setPage={setPage}/>
+          </div>
       
 
         </div>
@@ -176,7 +195,7 @@ const RestoMenusTampil = () => {
             {/* <div className="w-full lg:w-100 bg-rose-400 mt-6 rounded-lg overflow-hidden shadow-lg"> */}
 
 
-            <div className="w-full lg:w-[28rem] border-2 border-black bg-white mt-6 p-4">
+            <div className="w-full lg:w-[28rem] border-2 border-black bg-white mt-16 p-4">
               <div className="flex items-center">
                 <GiShoppingCart className="text-6xl ml-3" />
                 <h2 className="text-2xl font-bold mb-4">Keranjang Belanja</h2></div>
@@ -269,11 +288,3 @@ const RestoMenusTampil = () => {
 }
 
 export default RestoMenusTampil
-
-
-    
-
-
-
-
-
