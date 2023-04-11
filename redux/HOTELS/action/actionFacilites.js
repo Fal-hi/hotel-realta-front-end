@@ -27,3 +27,31 @@ export const doGetFaciByNameResponse = payload => {
     payload,
   }
 }
+
+export const doAddFaci = payload => {
+  return {
+    type: ActionTypes.ADD_FACI,
+    payload,
+  }
+}
+
+export const doAddFaciResponse = payload => {
+  return {
+    type: ActionTypes.ADD_FACI_RESPONSE,
+    payload,
+  }
+}
+
+export const doUpdateFaci = payload => {
+  return {
+    type: ActionTypes.UPDATE_FACI,
+    payload,
+  }
+}
+
+export const doUpdateFaciResponse = payload => {
+  return {
+    type: ActionTypes.UPDATE_FACI_RESPONSE,
+    payload,
+  }
+}

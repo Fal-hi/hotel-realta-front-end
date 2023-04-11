@@ -7,8 +7,10 @@ import { doRequestGetAddressById } from "@/redux/HOTELS/action/actionAddress"
 import { Search, BgPrimary, ThreeDots } from "@/components/icons/index"
 import RatingStars from "@/functions/ratingStarsFunction"
 import moment from "moment"
-import ModalAddFacility from "../../components/hotel/facilities/ModalAddFacility"
-import ModalEditFacility from "../../components/hotel/facilities/ModalEditFacility"
+
+import ModalAddFacility from "@/components/hotel/facilities/ModalAddFacility"
+import ModalEditFacility from "@/components/hotel/facilities/ModalEditFacility"
+import ModalAddPhoto from "@/components/hotel/facilities/ModalAddPhoto"
 import Link from "next/link"
 import {
   doRequestGetFaci,
@@ -19,15 +21,15 @@ import { useRouter } from "next/router"
 function Facility() {
   const dispatch = useDispatch()
 
-  let { hotels, refresh } = useSelector(state => state.hotelsReducers)
+  let { hotels } = useSelector(state => state.hotelsReducers)
   let { address } = useSelector(state => state.addressReducers)
-  let { facilities, status, totalPagination, page_size, total } = useSelector(
-    state => state.facilitiesReducers
-  )
+  let { facilities, status, totalPagination, page_size, total, refresh } =
+    useSelector(state => state.facilitiesReducers)
 
   const [showModalAdd, setShowModalAdd] = React.useState(false)
   const [showModalEdit, setShowModalEdit] = React.useState(false)
-  const [hotelChoseEdit, setHotelChoseEdit] = React.useState("")
+  const [showModalPhoto, setShowModalPhoto] = React.useState(false)
+  const [facilityChoseEdit, setfacilityChoseEdit] = React.useState("")
   const [search, setSearch] = React.useState("")
 
   const [paginationLocation, setPagination] = React.useState(1)
@@ -73,14 +75,13 @@ function Facility() {
         paginationLocation,
       }
 
-      console.log(paginationLocation)
       id && dispatch(doRequestGetFaci(payload))
     }
-  }, [paginationLocation])
+  }, [paginationLocation, refresh])
 
   React.useEffect(() => {
     hotels && setHotel(hotels[0])
-  }, [hotels, refresh])
+  }, [hotels])
 
   React.useEffect(() => {
     hotel && dispatch(doRequestGetAddressById(hotel.hotel_addr_id))
@@ -89,7 +90,6 @@ function Facility() {
   React.useEffect(() => {
     address && setadrs(address[0])
   }, [address])
-  console.log(hotel)
 
   React.useEffect(() => {
     function handleClickOutsideOptionsMenu(event) {
@@ -105,16 +105,7 @@ function Facility() {
     }
   }, [menuOptions])
 
-  console.log(hotel)
-  console.log(hotels[0])
-  console.log(address)
-  console.log(adrs)
-  console.log(facilities)
-
-  console.log(total)
-
   if (!hotel || !adrs || !hotels) {
-    console.log("woy")
     return (
       <div class="h-screen  bg-white">
         <div class="flex justify-center items-center h-full">
@@ -132,8 +123,14 @@ function Facility() {
         {showModalAdd && <ModalAddFacility setShowModalAdd={setShowModalAdd} />}
         {showModalEdit && (
           <ModalEditFacility
-            hotelChoseEdit={hotelChoseEdit}
+            facilityChoseEdit={facilityChoseEdit}
             setShowModalEdit={setShowModalEdit}
+          />
+        )}
+        {showModalPhoto && (
+          <ModalAddPhoto
+            facilityChoseEdit={facilityChoseEdit}
+            setShowModalPhoto={setShowModalPhoto}
           />
         )}
         <div className="header flex justify-between mb-5">
@@ -216,7 +213,7 @@ function Facility() {
           <table class="table-auto  w-full border-collapse border-x border-slate-200">
             <thead className="bg-bgGray">
               <tr className="border-t border-slate-200 text-textGray text-sm text-start">
-                <th className="font-normal p-3 text-start">No</th>
+                <th className="font-normal px-3 py-5 text-center">No</th>
                 <th className="font-normal text-start">Facility Name</th>
                 <th className="font-normal text-start">Room</th>
                 <th className="font-normal text-start">Max. Vacant</th>
@@ -234,33 +231,34 @@ function Facility() {
                 facilities?.length > 0 &&
                 facilities.map(faci => (
                   <tr
-                    className="text-justify text-textSecondary text-sm font-regular border-t border-slate-200 relative"
+                    className={`text-justify text-textSecondary text-sm font-regular border-t border-slate-200 relative ${
+                      faci.row_number % 2 == 0 ? "bg-bgPrimary/5" : "bg-inherit"
+                    } `}
                     key={faci.faci_id}
                   >
-                    <td className="p-3">{faci.faci_id}</td>
+                    <td className=" px-3 py-5 text-center">
+                      {faci.row_number}
+                    </td>
                     <td>{faci.faci_name}</td>
 
                     <td>{faci.faci_room_number}</td>
                     <td>{faci.faci_max_number}</td>
 
-                    <td className="text-justify break-words">
-                      {moment(faci.faci_startdate).format("ll")}
-                      {" - "}
-
-                      {moment(faci.faci_enddate).format("ll")}
+                    <td className="text-justify break-words leading-6">
+                      <p>{moment(faci.faci_startdate).format("ll")}</p>
+                      <p>{moment(faci.faci_enddate).format("ll")}</p>
                     </td>
 
-                    <td className="text-justify py-2 break-words">
-                      {faci.faci_low_price}
+                    <td className="text-justify break-words tracking-wider leading-6">
+                      <p>{faci.faci_low_price}</p>
 
-                      {" - "}
-                      {faci.faci_high_price}
+                      <p>{faci.faci_high_price}</p>
                     </td>
                     <td>{faci.faci_discount}</td>
-                    <td>{faci.faci_rate_price}</td>
+                    <td className="tracking-wider">{faci.faci_rate_price}</td>
                     <td>{faci.faci_tax_rate}</td>
 
-                    <td className="flex pt-3 justify-start gap-2 items-center content-center w-full h-full">
+                    <td className="flex px-3 py-5 justify-start  items-center content-center w-full h-full">
                       <div onClick={() => setOptions(faci.faci_id)}>
                         <ThreeDots />
                       </div>
@@ -271,15 +269,32 @@ function Facility() {
                         ref={menuOptions}
                         className="menu-options absolute z-10 shadow-lg border w-44 rounded-lg  right-6 top-4 bg-white"
                       >
-                        <li className="hover:bg-neutral-100 p-2 px-3 cursor-pointer">
+                        <li
+                          className="hover:bg-neutral-100 p-2 px-3 cursor-pointer"
+                          onClick={() => {
+                            setShowModalEdit(true)
+                            setfacilityChoseEdit(faci.faci_id)
+                            setOptions(null)
+                          }}
+                        >
                           edit
                         </li>
-                        <li className="hover:bg-neutral-100 p-2 px-3 cursor-pointer">
+
+                        <li
+                          className="hover:bg-neutral-100 p-2 px-3 cursor-pointer"
+                          onClick={() => {
+                            setShowModalPhoto(true)
+                            setfacilityChoseEdit(faci.faci_id)
+                            setOptions(null)
+                          }}
+                        >
                           upload photo
                         </li>
-                        <li className="hover:bg-neutral-100 p-2 px-3 cursor-pointer">
-                          Price History
-                        </li>
+                        <Link href={`pricehistory/${faci.faci_id}`}>
+                          <li className="hover:bg-neutral-100 p-2 px-3 cursor-pointer">
+                            Price History
+                          </li>
+                        </Link>
                       </ul>
                     )}
                   </tr>
@@ -345,7 +360,10 @@ function Facility() {
                         href="#"
                         aria-current="page"
                         className={className}
-                        onClick={() => setPagination(index + 1)}
+                        onClick={e => {
+                          e.preventDefault()
+                          setPagination(index + 1)
+                        }}
                       >
                         {index + 1}
                       </a>
