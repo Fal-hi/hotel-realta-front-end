@@ -5,15 +5,16 @@ import { Plus } from "../icons";
 
 type Props = {
   onClick?: any;
+  className?: string;
 };
 
-const AddButton = ({ onClick }: Props) => {
+const AddButton = ({ onClick, className }: Props) => {
   return (
     <button
       onClick={onClick}
-      className="flex items-center bg-[#7743DB] hover:bg-[#5f35ac] text-white py-2 px-4 rounded"
+      className={`flex items-center bg-[#7743DB] hover:bg-[#5f35ac] text-white py-2 px-4 rounded ${className}`}
     >
-      <Plus />
+      <Plus width="18" />
       <Typography variant={variants.baseregular}>
         <p className="px-2">Add</p>
       </Typography>

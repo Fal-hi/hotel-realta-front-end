@@ -18,8 +18,8 @@ export default function ModalAdd(props) {
   const [status, setStatus] = React.useState("active")
   const [addressInput, setAddressInput] = React.useState("")
 
-  console.log(addressInput)
-  console.log(address)
+  // console.log(addressInput)
+  // console.log(address)
 
   const [newHotel, setNewHotel] = React.useState({
     hotel_name: "",
