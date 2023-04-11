@@ -1,5 +1,13 @@
-import { Dashboard, Chevron, Money, Hr, Folder, User, Hotel, Cart } from "../icons";
-
+import {
+  Dashboard,
+  Chevron,
+  Money,
+  Hr,
+  Folder,
+  User,
+  Hotel,
+  Cart,
+} from "../icons"
 
 const listMenu = [
   {
@@ -69,8 +77,8 @@ const listMenu = [
     ],
   },
   {
-    to: "/payment",
-    path: "/payment",
+    to: "",
+    path: "",
     icon: Money,
     name: "Payment",
     icon2: Chevron,
@@ -184,6 +192,6 @@ const listMenu = [
       },
     ],
   },
-];
+]
 
-export default listMenu;
+export default listMenu

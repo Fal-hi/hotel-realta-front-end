@@ -2,19 +2,10 @@ import React, { useEffect, useState } from "react"
 import PropTypes from "prop-types"
 import Navbar from "@/components/navbar"
 import Sidebar from "@/components/sidebar"
-import { BiLogOut } from "react-icons/bi"
-import { Menu } from "@headlessui/react"
-import { Router, useRouter } from "next/router"
 
 const BaseLayout = ({ children }: any) => {
-  const router = useRouter()
   const [showNav, setShowNav] = useState(true)
   const [screenWidth, setScreenWidth] = useState<number>(0)
-  const handleLogout = () => {
-    localStorage.removeItem("token")
-
-    router.push("/users/loginEmployee")
-  }
 
   useEffect(() => {
     setScreenWidth(window.innerWidth)
@@ -41,12 +32,16 @@ const BaseLayout = ({ children }: any) => {
             <Sidebar showNav={showNav} />
           </div>
         )}
-        <div className='h-full mx-10 mb-10 md:ml-64 '>
-        <main className={`pt-[100px] transition-all duration-[400ms] flex-1`}>
-          <div className="px-1 md:px-10">{children}</div>
-        </main>
+        <div
+          className={`h-full mx-10 mb-10 ${
+            showNav && screenWidth >= 768 ? "md:ml-64" : ""
+          }  `}
+        >
+          <main className={`pt-[100px] transition-all duration-[400ms] flex-1`}>
+            <div className="px-1 md:px-10">{children}</div>
+          </main>
+        </div>
       </div>
-    </div>
     </>
   )
 }
