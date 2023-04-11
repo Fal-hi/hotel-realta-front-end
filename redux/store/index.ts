@@ -20,13 +20,9 @@ import { restomenureducers } from "../RESTO/reducer/restomenuReducer"
 import { orderrestoreducers } from "../RESTO/reducer/orderReducer"
 import galleryReducers from "../PURCHASING/reducer/galleryReducer"
 import { addressReducers } from "../HOTELS/reducer/addressReducers"
-import stockReducers from "../PURCHASING/reducer/stockReducer"
-import listOrderReducers from "../PURCHASING/reducer/listOrderReducer"
-import loginReducers from "../USERS/reducer/loginReducer"
 import passwordReducers from "../USERS/reducer/passwordReducer"
 import generalReducers from "../USERS/reducer/generalReducer"
 import registerReducers from "../USERS/reducer/registerReducer"
-const logger = createLogger()
 import { facilitiesReducers } from "../HOTELS/reducer/facilitesReducers"
 import { facilitiesHistoryReducers } from "../HOTELS/reducer/facilityPriceHistoryReducers"
 
@@ -41,17 +37,6 @@ const reducer = combineReducers({
   addressReducers,
   facilitiesReducers,
   facilitiesHistoryReducers,
-
-  bankReducers,
-  vendorReducers,
-  stockReducers,
-  listOrderReducers,
-<<<<<<< HEAD
-  loginReducers,
-  registerReducers,
-  passwordReducers,
-  generalReducers,
-=======
   fintechReducers,
   accountReducers,
   transactionReducers,
@@ -59,7 +44,14 @@ const reducer = combineReducers({
   restomenureducers,
   orderrestoreducers,
   galleryReducers,
->>>>>>> master
+
+  bankReducers,
+  vendorReducers,
+  stockReducers,
+  listOrderReducers,
+  registerReducers,
+  passwordReducers,
+  generalReducers,
 })
 
 const store = configureStore({
@@ -68,7 +60,6 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     })
-      .concat(logger)
       .concat(logger)
       .concat(saga),
 })
