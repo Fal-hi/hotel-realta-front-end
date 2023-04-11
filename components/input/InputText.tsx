@@ -1,10 +1,13 @@
+import { any } from "prop-types"
 import { FC, useState } from "react"
 import { FaEye, FaEyeSlash } from "react-icons/fa"
 
 interface InputTextProps {
-  width?: string
   placeholder: string
   isPassword?: boolean
+  width?: string
+  value?: any
+  onChange?: (e?: any) => void
 }
 
 const InputText: FC<InputTextProps> = ({

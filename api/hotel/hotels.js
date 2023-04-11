@@ -1,7 +1,15 @@
 import axios from "../config"
 
+// const get = () => {
+
+//   return axios.get("/hotels")
+// }
 const get = offset => {
   return axios.get(`/hotels/pagination/${offset}`)
+}
+
+const getOne = id => {
+  return axios.get(`/hotels/${id}`)
 }
 
 const getByHotelName = payload => {
@@ -33,6 +41,7 @@ const remove = id => {
 
 const ApiMethod = {
   get,
+  getOne,
   create,
   update,
   searchAddress,

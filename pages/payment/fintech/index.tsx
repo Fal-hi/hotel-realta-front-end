@@ -6,17 +6,23 @@ import Breadcumb from "@/components/breadcumb"
 import { Pencil, Trash } from "@/components/icons"
 
 import { SearchInput } from "@/components/searchInput"
-import { getDataFintech } from "@/redux/PAYMENT/action/fintech"
+import { deleteDataFintech, getDataFintech } from "@/redux/PAYMENT/action/fintech"
 
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { tableConstants } from "./listHeader"
+import { Modal } from "@/components/modal"
+import { FormAdd } from "@/pages/payment/bank/frombank/FromAdd"
+import { ConfirmationDelete } from "@/pages/payment/bank/frombank/Delete"
+import { FromAddFintech } from "@/pages/payment/fintech/fromFintech/FromAddFintech"
+import Swal from "sweetalert2"
 
 const Fintech = () => {
   const { fint, refresh } = useSelector((state: any) => state.fintechReducers)
   const [search, setSearch] = useState("")
   const [isOpen, setIsOpen] = useState({
-    fintech: "",
+    code:"",
+    name: "",
     id: 0,
     isShow: false,
   })
@@ -25,6 +31,27 @@ const Fintech = () => {
     id: 0,
     isShow: false,
   })
+  const handleClose = () => {
+    setIsOpen(prev => {
+      return { ...prev, isShow: false }
+    })
+    
+    setIsDelete(prev => {
+      return { ...prev, isShow: false }
+    })
+  }
+  const handleAddData = () => {
+    setIsOpen({code:"", name: "", id: 0, isShow: true })
+  }
+  const handleDelete = (id: number) => {
+    dispatch(deleteDataFintech(id))
+    Swal.fire({
+      title: "Sukses",
+      text: `Berhasil Hapus Data`,
+      icon: "success",
+    })
+    handleClose()
+  }
   const handleSearchChange = (e: any): void => {
     setSearch(e.target.value)
   }
@@ -32,7 +59,7 @@ const Fintech = () => {
 
   useEffect(() => {
     dispatch(getDataFintech(search))
-  }, [dispatch, search])
+  }, [dispatch, search,refresh])
 
   return (
     <div>
@@ -44,11 +71,33 @@ const Fintech = () => {
             <SearchInput onChange={handleSearchChange} />
           </div>
           <div className="flex ">
-            <AddButton />
+            <AddButton className={'transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-300 shadow-md'} onClick={handleAddData} />
           </div>
         </div>
 
         <Table cols={tableConstants(setIsOpen, setIsDelete)} data={fint} />
+
+        {isOpen.isShow ? (
+          <Modal onClose={handleClose} header={"Fintech"}>
+            <FromAddFintech id={isOpen.id} code={isOpen.code} fintech={isOpen.name} setIsOpen={setIsOpen} />
+          </Modal>
+        ) : null}
+
+        {isDelete.isShow ? (
+          <Modal
+            onClose={handleClose}
+            header={"Hapus Data"}
+          >
+            <ConfirmationDelete
+              data={isDelete.fintech}
+              handleDelete={handleDelete}
+              id={isDelete.id}
+              handleClose={() => {
+                handleClose()
+              }}
+            />
+          </Modal>
+        ) : null}
       </div>
     </div>
   )

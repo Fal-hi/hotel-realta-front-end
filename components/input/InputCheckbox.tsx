@@ -3,6 +3,10 @@ import { FC } from "react"
 interface InputCheckboxProps {
   width?: string
   height?: string
+  checked?: boolean
+  onChange?: () => void
+  onClick?: () => void
+  disabled?: any
 }
 
 const InputCheckbox: FC<InputCheckboxProps> = (props: any) => {
@@ -16,6 +20,10 @@ const InputCheckbox: FC<InputCheckboxProps> = (props: any) => {
         width: props.width,
         height: props.height,
       }}
+      onChange={props.onChange}
+      onClick={props.onClick}
+      checked={props.checked}
+      disabled={props.disabled}
     />
   )
 }

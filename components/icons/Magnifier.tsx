@@ -29,7 +29,7 @@ const Magnifier: FC<MagnifierProps> = (props: any) => {
 Magnifier.defaultProps = {
   width: "18",
   height: "18",
-  stroke: "#667085",
+  stroke: "#A5ABB1",
 }
 
 export default Magnifier
