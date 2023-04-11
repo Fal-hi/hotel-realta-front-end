@@ -28,7 +28,6 @@ import RatingStart from "./RatingStart"
 import BgPrimary from "./BgPrimary"
 import ThreeDots from "./ThreeDots"
 import X from "./X"
-import RatingStart from "./RatingStart"
 
 export {
   Ac,
@@ -61,5 +60,4 @@ export {
   UserCircleFill,
   Wifi,
   X,
-  Wifi,
 }
