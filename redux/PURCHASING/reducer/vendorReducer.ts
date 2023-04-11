@@ -13,14 +13,24 @@ function vendorReducers(state = initialState, action: any) {
             return {...state, vendor: payload, refresh: true};
         case ActionTypes.GET_PRODUCT_RESPONSE:
             return {...state, vendor: payload, refresh: true};
+        case ActionTypes.GET_PRODUCTID_RESPONSE:
+            return {...state, vendor: payload, refresh: true};
         case ActionTypes.SEARCH_VENDOR_RESPONSE:
             return {...state, vendor: payload, refresh: true};
         case ActionTypes.UPDATE_VENDOR_RESPONSE:
             return {message: payload.message, refresh: false};
         case ActionTypes.DEL_VENDOR_RESPONSE:
             return {message: payload, refresh: false};
-        case ActionTypes.ADD_VENDOR:
+        case ActionTypes.ADD_VENDOR_RESPONSE:
             return {message: payload?.message || '', refresh: false};
+
+        //VEPRO
+        case ActionTypes.ADD_VEPRO_RESPONSE:
+            return {message: payload?.message || '', refresh: false}; 
+        case ActionTypes.DEL_VEPRO_RESPONSE:
+            return {message: payload, refresh: false};
+        case ActionTypes.UPDATE_VEPRO_RESPONSE:
+            return {message: payload.message, refresh: false};
         default:
             return state
     }

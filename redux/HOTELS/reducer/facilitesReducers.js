@@ -13,7 +13,7 @@ const initialState = {
 
 export function facilitiesReducers(state = initialState, action) {
   const { type, payload } = action
-  console.log(payload)
+
   switch (type) {
     case ActionTypes.GET_FACI_RESPONSE:
       return {
@@ -22,8 +22,8 @@ export function facilitiesReducers(state = initialState, action) {
         refresh: true,
         total: payload.data[0].total_rows,
         page_size: payload.page_size,
-        totalPagination: Math.ceil(
-          parseInt(payload.data[0].total_rows) / payload.page_size
+        totalPagination: Math.round(
+          Math.ceil(parseInt(payload.data[0].total_rows) / payload.page_size)
         ),
 
         status: payload.status,
@@ -38,8 +38,8 @@ export function facilitiesReducers(state = initialState, action) {
         total: payload.data[0].total_rows,
         page_size: payload.page_size,
         refresh: true,
-        totalPagination: Math.ceil(
-          parseInt(payload.data[0].total_rows) / payload.page_size
+        totalPagination: Math.round(
+          Math.ceil(parseInt(payload.data[0].total_rows) / payload.page_size)
         ),
 
         status: payload.status,
@@ -47,7 +47,10 @@ export function facilitiesReducers(state = initialState, action) {
         statusResponse: payload.status,
         error: payload.error ? payload.error : "",
       }
-
+    case ActionTypes.UPDATE_FACI_RESPONSE:
+      return { message: payload.message, refresh: !state.status }
+    case ActionTypes.ADD_FACI_RESPONSE:
+      return { message: payload.message, refresh: false }
     default:
       return state
   }

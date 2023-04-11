@@ -1,11 +1,11 @@
 import { call, put } from "redux-saga/effects";
 import ApiVendor from "@/api/purchasing/apiPurchasing";
-import { doAddResponse, doDeleteResponse, doGetProductResponse, doGetVendorResponse, doSearchResponse, doUpdateResponse } from "../action/actionVendor";
+import { doAddResponse, doDeleteResponse, doGetProductResponse, doGetProductResponseId, doGetVendorResponse, doSearchResponse, doUpdateResponse } from "../action/actionVendor";
 
 function* handleGetVendor(action: any): any {
     try {
-        const { search, page, entry } = action.payload
-        const result = yield call(ApiVendor.getAll, search, page, entry);
+        const { search, page, entry, searchPri } = action.payload
+        const result = yield call(ApiVendor.getAll, search, page, entry, searchPri);
         // console.log(result)
         yield put(doGetVendorResponse(result.data))
     }
@@ -16,7 +16,7 @@ function* handleGetVendor(action: any): any {
 
 function* handleAddVendor(action: any): any {
     try {
-        console.log(action.payload)
+        // console.log(action.payload)
         const result = yield call(ApiVendor.create, action.payload)
         yield put(doAddResponse(result.data))
     }
@@ -28,13 +28,25 @@ function* handleAddVendor(action: any): any {
 function* handleGetProduct(): any {
     try {
         const result = yield call(ApiVendor.product);
-        console.log(result)
+        // console.log(result)
         yield put(doGetProductResponse(result.data))
     }
     catch (error) {
         yield put(doGetProductResponse({ message: error }))
     }
 }
+
+function* handleGetProductId(action: any): any {
+    try {
+        const result = yield call(ApiVendor.productId, action.payload);
+        // console.log(result.data)
+        yield put(doGetProductResponseId(result.data))
+    }
+    catch (error) {
+        yield put(doGetProductResponseId({ message: error }))
+    }
+}
+
 
 function* handleDelVendor(action: any) :any {
     try {
@@ -60,11 +72,11 @@ function* handleSearchVendor(action: any) :any {
     try {
         const result = yield call(ApiVendor.search, action.payload)
         yield put(doSearchResponse(result.data))
-        console.log(result.data)
+        // console.log(result.data)
     }
     catch (error) {
         yield put(doSearchResponse({ message: error }))
     }
 }
 
-export { handleGetVendor, handleAddVendor, handleGetProduct, handleDelVendor, handleUpdateVedor, handleSearchVendor }
+export { handleGetVendor, handleAddVendor, handleGetProduct, handleDelVendor, handleUpdateVedor, handleSearchVendor, handleGetProductId }

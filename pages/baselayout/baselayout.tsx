@@ -26,7 +26,7 @@ const BaseLayout = ({children}:any) => {
             <Sidebar showNav={showNav}   />
           </div>
         )}
-        <div className='h-full mx-10 mb-10 md:ml-64 '>
+        <div className={`h-full mx-10 mb-10 ${showNav && screenWidth >= 768 ? 'md:ml-64' : ''}  `}>
         <main className={`pt-[100px] transition-all duration-[400ms] flex-1`}>
           <div className="px-1 md:px-10">{children}</div>
         </main>

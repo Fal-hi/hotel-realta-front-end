@@ -5,6 +5,7 @@ import PopUp from "@/components/hr/popUp"
 import DotsVertical from "@/components/icons/DotsVertical"
 import { Modal } from "@/components/modal"
 import { Pagination } from "@/components/pagination"
+// import { Pagination } from "@/components/pagination"
 import { SearchInput } from "@/components/searchInput"
 import ShowingResult from "@/components/showingResult"
 import { getEmployee } from "@/redux/HR/action/employee"
@@ -32,6 +33,7 @@ const Employee = () => {
   const [page, setPage] = useState(1)
   const handleSearchChange = (e: any) => {
     setSearch(e.target.value)
+    setPage(1)
   }
 
   const [status, setStatus] = useState("")
@@ -157,8 +159,8 @@ const Employee = () => {
         >
           <Pagination
             pagination={{
-              totalPage: employee.totalPage,
-              page: employee.page,
+              totalPage: employee?.totalPage,
+              page: employee?.page,
             }}
             setPage={setPage}
           />

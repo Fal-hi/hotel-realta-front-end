@@ -1,10 +1,11 @@
 import ActionTypes from "./actionType";
 
-export const doRequestGetVendor = (search: any, page: any, entry: any) => {
+export const doRequestGetVendor = (search: any, page: any, entry: any, searchPri: any) => {
     const payload = {
         search,
         page,
         entry,
+        searchPri,
       };
     return {
         type: ActionTypes.REQ_GET_VENDOR,
@@ -41,10 +42,25 @@ export const doRequestGetProduct = () => {
 
 export const doGetProductResponse = (payload: any) => {
     return {
-        type: ActionTypes.GET_VENDOR_RESPONSE,
+        type: ActionTypes.GET_PRODUCT_RESPONSE,
         payload : payload
     }
 }
+
+export const doRequestGetProductid = (payload: any) => {
+    return {
+        type: ActionTypes.REQ_GET_PRODUCTID,
+        payload
+    }
+}
+
+export const doGetProductResponseId = (payload: any) => {
+    return {
+        type: ActionTypes.GET_PRODUCTID_RESPONSE,
+        payload : payload
+    }
+}
+
 
 export const doDelete = (payload: any)=>{
     return{
