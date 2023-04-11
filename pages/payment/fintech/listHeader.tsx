@@ -39,7 +39,8 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any) => {
               className="mx-2 cursor-pointer"
               onClick={() => {
                 setIsOpen({
-                  bank: data.paga_name,
+                  code: data.paga_code,
+                  name: data.paga_name,
                   id: data.paga_entity_id,
                   isShow: true,
                 })

@@ -3,8 +3,8 @@ import { Dashboard, Chevron, Money, Hr, Folder, User, Hotel, Cart } from "../ico
 
 const listMenu = [
   {
-    to: "/",
-    path: "/",
+    to: "/dashboard",
+    path: "/dashboard",
     icon: Dashboard,
     name: "Dashboard",
   },
@@ -17,9 +17,28 @@ const listMenu = [
   {
     to: "",
     path: "",
-    icon: Hotel,
+    icon: Cart,
     name: "Resto",
+    icon2: Chevron,
+    submenu: [
+      {
+        to: "/resto/admin",
+        path: "/resto/admin",
+        title: "Resto Admin",
+      },
+      {
+        to: "/resto/restomenus",
+        path: "/resto/restomenus",
+        title: "Resto Menu",
+      },
+      {
+        to: "/resto/restoorder",
+        path: "/resto/restorder",
+        title: "Resto Order",
+      },
+    ],
   },
+
   {
     to: "#",
     path: "#",
@@ -28,18 +47,23 @@ const listMenu = [
     icon2: Chevron,
     submenu: [
       {
-        to: "",
-        path: "",
+        to: "/purchasing/vendor",
+        path: "/purchasing/vendor",
         title: "Vendor",
       },
       {
-        to: "",
-        path: "",
+        to: "/purchasing/stock",
+        path: "/purchasing/stock",
         title: "Stock",
       },
       {
-        to: "",
-        path: "",
+        to: "/purchasing/gallery",
+        path: "/purchasing/gallery",
+        title: "Gallery",
+      },
+      {
+        to: "/purchasing/listOrder",
+        path: "/purchasing/listOrder",
         title: "Purchasing Order",
       },
     ],
