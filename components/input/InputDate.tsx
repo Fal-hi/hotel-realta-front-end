@@ -26,7 +26,7 @@ const InputDate: React.FC<InputDateProps> = (props: any) => {
   }
 
   return (
-    <form className="flex items-center">
+    <form className="flex items-center text-white">
       <div className={`input-date ${focused ? 'focused' : ''}`}>
         <input
           type="date"

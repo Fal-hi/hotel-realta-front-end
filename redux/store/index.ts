@@ -14,8 +14,11 @@ import vendorReducers from "../PURCHASING/reducer/vendorReducer"
 import { addressReducers } from "../HOTELS/reducer/addressReducers"
 import stockReducers from "../PURCHASING/reducer/stockReducer"
 import listOrderReducers from "../PURCHASING/reducer/listOrderReducer"
-
-// const logger = createLogger()
+import loginReducers from "../USERS/reducer/loginReducer"
+import passwordReducers from "../USERS/reducer/passwordReducer"
+import generalReducers from "../USERS/reducer/generalReducer"
+import registerReducers from "../USERS/reducer/registerReducer"
+const logger = createLogger()
 const saga = createSagaMiddleware()
 
 const reducer = combineReducers({
@@ -29,6 +32,10 @@ const reducer = combineReducers({
   vendorReducers,
   stockReducers,
   listOrderReducers,
+  loginReducers,
+  registerReducers,
+  passwordReducers,
+  generalReducers,
 })
 
 const store = configureStore({
@@ -37,7 +44,7 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     })
-      // .concat(logger)
+      .concat(logger)
       .concat(saga),
 })
 

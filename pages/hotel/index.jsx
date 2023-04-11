@@ -9,7 +9,7 @@ import {
 } from "../../redux/HOTELS/action/actionHotels"
 import { Search, Trash, Pencil } from "@/components/icons/index"
 import RatingStars from "@/functions/ratingStarsFunction"
-import moment from "moment"
+// import moment from "moment"
 import ModalEditAdd from "../../components/hotel/ModalAdd"
 import ModalEditEdit from "../../components/hotel/ModalEdit"
 
