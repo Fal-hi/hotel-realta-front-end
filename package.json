@@ -32,13 +32,14 @@
     "react-hook-form": "^7.43.8",
     "react-icons": "^4.8.0",
     "react-redux": "^8.0.5",
-    "react-select": "^5.7.2",
-    "sweetalert2": "^11.7.3",
     "react-responsive-carousel": "^3.2.23",
+    "react-select": "^5.7.2",
+    "react-tailwindcss-datepicker": "^1.5.1",
     "react-toastify": "^9.1.2",
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.2.3",
     "slick-carousel": "^1.8.1",
+    "sweetalert2": "^11.7.3",
     "typescript": "5.0.2"
   },
   "devDependencies": {
