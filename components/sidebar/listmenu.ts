@@ -3,8 +3,8 @@ import { Dashboard, Chevron, Money, Hr, Folder, User, Hotel, Cart } from "../ico
 
 const listMenu = [
   {
-    to: "/",
-    path: "/",
+    to: "/dashboard",
+    path: "/dashboard",
     icon: Dashboard,
     name: "Dashboard",
   },
