@@ -10,7 +10,7 @@ const initialState = {
 
 export function addressReducers(state = initialState, action) {
   const { type, payload } = action
-  console.log(payload)
+
   switch (type) {
     case ActionTypes.GET_ADDRESS_RESPONSE:
       return {

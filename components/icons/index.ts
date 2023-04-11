@@ -26,6 +26,9 @@ import RatingStart from "./RatingStart"
 import BgPrimary from "./BgPrimary"
 import ThreeDots from "./ThreeDots"
 import Calendar from "./Calendar"
+import PlusPhoto from "./PlusPhoto"
+import StarIcon from "./StarIcon"
+import Sort from "./Sort"
 
 export {
   Ac,
@@ -48,8 +51,11 @@ export {
   Money,
   Pencil,
   Plus,
+  PlusPhoto,
   RatingStart,
   Search,
+  Sort,
+  StarIcon,
   ThreeDots,
   Trash,
   Tv,

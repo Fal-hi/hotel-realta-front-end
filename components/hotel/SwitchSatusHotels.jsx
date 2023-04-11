@@ -53,7 +53,7 @@ export default function ModalSwitchStatus(props) {
       }
     })
   }
-
+  console.log(switchStatus)
   const submitStatusEdit = e => {
     e.preventDefault()
     const payload = {
@@ -159,8 +159,16 @@ export default function ModalSwitchStatus(props) {
                       <textarea
                         type="text"
                         value={switchStatus.reason}
+                        onChange={e =>
+                          setswitchStatus(prev => {
+                            return {
+                              ...prev,
+                              reason: e.target.value,
+                            }
+                          })
+                        }
                         id="reason"
-                        className="border w-full placeholder:italic placeholder:text-slate-400 block bg-gray-50 focus:bg-white h-40 border-slate-300 rounded-lg py-4 px-3 shadow-sm focus:outline-none focus:border-bgPrimary  focus:ring-bgPrimary  focus:ring-1 sm:text-sm resize-none "
+                        className="border w-full placeholder:italic placeholder:text-slate-400 block bg-gray-50 focus:bg-white h-40 border-slate-300 rounded-lg py-4 px-3 shadow-sm focus:outline-none focus:border-bgPrimary  focus:ring-bgPrimary   sm:text-sm resize-none "
                         placeholder="write Reason ..."
                         required
                         name="reason"
@@ -172,7 +180,7 @@ export default function ModalSwitchStatus(props) {
               {/*footer*/}
               <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                 <button
-                  className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  className="text-red-500 background-transparent font-normal uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                   type="button"
                   onClick={() => props.setShowModalSwitchStatus(false)}
                 >
@@ -181,7 +189,7 @@ export default function ModalSwitchStatus(props) {
                 <button
                   for="submit"
                   type="submit"
-                  className=" bg-bgPrimary/90  hover:bg-bgPrimary text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  className=" bg-bgPrimary/90  hover:bg-bgPrimary text-white active:bg-emerald-600 font-normal uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 >
                   Save Changes
                 </button>

@@ -27,7 +27,7 @@ const Trash: FC<TrashProps> = (props: any) => {
 }
 
 Trash.defaultProps = {
-  width: "18",
+  width: "20",
   height: "20",
   stroke: "#667085",
 }

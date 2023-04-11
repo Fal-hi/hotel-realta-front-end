@@ -12,6 +12,7 @@ import { fintechReducers } from "../PAYMENT/reducer/fintechReducer"
 import { transactionReducers } from "../PAYMENT/reducer/transactionReducer"
 import { addressReducers } from "../HOTELS/reducer/addressReducers"
 import { facilitiesReducers } from "../HOTELS/reducer/facilitesReducers"
+import { facilitiesHistoryReducers } from "../HOTELS/reducer/facilityPriceHistoryReducers"
 
 const logger = createLogger()
 const saga = createSagaMiddleware()
@@ -22,6 +23,7 @@ const reducer = combineReducers({
   hotelsReducers,
   addressReducers,
   facilitiesReducers,
+  facilitiesHistoryReducers,
 
   bankReducers,
   fintechReducers,
