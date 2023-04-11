@@ -2,7 +2,7 @@ import Car from "./Car"
 import Cart from "./Cart"
 import Calendar from "./Calendar"
 import Chevron from "./Chevron"
-import ChevronDown from "./ChevronDown"
+// import ChevronDown from "./ChevronDown"
 import ChevronLeft from "./ChevronLeft"
 import ChevronRight from "./ChevronRight"
 import Coffee from "./Coffee"
@@ -27,6 +27,9 @@ import Wifi from "./Wifi"
 import RatingStart from "./RatingStart"
 import BgPrimary from "./BgPrimary"
 import ThreeDots from "./ThreeDots"
+import PlusPhoto from "./PlusPhoto"
+import StarIcon from "./StarIcon"
+import Sort from "./Sort"
 import X from "./X"
 
 export {
@@ -36,7 +39,7 @@ export {
   Calendar,
   Cart,
   Chevron,
-  ChevronDown,
+  // ChevronDown,
   ChevronLeft,
   ChevronRight,
   Coffee,
@@ -51,8 +54,11 @@ export {
   Money,
   Pencil,
   Plus,
+  PlusPhoto,
   RatingStart,
   Search,
+  Sort,
+  StarIcon,
   ThreeDots,
   Trash,
   Tv,

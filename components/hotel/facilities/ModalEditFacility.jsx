@@ -1,33 +1,80 @@
-import {
-  doRequestGetAddress,
-  doRequestGetAddressById,
-} from "@/redux/HOTELS/action/actionAddress"
-import { doUpdateHotels } from "@/redux/HOTELS/action/actionHotels"
+// import { doEditFaci } from "../../../redux/HOTELS/action/actionFacilites"
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-export default function ModalAdd(props) {
-  const dispatch = useDispatch()
-  let { address, refresh } = useSelector(state => state.addressReducers)
+import Datepicker from "react-tailwindcss-datepicker"
+import { useRouter } from "next/router"
+import { doUpdateFaci } from "@/redux/HOTELS/action/actionFacilites"
 
-  let { hotels } = useSelector(state => state.hotelsReducers)
+export default function ModalEdit(props) {
+  let { facilities } = useSelector(state => state.facilitiesReducers)
+  const router = useRouter()
+
+  const [startDate, setStartDate] = React.useState()
+  const [endDate, setEndDate] = React.useState()
+
+  let categoryList = [
+    { cagro_name: "Room Type", faci_cagro_id: 6 },
+    { cagro_name: "Facility", faci_cagro_id: 7 },
+    { cagro_name: "Food and Beverage", faci_cagro_id: 8 },
+    { cagro_name: "Activities", faci_cagro_id: 9 },
+    { cagro_name: "Transportation", faci_cagro_id: 10 },
+    { cagro_name: "Business Center", faci_cagro_id: 11 },
+    { cagro_name: "Spa and Wellness", faci_cagro_id: 12 },
+    { cagro_name: "Meeting Room", faci_cagro_id: 13 },
+    { cagro_name: "Wedding Venue", faci_cagro_id: 14 },
+    { cagro_name: "Banquet and Catering", faci_cagro_id: 15 },
+  ]
+
+  let expoPriceList = ["Low Price", "Rate Price", "High Price"]
+  let measureUnitList = ["Beds", "People", "Units"]
 
   const [dropdown, setDropdown] = React.useState(false)
-  const [showAddress, setShowAddress] = React.useState(false)
-  const searchInputRef = React.useRef(null)
-  const textSearchRef = React.useRef(null)
+  const [dropdownExpose, setDropdownExpose] = React.useState(false)
+  const [dropdownMeasure, setDropdownMeasure] = React.useState(false)
+
   const FormRef = React.useRef(null)
 
-  const [addressInput, setAddressInput] = React.useState("")
-
-  const [newHotel, setNewHotel] = React.useState({
-    hotel_name: "",
-    hotel_description: "",
-    hotel_phonenumber: "",
-    hotel_addr_id: "",
-    status: "active",
-    reason: "",
+  let [newFacility, setnewFacility] = React.useState({
+    faci_name: "",
+    faci_description: "",
+    faci_max_number: 0,
+    faci_measure_unit: "",
+    faci_room_number: "",
+    faci_startdate: startDate,
+    faci_enddate: endDate,
+    faci_high_price: "",
+    faci_low_price: "",
+    faci_discount: "",
+    faci_tax_rate: "",
+    faci_cagro_id: 6,
+    faci_hotel_id: router.query.id,
+    faci_expose_price: "",
   })
+
+  let dispatch = useDispatch()
+  const submitEditFacility = e => {
+    e.preventDefault()
+
+    const data = {
+      id: props.facilityChoseEdit,
+      data: newFacility,
+    }
+
+    // dispatch(doEditFaci(newFacility))
+    dispatch(doUpdateFaci(data))
+    props.setShowModalEdit(false)
+  }
+
+  const [selectCategory, setselectCategory] = React.useState(
+    categoryList[0].cagro_name
+  )
+  const [selectExpo, setselectExpo] = React.useState(
+    newFacility.faci_expose_price
+  )
+  const [selectMeasureUnit, setselectMeasureUnit] = React.useState(
+    measureUnitList[1]
+  )
 
   React.useEffect(() => {
     function handleClickOutsideModal(event) {
@@ -35,43 +82,95 @@ export default function ModalAdd(props) {
         props.setShowModalEdit(false)
       }
     }
-    function handleClickOutside(event) {
-      if (
-        searchInputRef.current &&
-        !searchInputRef.current.contains(event.target) &&
-        textSearchRef.current &&
-        !textSearchRef.current.contains(event.target)
-      ) {
-        setShowAddress(false)
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside)
     document.addEventListener("mousedown", handleClickOutsideModal)
-
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
       document.removeEventListener("mousedown", handleClickOutsideModal)
     }
-  }, [searchInputRef, FormRef, props])
-
+  }, [FormRef])
+  console.log(props.facilityChoseEdit)
   React.useEffect(() => {
-    const hotel = hotels.filter(htl => htl.hotel_id == props.hotelChoseEdit)[0]
-    dispatch(doRequestGetAddressById(hotel.hotel_addr_id))
-    setNewHotel(hotel.hotel_addr_id)
-    setNewHotel(hotel)
+    const faci = facilities.filter(
+      fc => fc.faci_id == props.facilityChoseEdit
+    )[0]
+    setnewFacility(faci)
+    setselectExpo(faci.faci_expose_price)
+    const cat = categoryList.filter(
+      ct => ct.faci_cagro_id == faci.faci_cagro_id
+    )[0]
 
-    setAddressInput(address[0]?.full_address)
-  }, [refresh])
+    setselectCategory(cat.cagro_name)
+    setselectMeasureUnit(faci.hotel_measure_unit)
+    setStartDate({
+      endDate: faci.faci_startdate,
+      startDate: faci.faci_startdate,
+    })
+    setEndDate({
+      endDate: faci.faci_enddate,
+      startDate: faci.faci_enddate,
+    })
 
-  React.useState(() => {}, [address])
+    newFacility = {
+      ...newFacility,
+      faph_user_id: 1,
+    }
+  }, [])
 
-  const search = e => {
-    dispatch(doRequestGetAddress(e.target.value))
+  const handleDate = e => {
+    if (e.name == "faci_startdate") {
+      setStartDate(e.e)
+    } else {
+      setEndDate(e.e)
+    }
+
+    setnewFacility(prev => {
+      return {
+        ...prev,
+        [e.name]: e.e.startDate,
+      }
+    })
   }
 
-  const handleChangeNewHotel = e => {
-    setNewHotel(prev => {
+  const handleChangeCategory = e => {
+    const categoriId = e.target.getAttribute("faci_cagro_id")
+    const categoriname = e.target.getAttribute("cagro_name")
+
+    setselectCategory(categoriname)
+    setnewFacility(prev => {
+      return {
+        ...prev,
+        faci_cagro_id: categoriId,
+      }
+    })
+    setDropdown(!dropdown)
+  }
+
+  const handleChangeExpo = e => {
+    const expo = e.target.getAttribute("faci_expose_price")
+
+    setselectExpo(expo)
+    setDropdownExpose(!dropdownExpose)
+    setnewFacility(prev => {
+      return {
+        ...prev,
+        faci_expose_price: expo,
+      }
+    })
+  }
+  const handleChangeMeasureUnit = e => {
+    const measureUnit = e.target.getAttribute("faci_measure_unit")
+
+    setselectMeasureUnit(measureUnit)
+    setDropdownMeasure(!dropdownMeasure)
+    setnewFacility(prev => {
+      return {
+        ...prev,
+        faci_measure_unit: measureUnit,
+      }
+    })
+  }
+
+  const handleChangenewFacility = e => {
+    setnewFacility(prev => {
       return {
         ...prev,
         [e.target.name]: e.target.value,
@@ -79,28 +178,18 @@ export default function ModalAdd(props) {
     })
   }
 
-  const sumitEditHotel = e => {
-    e.preventDefault()
-    const payload = {
-      id: newHotel.hotel_id,
-      data: newHotel,
-    }
-    dispatch(doUpdateHotels(payload))
-    props.setShowModalEdit(false)
-  }
-
   return (
     <>
       <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50  outline-none focus:outline-none">
-        <div className="relative  my-6 mx-auto w-4/6">
-          <form onSubmit={sumitEditHotel} ref={FormRef}>
+        <div className="relative mt-28 my-6 mx-auto w-4/6">
+          <form onSubmit={submitEditFacility} ref={FormRef}>
             {/*content*/}
             <div
               className={`border-0  rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none`}
             >
               {/*header*/}
               <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                <h3 className="text-xl font-bold">Edit Hotel</h3>
+                <h3 className="text-xl font-bold">Edit Facility</h3>
                 <button
                   className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                   onClick={() => setShowModalEdit(false)}
@@ -111,119 +200,341 @@ export default function ModalAdd(props) {
                 </button>
               </div>
               {/*body*/}
-              <div className="relative p-6 flex-auto">
-                <div className="mb-6 flex items-center">
-                  <label
-                    for="hotel_name"
-                    className="block text-sm font-semibold w-1/6 text-textPrimary dark:text-white"
-                  >
-                    Hotel Name
-                  </label>
-                  <input
-                    type="text"
-                    id="hotel_name"
-                    className="bg-gray-50 border focus:bg-white border-gray-300 text-textPrimary text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 placeholder:italic placeholder:text-slate-400 dark:text-white dark:focus:ring-bgPrimary dark:focus:border-bgPrimary  focus:outline-none focus:border-bgPrimary  focus:ring-bgPrimary  focus:ring-1"
-                    placeholder="Nama Hotel..."
-                    required
-                    name="hotel_name"
-                    value={newHotel.hotel_name}
-                    onChange={handleChangeNewHotel}
-                  />
-                </div>
-
-                <div className="mb-6 flex items-center">
-                  <label
-                    for="hotel_phonenumber"
-                    className="block font-semibold  text-sm  w-1/6 text-textPrimary dark:text-white"
-                  >
-                    Phone Number
-                  </label>
-                  <input
-                    type="text"
-                    id="hotel_phonenumber"
-                    className="bg-gray-50 border focus:bg-white placeholder:italic placeholder:text-slate-400 border-gray-300 text-textPrimary text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-bgPrimary  dark:focus:border-bgPrimary  focus:outline-none focus:border-bgPrimary  focus:ring-bgPrimary  focus:ring-1"
-                    required
-                    placeholder="+62..."
-                    name="hotel_phonenumber"
-                    value={newHotel.hotel_phonenumber}
-                    onChange={handleChangeNewHotel}
-                  />
-                </div>
-
-                <div className="mb-6">
-                  <div className="primary flex items-center">
+              <div className="relative p-6 flex-auto ">
+                <div className="faciname-category flex justify-between gap-3">
+                  <div className="faci mb-6 items-center w-full">
                     <label
-                      for="hotel_addr_id"
-                      className="block text-sm font-semibold w-1/6 text-textPrimary dark:text-white"
+                      for="faci_name"
+                      className="w-1/3 block mb-2 text-sm font-semibold text-textPrimary dark:text-white"
                     >
-                      Address
+                      Faci Name
                     </label>
+                    <input
+                      type="text"
+                      id="faci_name"
+                      className="bg-gray-50 border border-gray-300 text-textPrimary text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 placeholder:italic placeholder:text-slate-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1"
+                      placeholder="Facility Name ..."
+                      required
+                      name="faci_name"
+                      value={newFacility.faci_name}
+                      onChange={handleChangenewFacility}
+                    />
+                  </div>
+                  <div className="category mb-6 w-full relative">
+                    <label className="block  mb-2 text-sm font-semibold text-gray-900 dark:text-white">
+                      Category
+                    </label>
+                    <button
+                      // id="dropdownDefaultButton"
+                      onClick={() => setDropdown(!dropdown)}
+                      className="text-white gap-6 bg-bgPrimary/90 w-full hover:bg-bgPrimary focus:ring-4 focus:outline-none focus:ring-bgPrimary/30 font-normal rounded-lg text-sm px-4 py-2.5 text-center flex justify-between items-center dark:bg-bgPrimary relative dark:hover:bg-bgPrimary dark:focus:ring-bgPrimary"
+                      type="button"
+                    >
+                      <p>{selectCategory}</p>
+                      <svg
+                        className="w-4 h-4 ml-2"
+                        aria-hidden="true"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M19 9l-7 7-7-7"
+                        ></path>
+                      </svg>
+                    </button>
 
-                    <textarea
-                      className="h-12  px-3 shadow-sm focus:bg-white sm:text-sm resize-none bg-gray-50 border placeholder:italic placeholder:text-slate-400 border-gray-300 text-textPrimary text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-bgPrimary  dark:focus:border-bgPrimary  focus:outline-none focus:border-bgPrimary  focus:ring-bgPrimary  focus:ring-1"
-                      value={addressInput}
-                      ref={searchInputRef}
-                      name="hotel_addr_id"
-                      onChange={e => {
-                        search(e)
-                        setShowAddress(true)
-                        setAddressInput(e.target.value)
-                      }}
-                      placeholder="address ..."
-                      id="hotel_addr_id"
-                      cols="30"
-                      rows="3"
-                    ></textarea>
+                    {dropdown && (
+                      <ul className="shadow-xl w-full text-sm text-gray-700 mt-2 rounded-lg dark:text-gray-200 absolute z-10  ">
+                        {categoryList.map(ct => (
+                          <li
+                            className="bg-purple-100 px-4 py-3 hover:bg-bgPrimary hover:rounded-md hover:text-white   cursor-pointer"
+                            faci_cagro_id={ct.faci_cagro_id}
+                            cagro_name={ct.cagro_name}
+                            onClick={handleChangeCategory}
+                          >
+                            {ct.cagro_name}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </div>
+
+                <div className="room-vacant-measure-expose flex justify-between gap-3">
+                  <div className="room-vacant-measure mb-6 flex gap-3 items-center w-full">
+                    <div className="room-number  items-center w-1/2">
+                      <label
+                        for="faci_room_number"
+                        className="w-full mb-2 block text-sm font-semibold text-textPrimary dark:text-white"
+                      >
+                        Room Number
+                      </label>
+                      <input
+                        type="text"
+                        id="faci_room_number"
+                        className="bg-gray-50 border border-gray-300 text-textPrimary text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 placeholder:italic placeholder:text-slate-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1"
+                        placeholder="Room Number ..."
+                        required
+                        name="faci_room_number"
+                        value={newFacility.faci_room_number}
+                        onChange={handleChangenewFacility}
+                      />
+                    </div>
+                    <div className="Max-Vacant items-center w-1/2">
+                      <label
+                        for="faci_max_number"
+                        className="w-full mb-2 block text-sm font-semibold text-textPrimary dark:text-white"
+                      >
+                        Max Vacant
+                      </label>
+
+                      <input
+                        type="number"
+                        id="faci_max_number"
+                        className="bg-gray-50 border border-gray-300 text-textPrimary text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 placeholder:italic placeholder:text-slate-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1"
+                        placeholder="Max Vacant ..."
+                        required
+                        name="faci_max_number"
+                        value={newFacility.faci_max_number}
+                        onChange={handleChangenewFacility}
+                      />
+                    </div>
                   </div>
 
-                  {showAddress && address?.length > 0 && (
-                    <>
-                      <div className="flex items-center">
-                        <div className="space w-1/6"></div>
-                        <ul
-                          ref={textSearchRef}
-                          className="list mt-3 bg-white text-textPrimary rounded-md border w-full"
+                  <div className="measure mb-6 w-full relative">
+                    <label className="block  mb-2 text-sm font-semibold text-gray-900 dark:text-white">
+                      Measure Unit
+                    </label>
+                    <button
+                      onClick={() => setDropdownMeasure(!dropdownMeasure)}
+                      className="text-white gap-6 bg-bgPrimary/90 w-full hover:bg-bgPrimary focus:ring-4 focus:outline-none focus:ring-bgPrimary/30 font-normal rounded-lg text-sm px-4 py-2.5 text-center flex justify-between items-center dark:bg-bgPrimary relative dark:hover:bg-bgPrimary dark:focus:ring-bgPrimary"
+                      type="button"
+                    >
+                      <p>{selectMeasureUnit}</p>
+                      <svg
+                        className="w-4 h-4 ml-2"
+                        aria-hidden="true"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M19 9l-7 7-7-7"
+                        ></path>
+                      </svg>
+                    </button>
+
+                    {dropdownMeasure && (
+                      <ul className="shadow-xl w-full text-sm text-gray-700 mt-2 rounded-lg dark:text-gray-200 absolute z-10  ">
+                        {measureUnitList.map(measure => (
+                          <li
+                            className="bg-purple-100 px-4 py-3 hover:bg-bgPrimary hover:rounded-md hover:text-white   cursor-pointer"
+                            faci_measure_unit={measure}
+                            onClick={handleChangeMeasureUnit}
+                          >
+                            {measure}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </div>
+
+                <div className="low-highprice discount-tax flex justify-between gap-3">
+                  <div className="low-high-expose w-1/2 flex  justify-between gap-3">
+                    <div className="mb-6 low items-center w-full">
+                      <label
+                        for="faci_low_price"
+                        className="w-full block mb-2 text-sm font-semibold text-textPrimary dark:text-white"
+                      >
+                        Low Price
+                      </label>
+                      <input
+                        type="text"
+                        id="faci_low_price"
+                        className="bg-gray-50 border border-gray-300 text-textPrimary text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 placeholder:italic placeholder:text-slate-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1"
+                        placeholder="Low Price ..."
+                        required
+                        name="faci_low_price"
+                        value={newFacility.faci_low_price}
+                        onChange={handleChangenewFacility}
+                      />
+                    </div>
+                    <div className="mb-6 high items-center w-full">
+                      <label
+                        for="faci_high_price"
+                        className="w-full block mb-2 text-sm font-semibold text-textPrimary dark:text-white"
+                      >
+                        Max Price
+                      </label>
+                      <input
+                        type="text"
+                        id="faci_high_price"
+                        className="bg-gray-50 border border-gray-300 text-textPrimary text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 placeholder:italic placeholder:text-slate-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1"
+                        placeholder="Hight Price ..."
+                        required
+                        name="faci_high_price"
+                        value={newFacility.faci_high_price}
+                        onChange={handleChangenewFacility}
+                      />
+                    </div>
+                    <div className="expose mb-6 w-full relative">
+                      <label className="block w-full  mb-2 text-sm font-semibold text-gray-900 dark:text-white">
+                        Expose Price
+                      </label>
+                      <button
+                        onClick={() => setDropdownExpose(!dropdownExpose)}
+                        className="text-white gap-6 bg-bgPrimary/90 w-full hover:bg-bgPrimary focus:ring-4 focus:outline-none focus:ring-bgPrimary/30 font-normal rounded-lg text-sm px-4 py-2.5 text-center flex justify-between items-center dark:bg-bgPrimary relative dark:hover:bg-bgPrimary dark:focus:ring-bgPrimary"
+                        type="button"
+                      >
+                        <p>{selectExpo}</p>
+                        <svg
+                          className="w-4 h-4 ml-2"
+                          aria-hidden="true"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
                         >
-                          {address.map(add => (
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M19 9l-7 7-7-7"
+                          ></path>
+                        </svg>
+                      </button>
+
+                      {dropdownExpose && (
+                        <ul className="shadow-xl w-full text-sm text-gray-700 mt-2 rounded-lg dark:text-gray-200 absolute z-10  ">
+                          {expoPriceList.map(expo => (
                             <li
-                              className="py-2 px-5 hover:bg-bgPrimary/10 cursor-pointer"
-                              onClick={e => {
-                                setNewHotel(prev => {
-                                  return {
-                                    ...prev,
-                                    hotel_addr_id: add.addr_id,
-                                  }
-                                })
-                                setAddressInput(add.full_address)
-                                setShowAddress(false)
-                              }}
+                              className="bg-purple-100 px-4 py-3 hover:bg-bgPrimary hover:rounded-md hover:text-white   cursor-pointer"
+                              faci_expose_price={expo}
+                              onClick={handleChangeExpo}
                             >
-                              {add.full_address}
+                              {expo}
                             </li>
                           ))}
                         </ul>
-                      </div>
-                    </>
-                  )}
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="discount-tax w-1/2 disc-tax flex justify-between gap-3">
+                    <div className="discount mb-6 items-center w-full">
+                      <label
+                        for="faci_discount"
+                        className="w-1/3 block mb-2 text-sm font-semibold text-textPrimary dark:text-white"
+                      >
+                        Discount
+                      </label>
+                      <input
+                        type="text"
+                        id="faci_discount"
+                        className="bg-gray-50 border border-gray-300 text-textPrimary text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 placeholder:italic placeholder:text-slate-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1"
+                        placeholder="Discount ..."
+                        required
+                        name="faci_discount"
+                        value={newFacility.faci_discount}
+                        onChange={handleChangenewFacility}
+                      />
+                    </div>
+                    <div className="tax mb-6 items-center w-full">
+                      <label
+                        for="faci_tax_rate"
+                        className="w-1/3 block mb-2 text-sm font-semibold text-textPrimary dark:text-white"
+                      >
+                        Tax
+                      </label>
+                      <input
+                        type="text"
+                        id="faci_tax_rate"
+                        className="bg-gray-50 border border-gray-300 text-textPrimary text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 placeholder:italic placeholder:text-slate-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1"
+                        placeholder="Tax ..."
+                        required
+                        name="faci_tax_rate"
+                        value={newFacility.faci_tax_rate}
+                        onChange={handleChangenewFacility}
+                      />
+                    </div>
+                  </div>
                 </div>
 
-                <div className="mb-6">
-                  <label
-                    for="hotel_description"
-                    className="block mb-2 text-sm font-semibold text-textPrimary dark:text-white"
-                  >
-                    Description
-                  </label>
-                  <textarea
-                    type="text"
-                    value={newHotel.hotel_description}
-                    id="hotel_description"
-                    className="border focus:bg-white w-full placeholder:italic placeholder:text-slate-400 block bg-gray-50 h-28 border-slate-300 rounded-lg py-4 px-3 shadow-sm focus:outline-none focus:border-bgPrimary  focus:ring-bgPrimary  focus:ring-1 sm:text-sm resize-none "
-                    placeholder="description..."
-                    required
-                    name="hotel_description"
-                    onChange={handleChangeNewHotel}
-                  />
+                <div className="start-enddate flex justify-between gap-3">
+                  <div date-rangepicker class=" items-center w-1/2">
+                    <label className="block  mb-2 text-sm font-semibold text-gray-900 dark:text-white">
+                      Start Date
+                    </label>
+                    <Datepicker
+                      primaryColor={"violet"}
+                      inputId="start-date"
+                      inputName="start-date"
+                      useRange={false}
+                      asSingle={true}
+                      value={startDate}
+                      displayFormat={"DD/MM/YYYY"}
+                      onChange={e => {
+                        const payload = {
+                          e,
+                          name: "faci_startdate",
+                        }
+                        handleDate(payload)
+                      }}
+                      inputClassName="font-normal bg-green-100 dark:bg-green-900 dark:placeholder:text-green-100 bg-gray-50 border border-gray-300 text-textPrimary text-sm rounded-lg   dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 placeholder:italic placeholder:text-slate-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1"
+                    />
+                  </div>
+                  <div date-rangepicker class=" items-center w-1/2">
+                    <label className="block  mb-2 text-sm font-semibold text-gray-900 dark:text-white">
+                      End Date
+                    </label>
+                    <Datepicker
+                      primaryColor={"violet"}
+                      inputId="end-date"
+                      inputName="end-date"
+                      useRange={false}
+                      asSingle={true}
+                      value={endDate}
+                      displayFormat={"DD/MM/YYYY"}
+                      onChange={e => {
+                        const payload = {
+                          e,
+                          name: "faci_enddate",
+                        }
+                        handleDate(payload)
+                      }}
+                      inputClassName="font-normal bg-green-100 dark:bg-green-900 dark:placeholder:text-green-100 bg-gray-50 border border-gray-300 text-textPrimary text-sm rounded-lg   dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 placeholder:italic placeholder:text-slate-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1"
+                    />
+                  </div>
+                </div>
+                <div className="description w-full mt-5">
+                  <div className="mb-6">
+                    <label
+                      for="faci_description"
+                      className="block mb-2 text-sm font-semibold text-textPrimary dark:text-white"
+                    >
+                      Description
+                    </label>
+                    <textarea
+                      type="text"
+                      id="faci_description"
+                      className="border w-full placeholder:italic placeholder:text-slate-400 block bg-white h-20 border-slate-300 rounded-lg py-4 px-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm resize-none "
+                      placeholder="description ..."
+                      required
+                      name="faci_description"
+                      value={newFacility.faci_description}
+                      onChange={handleChangenewFacility}
+                    />
+                  </div>
                 </div>
               </div>
               {/*footer*/}
@@ -238,9 +549,9 @@ export default function ModalAdd(props) {
                 <button
                   for="submit"
                   type="submit"
-                  className="  bg-bgPrimary/80  px-5 py-3  hover:bg-bgPrimary text-white active:bg-emerald-600 font-normal rounded-xl  uppercase text-sm shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  className=" bg-bgPrimary/80   hover:bg-bgPrimary text-white active:bg-emerald-600 font-normal rounded-xl uppercase text-sm px-5 py-3  shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 >
-                  Save Changes
+                  Add Facility
                 </button>
               </div>
             </div>

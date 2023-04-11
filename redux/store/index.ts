@@ -10,8 +10,6 @@ import { createLogger } from "redux-logger"
 import rootSaga from "../sagaPublic/index"
 import { accountReducers } from "../PAYMENT/reducer/accountsReducer"
 import vendorReducers from "../PURCHASING/reducer/vendorReducer"
-import { addressReducers } from "../HOTELS/reducer/addressReducers"
-import { facilitiesReducers } from "../HOTELS/reducer/facilitesReducers"
 import stockReducers from "../PURCHASING/reducer/stockReducer"
 import listOrderReducers from "../PURCHASING/reducer/listOrderReducer"
 import { bankReducers } from "../PAYMENT/reducer/bankReducer"
@@ -21,6 +19,9 @@ import { adminRestoReducers } from "../RESTO/reducer/adminReducer"
 import { restomenureducers } from "../RESTO/reducer/restomenuReducer"
 import { orderrestoreducers } from "../RESTO/reducer/orderReducer"
 import galleryReducers from "../PURCHASING/reducer/galleryReducer"
+import { addressReducers } from "../HOTELS/reducer/addressReducers"
+import { facilitiesReducers } from "../HOTELS/reducer/facilitesReducers"
+import { facilitiesHistoryReducers } from "../HOTELS/reducer/facilityPriceHistoryReducers"
 
 const logger = createLogger()
 const saga = createSagaMiddleware()
@@ -32,6 +33,7 @@ const reducer = combineReducers({
   hotelsReducers,
   addressReducers,
   facilitiesReducers,
+  facilitiesHistoryReducers,
 
   bankReducers,
   vendorReducers,

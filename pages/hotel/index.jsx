@@ -41,11 +41,10 @@ export default function Hotel() {
     if (search.length == 0) {
       setPagination(1)
     }
-    console.log(search.length)
   }
 
   const router = useRouter()
-  console.log(search)
+
   React.useEffect(() => {
     if (search.length > 0) {
       const payload = {
@@ -142,7 +141,7 @@ export default function Hotel() {
         <table class="table-auto  w-full border-collapse border-x border-slate-200">
           <thead className="bg-bgGray">
             <tr className="border-t border-slate-200 text-textGray ">
-              <th className="font-normal p-3">No</th>
+              <th className="font-normal px-3 py-5">No</th>
               <th className="font-normal">Hotel Name</th>
               <th className="font-normal">Rating Star</th>
               <th className="font-normal">Modified Date</th>
@@ -154,12 +153,14 @@ export default function Hotel() {
               hotels?.length > 0 &&
               hotels.map(hotel => (
                 <tr
-                  className="text-center text-textSecondary font-regular border-t border-slate-200 relative"
+                  className={`text-center text-textSecondary font-regular border-t border-slate-200 relative ${
+                    hotel.row_number % 2 == 0 ? "bg-bgPrimary/5" : "bg-inherit"
+                  }`}
                   key={hotel.hotel_id}
                 >
-                  <td className="p-3">{hotel.row_number}</td>
+                  <td className="px-3 py-4">{hotel.row_number}</td>
                   <td>
-                    <Link href={`/hotel/${hotel.hotel_id}`}>
+                    <Link href={`/hotel/facility/${hotel.hotel_id}`}>
                       {hotel.hotel_name}
                     </Link>
                   </td>
@@ -208,7 +209,7 @@ export default function Hotel() {
                       >
                         edit
                       </li>
-                      <Link href={`/hotel/${hotel.hotel_id}`}>
+                      <Link href={`/hotel/facility/${hotel.hotel_id}`}>
                         <li className="hover:bg-neutral-100 p-2 px-3 cursor-pointer">
                           Facility
                         </li>

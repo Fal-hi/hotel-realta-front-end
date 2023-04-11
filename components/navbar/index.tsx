@@ -9,7 +9,7 @@ import Menualt from "@/components/icons/MenuAlt"
 const Navbar = ({ showNav, setShowNav,screenWidth }: any) => {
   return (
     <div className={`${navbarCss.navbar} ${
-      screenWidth >= 768 && showNav ? "pl-64" : ""
+      screenWidth >= 768 && showNav ? "pl-64" : "pl-10"
     }`}>
       <div className={"flex justify-center items-center"}>
         <button

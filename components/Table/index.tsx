@@ -4,12 +4,12 @@ import PropTypes from "prop-types"
 const Table = ({ cols, data, children }: any) => {
   return (
     <>
-      <section className="container">
+      <section className="container overflow-x-auto">
         <div className="flex flex-col">
-          <div className="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
-            <div className="w-full py-2 align-middle md:px-6 lg:px-8 ">
-              <div className=" border border-gray-200 dark:border-gray-700 md:rounded-lg shadow-md">
-                <table className="w-full ">
+          <div className="">
+            <div className="inline-block min-w-full py-2 align-middle ">
+              <div className=" border border-gray-200 dark:border-gray-700 md:rounded-lg shadow">
+                <table className="w-full min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                   <thead className="bg-gray-50 dark:bg-gray-800">
                     <tr>
                       {(cols || []).map((headerItem: any, index: any) => (
@@ -23,7 +23,7 @@ const Table = ({ cols, data, children }: any) => {
                       ))}
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                  <tbody className=" divide-gray-200 divide-y dark:divide-gray-700 dark:bg-gray-900">
                     {(data || []).map((item: any, index: any) => (
                       <tr key={index} className="hover:bg-gray-50">
                         {cols.map((col: any, key: any) => (
