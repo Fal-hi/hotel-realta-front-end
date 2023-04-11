@@ -33,6 +33,7 @@ const Department = () => {
     id: 0,
     isShow: false,
   })
+
   const header = ["Departmen ID", "Department"]
   const { data, refresh } = useSelector(
     (state: any) => state.departmentReducers
@@ -46,6 +47,7 @@ const Department = () => {
 
   const handleSearchChange = (e: any): void => {
     setSearch(e.target.value)
+    setPage(1)
   }
   const closeDeleteModal = (): void => {
     setIsDelete((prev: any) => {
@@ -89,8 +91,8 @@ const Department = () => {
         >
           <Pagination
             pagination={{
-              totalPage: data.totalPage,
-              page: data.page,
+              totalPage: +data.totalPage,
+              page: +data.page,
             }}
             setPage={setPage}
           />

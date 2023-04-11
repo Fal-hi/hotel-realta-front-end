@@ -20,7 +20,7 @@ export default function App() {
         <div>
           <div className="rounded-lg">
             <img
-              className="rounded-3xl w-[1170px] h-[500px]"
+              className="rounded-3xl h-[720px] w-[100%]  "
               src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=50"
               alt=""
             />
@@ -140,34 +140,33 @@ export default function App() {
           </div>
           <div className="grid grid-cols-4 gap-4">
             <div>
-            <img
-                  className="rounded-lg h-30"
-                  src="https://images.unsplash.com/photo-1645696329525-8ec3bee460a9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1029&q=80"
-                  alt=""
-                />
+              <img
+                className="rounded-lg h-30"
+                src="https://images.unsplash.com/photo-1645696329525-8ec3bee460a9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1029&q=80"
+                alt=""
+              />
             </div>
             <div>
-            <img
-                  className="rounded-lg h-30"
-                  src="https://images.unsplash.com/photo-1645696329525-8ec3bee460a9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1029&q=80"
-                  alt=""
-                />
+              <img
+                className="rounded-lg h-30"
+                src="https://images.unsplash.com/photo-1645696329525-8ec3bee460a9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1029&q=80"
+                alt=""
+              />
             </div>
             <div>
-            <img
-                  className="rounded-lg h-30"
-                  src="https://images.unsplash.com/photo-1645696329525-8ec3bee460a9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1029&q=80"
-                  alt=""
-                />
+              <img
+                className="rounded-lg h-30"
+                src="https://images.unsplash.com/photo-1645696329525-8ec3bee460a9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1029&q=80"
+                alt=""
+              />
             </div>
             <div>
-            <img
-                  className="rounded-lg h-30"
-                  src="https://images.unsplash.com/photo-1645696329525-8ec3bee460a9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1029&q=80"
-                  alt=""
-                />
+              <img
+                className="rounded-lg h-30"
+                src="https://images.unsplash.com/photo-1645696329525-8ec3bee460a9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1029&q=80"
+                alt=""
+              />
             </div>
-
           </div>
         </div>
       </div>

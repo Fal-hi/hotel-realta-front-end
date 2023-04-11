@@ -5,9 +5,7 @@ import Table from "@/components/Table"
 import { tableConstants } from "./listHeader"
 import Breadcumb from "@/components/breadcumb"
 import { Pagination } from "@/components/pagination"
-import {
-  doReqGetListOrder,
-} from "@/redux/PURCHASING/action/actionListOrder"
+import { doReqGetListOrder } from "@/redux/PURCHASING/action/actionListOrder"
 import SwitchStatus from "./switchStatus"
 import { Modal } from "@/components/modal"
 import DeleteListOrder from "./deleteListOrder"
@@ -71,17 +69,17 @@ export default function ListOrder() {
           <div>
             <SearchInput onChange={handleSearchChange} />
           </div>
-          <div
-            className="grid grid-cols-1 gap-4 max-w-xl m-auto"
-          >
+          <div className="grid grid-cols-1 gap-4 max-w-xl m-auto">
             <select
               id="pohe_status"
               className="bg-violet-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
             dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            onChange={handleSearchStatChange}
-            value={searchStat}
+              onChange={handleSearchStatChange}
+              value={searchStat}
             >
-              <option selected value="">Choose a status</option>
+              <option selected value="">
+                Choose a status
+              </option>
               <option value="1">Pending</option>
               <option value="2">Approved</option>
               <option value="3">Rejected</option>
