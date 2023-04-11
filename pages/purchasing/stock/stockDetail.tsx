@@ -14,7 +14,7 @@ export default function StockDetail(props: any) {
   const stockId = router.query.stock_id
   const stockName = router.query.stock_name
 
-  const { stock, message, refresh } = useSelector(
+  const { findStock, message, refresh } = useSelector(
     (state: any) => state.stockReducers
   )
   // console.log("tes",stock?.data?.data)
@@ -43,9 +43,15 @@ export default function StockDetail(props: any) {
   console.log(stockId)
 
   useEffect(() => {
-    dispatch(doGetFindStock(stockId))
+    if (stockId) {
+      dispatch(doGetFindStock(stockId))
+      localStorage.setItem('stockId',JSON.stringify(stockId))
+    }
+    return () => {
+      localStorage.removeItem('stockId')
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refresh])
+  }, [refresh, stockId])
   // console.log(purchaseOrder)
   // console.log("ts=>",listOrder?.data?.data[0]?.purchase_order_details)
 
@@ -67,7 +73,7 @@ export default function StockDetail(props: any) {
 
       <Table
         cols={tableConstants(editOpen)}
-        data={stock?.data?.data.stock_details}
+        data={findStock?.data?.data.stock_details}
       />
 
       <div style={{ marginTop: "1rem" }}>

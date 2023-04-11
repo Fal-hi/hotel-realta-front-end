@@ -58,7 +58,7 @@ export const tableConstants = (setIsOpen?: any) => {
     {
       title: "Used In",
       render: (data: any) => {
-        return <span>{data.stod_faci_id}</span>
+        return <span>{data.facilities.faci_room_number}</span>
       },
     },
 

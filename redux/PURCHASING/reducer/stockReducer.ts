@@ -2,6 +2,7 @@ import ActionTypes from "../action/actionType";
 
 const initialState = {
     stock: {},
+    findStock: {},
     message: '',
     refresh: '',
 };
@@ -18,7 +19,7 @@ function stockReducers(state = initialState, action: any) {
         case ActionTypes.DEL_STOCK_RESPONSE:
             return {message: payload, refresh: false};  
         case ActionTypes.FIND_STOCK_RESPONSE:
-            return {...state, stock: payload, refresh: true};  
+            return {...state, findStock: payload, refresh: true};  
         case ActionTypes.UPDATE_STOD_RESPONSE:
             return {message: payload.message, refresh: false};
         case ActionTypes.ADD_PHOTOS_RESPONSE:

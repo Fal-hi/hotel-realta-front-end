@@ -83,9 +83,16 @@ export default function DetailListOrder(props: any) {
   }
 
   useEffect(() => {
-    dispatch(doGetFindListOrder(purchaseOrder))
+    if (purchaseOrder) {
+      dispatch(doGetFindListOrder(purchaseOrder))
+      localStorage.setItem('purchaseOrder', JSON.stringify(purchaseOrder))
+    }
+    return () => {
+      localStorage.removeItem('purchaseOrder')
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refresh])
+  }, [refresh, purchaseOrder])
+  
   // console.log(purchaseOrder)
   // console.log("ts=>",listOrder?.data?.data[0]?.purchase_order_details)
 

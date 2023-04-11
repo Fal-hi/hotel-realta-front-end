@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import "react-datepicker/dist/react-datepicker.css"
 import { useRouter } from "next/router"
 import { doAddStod } from "@/redux/PURCHASING/action/actionStod"
+import { getFacilities } from "@/api/purchasing/apiPurchasing"
 
 export default function AddGenerate(props: any) {
   const router = useRouter()
@@ -19,15 +20,31 @@ export default function AddGenerate(props: any) {
     stod_faci_id: number
     stod_pohe_id: number
   }
+  
+  type Facilities = {
+    faci_id: number
+    faci_room_number: string
+  }
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>()
-   let { listOrder, message, refresh } = useSelector(
+  let { listOrder, message, refresh } = useSelector(
     (state: any) => state.listOrderReducers
-   )
+  )
   const dispatch = useDispatch()
+
+  const [facilities, setFacilities] = useState<Facilities[]>([])
+
+  useEffect(() => {
+    const fetchFacilities = async () => {
+      const data = await getFacilities()
+      setFacilities(data)
+    }
+    fetchFacilities()
+  }, [])
 
   const [data, setData] = useState<any>({})
 
@@ -57,7 +74,7 @@ export default function AddGenerate(props: any) {
   return (
     <div>
       <div className="px-5">
-        <form onSubmit={handleSubmit(handleEdit, handleError)}>  
+        <form onSubmit={handleSubmit(handleEdit, handleError)}>
           <div
             className="grid grid-cols-1 gap-4 max-w-xl m-auto"
             style={{ marginTop: "1rem" }}
@@ -77,8 +94,10 @@ export default function AddGenerate(props: any) {
             </select>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 max-w-xl m-auto relative"
-          style={{ marginTop: "1rem" }}>
+          <div
+            className="grid grid-cols-1 gap-4 max-w-xl m-auto relative"
+            style={{ marginTop: "1rem" }}
+          >
             <label>Notes</label>
             <div className="grid grid-cols-1 gap-4 max-w-xl relative">
               <input
@@ -92,7 +111,7 @@ export default function AddGenerate(props: any) {
               {errors?.stod_notes && errors.stod_notes.message}
             </small>
           </div>
-
+{/* 
           <div className="grid grid-cols-1 gap-4 max-w-xl m-auto relative">
             <label>Use In</label>
             <div className="grid grid-cols-1 gap-4 max-w-xl relative">
@@ -106,6 +125,25 @@ export default function AddGenerate(props: any) {
             <small className="text-danger">
               {errors?.stod_faci_id && errors.stod_faci_id.message}
             </small>
+          </div> */}
+
+          <div
+            className="grid grid-cols-1 gap-4 max-w-xl m-auto"
+          >
+            <label>Use In Room</label>
+            <select
+              id="countries"
+              className="bg-violet-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+                           dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              {...register("stod_faci_id", registerOptions.stod_faci_id)}
+            >
+              <option selected>Choose a room number</option>
+              {facilities.map(facilitiess => (
+                <option value={facilitiess.faci_id} key={facilitiess.faci_id}>
+                  {facilitiess.faci_room_number}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="flex justify-end items-center mt-4 p-5">
@@ -122,7 +160,6 @@ export default function AddGenerate(props: any) {
               Cancel
             </button>
           </div>
-
         </form>
       </div>
     </div>
