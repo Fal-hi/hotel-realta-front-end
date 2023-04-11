@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { format } from 'date-fns'
+import { useState } from "react"
+import { format } from "date-fns"
 
 interface InputDateProps {
   name: string

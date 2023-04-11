@@ -6,7 +6,6 @@ import Link from "next/link"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import { useState } from "react"
-import { format } from "date-fns"
 import RoomGuest from "@/components/select/RoomGuest"
 
 export default function SearchBooking(props: any) {
@@ -47,8 +46,8 @@ export default function SearchBooking(props: any) {
               selectsStart
               startDate={checkinDate}
               endDate={checkoutDate}
-              dateFormat="dd/MM/yyyy"
-              className="px-3 py-1 w-28 text-xs text-[#667085] bg-white border-[#8A92A6] border-2 rounded-md outline-none mr-2"
+              dateFormat="d MMMM, yyyy"
+              className="px-3 py-1 w-32 text-xs text-[#667085] bg-white border-[#8A92A6] border-2 rounded-md outline-none mr-2"
               popperPlacement="bottom-start"
             />
             <DatePicker
@@ -58,8 +57,8 @@ export default function SearchBooking(props: any) {
               startDate={checkinDate}
               endDate={checkoutDate}
               minDate={checkinDate}
-              dateFormat="dd/MM/yyyy"
-              className="px-3 py-1 w-28 text-xs text-[#667085] bg-white border-[#8A92A6] border-2 rounded-md outline-none"
+              dateFormat="d MMMM, yyyy"
+              className="px-3 py-1 w-32 text-xs text-[#667085] bg-white border-[#8A92A6] border-2 rounded-md outline-none"
               popperPlacement="bottom-start"
             />
           </div>

@@ -8,23 +8,23 @@ import { useEffect } from "react"
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter()
-  const isOneLoginPage =
-    !router.pathname.startsWith("/users/signupEmployee") &&
+  const Layout =
+    router.pathname !== "/" &&
+    !router.pathname.startsWith("/booking") &&
+    !router.pathname.startsWith("/resto/restomenus")
+    && !router.pathname.startsWith("/users/signupEmployee") &&
     !router.pathname.startsWith("/users/signupGuest") &&
     !router.pathname.startsWith("/users/loginGuest") &&
     !router.pathname.startsWith("/users/loginEmployee") &&
     router.pathname !== "/_error"
-
   return (
     <Provider store={store}>
-      {isOneLoginPage ? (
+      {Layout ? (
         <BaseLayout>
           <Component {...pageProps} />
         </BaseLayout>
       ) : (
-        // <BaseLayout>
         <Component {...pageProps} />
-        // </BaseLayout>
       )}
     </Provider>
   )
