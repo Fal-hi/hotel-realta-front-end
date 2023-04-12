@@ -68,8 +68,10 @@ function* handlegetWorkOrderDetail(action: any): any {
 }
 function* handlecreateWorkOrderDetail(action: any): any {
   try {
-    const { data } = action.payload
-    const result = yield call(workOrderApi.createWorkOrderDetail, data)
+    const result = yield call(
+      workOrderApi.createWorkOrderDetail,
+      action.payload
+    )
 
     yield put(createWorkOrderDetailResponse(result.data))
   } catch (error) {
@@ -78,8 +80,10 @@ function* handlecreateWorkOrderDetail(action: any): any {
 }
 function* handlegetEmployeeNameOption(action: any): any {
   try {
-    const { nameLike } = action.payload
-    const result = yield call(workOrderApi.getEmployeeNameOption, nameLike)
+    const result = yield call(
+      workOrderApi.getEmployeeNameOption,
+      action.payload
+    )
 
     yield put(getEmployeeNameOptionResponse(result.data))
   } catch (error) {
@@ -88,8 +92,7 @@ function* handlegetEmployeeNameOption(action: any): any {
 }
 function* handlegetTaskName(action: any): any {
   try {
-    const { tasklike } = action.payload
-    const result = yield call(workOrderApi.getTaskName, tasklike)
+    const result = yield call(workOrderApi.getTaskName, action.payload)
 
     yield put(getTaskNameResponse(result.data))
   } catch (error) {

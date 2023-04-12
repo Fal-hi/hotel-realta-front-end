@@ -14,6 +14,7 @@ import {
   getDepartmentOption,
   getJobRoleOption,
   getShift,
+  getShiftById,
   getUsersForSearchEmployeeOption,
 } from "@/redux/HR/action/employee"
 import Shift from "./shift"
@@ -21,9 +22,10 @@ import Shift from "./shift"
 const FormEmployee = () => {
   const dispatch = useDispatch()
   const [fileName, setFileName] = useState(null)
-  const { users, usersProfiles, jobRoles, departments } = useSelector(
+  const { users, usersProfiles, jobRoles, departments, shift } = useSelector(
     (state: any) => state.employeeReducers
   )
+
   const handleDrop = (event: any) => {
     event.preventDefault()
     event.stopPropagation()
@@ -163,11 +165,11 @@ const FormEmployee = () => {
 
   const [shiftId, setShiftId] = useState<number[]>([])
 
-  const handleSetShiftId = (id: number, index: number) => {
-    const updatedShiftId = [...shiftId]
-    updatedShiftId[index] = id
-    setShiftId(updatedShiftId)
-  }
+  // const handleSetShiftId = (id: number, index: number) => {
+  //   const updatedShiftId = [...shiftId]
+  //   updatedShiftId[index] = id
+  //   setShiftId(updatedShiftId)
+  // }
 
   const [shiftTime, setShiftTime] = useState<any>([])
   const handleShiftTIme = (nomor: number, val: any) => {
@@ -175,7 +177,7 @@ const FormEmployee = () => {
     //   startTime: val.shift_start_time,
     //   endTime: val.shift_end_time,
     // })
-    console.log("val", val)
+    // console.log("val", val)
     // const updatedShiftTime = [...shiftTime]
     // updatedShiftTime[index] = {
     //   startTime: val.shift_start_time,
@@ -186,19 +188,64 @@ const FormEmployee = () => {
     // // console.log("updatedShiftTime", updatedShiftTime)
   }
 
-  const handlePlusShift = () => {
-    setShiftTime((prev: any) => {
-      return [...prev, { id: shiftTime.length + 1 }]
-    })
-  }
+  // const handleChangeShiftTest = (id: number, index: number) => {
+  //   const updatedShiftId = [...shiftTest]
+  //   updatedShiftId[index].shiftID = id
+  //   setShiftTest(updatedShiftId)
 
-  React.useEffect(() => {
+  //   dispatch(getShiftById(id))
+  // }
+
+  // const handleTest = (shift: any, index: number) => {
+  //   const updatedShift = [...shiftTest]
+  //   updatedShift[index].shiftStartTime = shift.shift_start_time
+  //   updatedShift[index].shiftEndTime = shift.shift_end_time
+
+  //   setShiftId(updatedShift)
+  // }
+
+  // const [shiftTest, setShiftTest] = useState<any>([
+  //   { shiftID: 0, shiftStartTime: "00:00", shiftEndTime: "00:00" },
+  // ])
+
+  // useEffect(() => {
+  //   if (shift && shift.shift_id !== 0) {
+  //     // console.log(shift.shift_id)
+
+  //     var index = shiftTest
+  //       .map((o: any) => Number(o.shiftID))
+  //       .indexOf(shift.shift_id)
+
+  //     if (index !== -1) {
+  //       handleTest(shift, index)
+  //     }
+  //   }
+  // }, [shift, shiftTest])
+
+  // console.log("Shift Test", shiftTest)
+
+  // const handlePlusShift = () => {
+  //   // setShiftTime((prev: any) => {
+  //   //   return [...prev, { id: shiftTime.length + 1 }]
+  //   // })
+
+  //   setShiftTest((prev: any) => {
+  //     return [
+  //       ...prev,
+  //       { shiftID: 0, shiftStartTime: "00:00", shiftEndTime: "00:00" },
+  //     ]
+  //   })
+  // }
+
+  useEffect(() => {
     setShiftTime([
       {
         id: 1,
       },
     ])
   }, [])
+
+  console.log(shift)
 
   const handleMinShift = () => {
     const lastIndex = shiftTime.length - 1
@@ -208,24 +255,14 @@ const FormEmployee = () => {
     setShiftId(updatedShiftId)
   }
 
-  console.log(shiftTime)
+  // console.log(shiftTime)
 
   const arrShift = []
 
   for (let i = 0; i < shiftTime.length; i++) {
-    console.log(shiftTime[i])
+    // console.log(shiftTime[i])
     const element = shiftTime[i]
-    arrShift.push(
-      <Shift
-        key={i}
-        id={shiftTime[i].id}
-        handle={handleSetShiftId}
-        shiftTime={shiftTime}
-        setShiftTime={setShiftTime}
-        handleShiftTIme={handleShiftTIme}
-        nomor={i}
-      />
-    )
+    arrShift.push(<Shift key={i} />)
   }
 
   const handleRegistration = (data: any) => {
@@ -251,9 +288,10 @@ const FormEmployee = () => {
 
       shift_id: JSON.stringify(shiftId),
     }
-    console.log("employeValue => ", employeValue)
+    // console.log("employeValue => ", employeValue)
     dispatch(createEmployee(employeValue))
   }
+
   return (
     <>
       <form onSubmit={handleSubmit(handleRegistration, handleError)}>
@@ -464,7 +502,7 @@ const FormEmployee = () => {
               />
             </div>
           </div>
-          <div className="flex px-5 mb-2">
+          {/* <div className="flex px-5 mb-2">
             <div>
               <Typography variant={variants.lgbold}>Shift</Typography>
             </div>
@@ -480,17 +518,23 @@ const FormEmployee = () => {
             >
               -
             </div>
-          </div>
+          </div> */}
 
-          {arrShift}
-          {/* {(muchShift || []).map((sh: any, i: number) => (
-            <Shift
-              key={i}
-              handle={handleSetShiftId}
-              shiftTime={shiftTime}
-              handleShiftTIme={handleShiftTIme}
-              index={i}
-            />
+          <Shift />
+
+          {/* {shiftTest.map((test: any, index: any) => (
+            <>
+              <input
+                type="text"
+                value={test.shiftID}
+                onChange={(e: any) =>
+                  handleChangeShiftTest(e.target.value, index)
+                }
+              />
+              <input type="time" value={test.shiftStartTime} />
+              <input type="time" value={test.shiftEndTime} />
+              <br />
+            </>
           ))} */}
         </div>
         <div className="bg-gray-50  py-5 sm:flex sm:flex-row-reverse sm:px-6">

@@ -1,5 +1,8 @@
 import Table from "@/components/Table"
+import AddButton from "@/components/addButton"
+import CreateTask from "@/components/hr/createTask"
 import { BgPrimary } from "@/components/icons"
+import { Modal } from "@/components/modal"
 import { getWorkOrderDetail } from "@/redux/HR/action/workorder"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
@@ -8,7 +11,8 @@ import { useDispatch, useSelector } from "react-redux"
 const WorkOrderDetail = () => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const { id } = router.query
+
+  // const parsedData = JSON.parse(data)
   const { workorderDetail, refresh } = useSelector(
     (state: any) => state.workorderReducers
   )
@@ -37,8 +41,17 @@ const WorkOrderDetail = () => {
   }, [workorderDetail, refresh])
 
   useEffect(() => {
+    const url = window.location.href
+    const parts = url.split("/")
+    const id = parts[parts.length - 1]
     dispatch(getWorkOrderDetail(id))
   }, [])
+
+  const [modal, setModal] = useState({
+    isShown: false,
+  })
+
+  // console.log(modal)
 
   return (
     <div className="font-poppins-regular">
@@ -55,11 +68,11 @@ const WorkOrderDetail = () => {
           </div>
           <div className="info-2 flex flex-col justify-center ">
             <p className="text-white font-thin">{workorderDetailData.status}</p>
-            {/* <RatingStars
-                count={hotel?.length > 0 ? hotel.hotel_rating_star : "0"}
-              /> */}
           </div>
         </div>
+      </div>
+      <div className="flex mt-2 justify-end mr-2">
+        <AddButton onClick={() => setModal({ isShown: true })} />
       </div>
       <div>
         <Table
@@ -95,17 +108,21 @@ const WorkOrderDetail = () => {
               },
             },
           ]}
-          data={[
-            {
-              id: 63,
-              taskname: "Service Task 1",
-              notes: "Cleaning Room 209",
-              status: "INPROGRESS",
-              assignTo: "guest4",
-            },
-          ]}
+          data={workorderDetail?.workOrderDetail}
         ></Table>
       </div>
+      {modal.isShown ? (
+        <Modal
+          header="Create Task"
+          onClose={() =>
+            setModal({
+              isShown: false,
+            })
+          }
+        >
+          <CreateTask workOrderId={workorderDetail?.id} />
+        </Modal>
+      ) : null}
     </div>
   )
 }

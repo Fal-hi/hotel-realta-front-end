@@ -1,6 +1,7 @@
 import { Listbox } from "@headlessui/react"
 import React from "react"
-import { ChevronDown } from "../icons"
+import ChevronDown from "../icons/ChevronDown"
+// import { ChevronDown } from "../icons"
 
 interface IProps {
   value: any

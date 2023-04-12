@@ -23,7 +23,13 @@ const PopUpWorkorder = ({ onEditClick, idWorkOrder }: any) => {
           Edit
         </Menu.Item>
         <Menu.Item as="div" className="py-2 px-2 cursor-pointer">
-          <Link href={`/hr/workorder/${idWorkOrder}`}>Workorder Detail</Link>
+          <Link
+            href={{
+              pathname: `/hr/workorder/${idWorkOrder}`,
+            }}
+          >
+            Workorder Detail
+          </Link>
         </Menu.Item>
       </Menu.Items>
     </Menu>
