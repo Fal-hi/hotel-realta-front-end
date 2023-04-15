@@ -11,6 +11,7 @@ import { Pagination } from "@/components/pagination"
 // import { Pagination } from "@/components/pagination"
 import { SearchInput } from "@/components/searchInput"
 import ShowingResult from "@/components/showingResult"
+import { TolocaleDate } from "@/functions/toLocaleDate"
 import { getEmployee } from "@/redux/HR/action/employee"
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
@@ -134,13 +135,13 @@ const Employee = () => {
             {
               title: "Birth Date",
               render: (data: any) => {
-                return <span>{data.emp_birth_date}</span>
+                return <span>{TolocaleDate(data.emp_birth_date)}</span>
               },
             },
             {
               title: "Hire Date",
               render: (data: any) => {
-                return <span>{data.emp_hire_date}</span>
+                return <span>{TolocaleDate(data.emp_hire_date)}</span>
               },
             },
             {
