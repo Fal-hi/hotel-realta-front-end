@@ -28,6 +28,7 @@ const ComboboxHr = ({
           <Magnifier />
         </div>
         <Combobox.Input
+          autoComplete="off"
           placeholder="Select"
           onChange={inputChanges}
           className={`border relative rounded-r-md p-1.5 block w-full mb-3 bg-[#F9FAFB] focus:border-[#DADADA] focus:outline-none`}

@@ -45,6 +45,7 @@
   "devDependencies": {
     "@types/react-datepicker": "^4.10.0",
     "@types/redux-logger": "^3.0.9",
+    "@types/zxcvbn": "^4.4.1",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.21",
     "tailwind-styled-components": "^2.2.0",
