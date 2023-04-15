@@ -49,6 +49,11 @@ export const getVendors = async () => {
     return response.data
 }
 
+export const getEmployee = async () => {
+    const response = await axios.get('purchasing/employee');
+    return response.data
+}
+
 
 const removeVepro = (id: number) => {
     return axios.delete(`purchasing/vendor-product/${id}`)

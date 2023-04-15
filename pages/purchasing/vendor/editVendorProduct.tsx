@@ -32,8 +32,10 @@ export default function EditVendroProduct(props: any) {
   const dispatch = useDispatch()
 
   const [data, setData] = useState<any>({})
-  console.log(data)
-  console.log(vendor?.data?.data)
+
+  const newVendor=vendor?.data?.data[0]?.vendor_product
+  console.log(newVendor)
+  console.log(vendor?.data?.data[0]?.vendor_product[0]?.stock?.stock_name)
 
   const [stocks, setStocks] = useState<Stocks[]>([])
 
@@ -89,11 +91,10 @@ export default function EditVendroProduct(props: any) {
             <label>Stock Name</label>
             <select
               id="countries"
-              className="bg-violet-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-                           dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
               {...register("vepro_stock_id", registerOptions.vepro_stock_id)}
             >
-              <option selected>Choose a category</option>
+              <option selected>Choose a stock</option>
               {stocks.map(stock => (
                 <option value={stock.stock_id} key={stock.stock_id}>
                   {stock.stock_name}
@@ -108,8 +109,7 @@ export default function EditVendroProduct(props: any) {
               <input
                 type="number"
                 id="quantity"
-                className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
-      text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+                className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
                 style={{ width: "100px" }}
                 defaultValue={data?.vepro_qty_stocked}
                 {...register(
@@ -127,8 +127,7 @@ export default function EditVendroProduct(props: any) {
               <input
                 type="number"
                 id="reorder"
-                className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
-      text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+                className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
                 style={{ width: "100px" }}
                 {...register(
                   "vepro_qty_remaining",
@@ -146,8 +145,7 @@ export default function EditVendroProduct(props: any) {
             <label>Sell Price</label>
             <div className="grid grid-cols-1 gap-4 max-w-xl relative">
               <input
-                className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
-                            text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+                className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
                 type="text"
                 {...register("vepro_price", registerOptions.vepro_price)}
               />

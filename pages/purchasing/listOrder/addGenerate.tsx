@@ -82,8 +82,7 @@ export default function AddGenerate(props: any) {
             <label>Status</label>
             <select
               id="stod_status"
-              className="bg-violet-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-            dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
               {...register("stod_status", registerOptions.stod_status)}
             >
               <option selected>Choose a status</option>
@@ -101,8 +100,7 @@ export default function AddGenerate(props: any) {
             <label>Notes</label>
             <div className="grid grid-cols-1 gap-4 max-w-xl relative">
               <input
-                className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
-                            text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+                className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
                 type="text"
                 {...register("stod_notes", registerOptions.stod_notes)}
               />
@@ -133,8 +131,7 @@ export default function AddGenerate(props: any) {
             <label>Use In Room</label>
             <select
               id="countries"
-              className="bg-violet-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-                           dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
               {...register("stod_faci_id", registerOptions.stod_faci_id)}
             >
               <option selected>Choose a room number</option>

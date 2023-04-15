@@ -10,7 +10,8 @@ export default function App({ Component, pageProps }: AppProps) {
   const Layout =
     router.pathname !== "/" &&
     !router.pathname.startsWith("/booking") &&
-    !router.pathname.startsWith("/resto/restomenus")
+    !router.pathname.startsWith("/resto/restomenus") &&
+    !router.pathname.startsWith("/purchasing/gallery")
 
   return (
     <Provider store={store}>

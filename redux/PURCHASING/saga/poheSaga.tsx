@@ -5,7 +5,7 @@ import { doAddPhotosResponse, doAddPoheResponse, doGetPhotosResponse } from "../
 function* handleAddPohe(action: any): any {
     try {
         const result = yield call(ApiPurchasing.createPohe, action.payload)
-        console.log(result)
+        console.log("--------->",result)
         yield put(doAddPoheResponse(result.data))
     }
     catch (error) {

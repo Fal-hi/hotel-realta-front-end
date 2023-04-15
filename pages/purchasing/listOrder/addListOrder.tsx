@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import { BsCalendar2Date } from "react-icons/bs"
-import { getVendors } from "@/api/purchasing/apiPurchasing"
+import { getEmployee, getVendors } from "@/api/purchasing/apiPurchasing"
 import { doAddPohe } from "@/redux/PURCHASING/action/actionPohe"
 
 export default function AddListOrder(props: any) {
@@ -22,6 +22,11 @@ export default function AddListOrder(props: any) {
     pohe_emp_id: number
     pohe_vendor_id: number
   }
+
+  type Employee = {
+    emp_id: number
+  }
+
   const {
     register,
     handleSubmit,
@@ -98,6 +103,16 @@ export default function AddListOrder(props: any) {
     pohe_vendor_id: { required: "Vendor type is required" },
   }
 
+  const [employee, setEmployee] = useState<Employee[]>([])
+
+  useEffect(() => {
+    const fetchEmployee = async () => {
+      const data = await getEmployee()
+      setEmployee(data)
+    }
+    fetchEmployee()
+  }, [])
+
 
   return (
     <div>
@@ -110,8 +125,7 @@ export default function AddListOrder(props: any) {
             <label>Status</label>
             <select
               id="pohe_status"
-              className="bg-violet-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-            dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
               {...register("pohe_status", registerOptions.pohe_status)}
             >
               <option selected>Choose a status</option>
@@ -128,8 +142,7 @@ export default function AddListOrder(props: any) {
             <div className="grid grid-cols-1 gap-4 max-w-xl relative">
               <DatePicker
                 dateFormat="yyyy/MM/dd"
-                className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium w-full
-                            text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+                className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
                 selected={selectedDate}
                 onChange={handleDateChange}
               /> <BsCalendar2Date className="absolute right-0 top-0 mt-3 mr-3 text-gray-400" size={20} />
@@ -149,8 +162,7 @@ export default function AddListOrder(props: any) {
             <label>Tax %</label>
             <div className="grid grid-cols-1 gap-4 max-w-xl relative">
               <input
-                className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
-                            text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
                 type="text"
                 {...register("pohe_tax", registerOptions.pohe_tax)}
               />
@@ -160,28 +172,12 @@ export default function AddListOrder(props: any) {
             </small>
           </div>
 
-          {/* <div className="grid grid-cols-1 gap-4 max-w-xl m-auto relative">
-            <label>Refund</label>
-            <div className="grid grid-cols-1 gap-4 max-w-xl relative">
-              <input
-                className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
-                            text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
-                type="text"
-                {...register("pohe_refund", registerOptions.pohe_refund)}
-              />
-            </div>
-            <small className="text-danger">
-              {errors?.pohe_refund && errors.pohe_refund.message}
-            </small>
-          </div> */}
-
           <div className="grid grid-cols-1 gap-4 max-w-xl m-auto relative">
             <label>Arrival Date</label>
             <div className="grid grid-cols-1 gap-4 max-w-xl relative">
               <DatePicker
                 dateFormat="yyyy/MM/dd"
-                className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium w-full
-                            text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+                className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
                 selected={selectedDate2}
                 onChange={handleDateChange2}
               /> <BsCalendar2Date className="absolute right-0 top-0 mt-3 mr-3 text-gray-400" size={20} />
@@ -204,8 +200,7 @@ export default function AddListOrder(props: any) {
             <label>Pay Type</label>
             <select
               id="pohe_pay_type"
-              className="bg-violet-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-            dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
               {...register("pohe_pay_type", registerOptions.pohe_pay_type)}
             >
               <option selected>Choose a pay type</option>
@@ -214,7 +209,7 @@ export default function AddListOrder(props: any) {
             </select>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 max-w-xl m-auto relative">
+          {/* <div className="grid grid-cols-1 gap-4 max-w-xl m-auto relative">
             <label>Empolyee ID</label>
             <div className="grid grid-cols-1 gap-4 max-w-xl relative">
               <input
@@ -227,6 +222,24 @@ export default function AddListOrder(props: any) {
             <small className="text-danger">
               {errors?.pohe_emp_id && errors.pohe_emp_id.message}
             </small>
+          </div> */}
+
+          <div
+            className="grid grid-cols-1 gap-4 max-w-xl m-auto"
+          >
+            <label>Empolyee ID</label>
+            <select
+              id="text"
+              className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
+              {...register("pohe_emp_id", registerOptions.pohe_emp_id)}
+            >
+              <option selected>Choose a employee id</option>
+              {employee.map(employeee => (
+                <option value={employeee.emp_id} key={employeee.emp_id}>
+                  {employeee.emp_id}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="grid grid-cols-1 gap-4 max-w-xl m-auto"
@@ -234,8 +247,7 @@ export default function AddListOrder(props: any) {
             <label>Vendor</label>
             <select
               id="countries"
-              className="bg-violet-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-                           dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
               {...register("pohe_vendor_id", registerOptions.pohe_vendor_id)}
             >
               <option selected>Choose a vendor</option>

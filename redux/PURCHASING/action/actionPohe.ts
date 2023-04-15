@@ -1,16 +1,17 @@
 import ActionTypes from "./actionType";
 
 export const doAddPohe = (payload: any) => {
+    console.log("action", payload)
     return {
         type: ActionTypes.ADD_POHE,
         payload
     }
 }
 
-export const doAddPoheResponse = (payload: any) => {
+export const doAddPoheResponse = (result: any) => {
     return {
         type: ActionTypes.ADD_POHE_RESPONSE,
-        payload
+        payload: result
     }
 }
 

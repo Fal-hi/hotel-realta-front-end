@@ -28,6 +28,9 @@ const Header = () => {
             <li className="list-none px-5 hover:border-2 rounded-md py-1 hover:border-bgPrimary">
             <Link href="/resto/restomenus">Resto</Link>  
             </li>
+            <li className="list-none px-5 hover:border-2 rounded-md py-1 hover:border-bgPrimary">
+            <Link href="/purchasing/gallery">Purchasing</Link>  
+            </li>
           </ul>
         </div>
         <div

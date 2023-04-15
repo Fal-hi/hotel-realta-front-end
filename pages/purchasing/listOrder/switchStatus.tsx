@@ -62,8 +62,7 @@ export default function SwitchStatus(props: any) {
             <label>Status</label>
             <select
               id="pohe_status"
-              className="bg-violet-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-            dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
               {...register("pohe_status", registerOptions.pohe_status)}
             >
               <option selected>Choose a status</option>
@@ -75,7 +74,7 @@ export default function SwitchStatus(props: any) {
             </select>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 max-w-xl m-auto relative"
+          {/* <div className="grid grid-cols-1 gap-4 max-w-xl m-auto relative"
           style={{ marginTop: "1rem" }}>
             <label>Tax %</label>
             <div className="grid grid-cols-1 gap-4 max-w-xl relative">
@@ -90,7 +89,7 @@ export default function SwitchStatus(props: any) {
             <small className="text-danger">
               {errors?.pohe_tax && errors.pohe_tax.message}
             </small>
-          </div>
+          </div> */}
 
           <div className="flex justify-end items-center mt-4 p-5">
             <button

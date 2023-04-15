@@ -77,8 +77,7 @@ export default function EditStock(props: any) {
           >
             <label>Stock Name</label>
             <input
-              className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
-                            text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+              className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
               type="text"
               defaultValue={data?.stock_name}
               {...register("stock_name", registerOptions.stock_name)}
@@ -91,8 +90,7 @@ export default function EditStock(props: any) {
           <div className="grid grid-cols-1 gap-4 max-w-xl m-auto">
             <label>Description</label>
             <input
-              className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
-                            text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+              className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
               type="text"
               defaultValue={data?.stock_description}
               {...register(
@@ -107,12 +105,26 @@ export default function EditStock(props: any) {
 
           <div className="flex gap-4 max-w-xl m-auto">
             <div className="w-1/3 grid grid-cols-1 gap-4">
+              <label htmlFor="reorder">Quantity </label>
+              <input
+                type="number"
+                id="quantity"
+                className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
+                style={{ width: "100px" }}
+                defaultValue={data?.stock_quantity}
+                {...register("stock_quantity", registerOptions.stock_quantity)}
+              />
+              <small className="text-danger">
+                {errors?.stock_quantity && errors.stock_quantity.message}
+              </small>
+            </div>
+
+            <div className="w-1/3 grid grid-cols-1 gap-4">
               <label htmlFor="reorder">Reorder </label>
               <input
                 type="number"
                 id="reorder"
-                className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
-      text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+                className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
                 style={{ width: "100px" }}
                 defaultValue={data?.stock_reorder_point}
                 {...register(
@@ -156,12 +168,11 @@ export default function EditStock(props: any) {
               {errors?.stock_scrap && errors.stock_scrap.message}
             </small>
           </div>*/}
-        
+
             <div className="w-1/3 grid grid-cols-1 gap-4">
               <label>Size</label>
               <input
-                className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
-      text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+                className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
                 type="text"
                 style={{ width: "100px" }}
                 defaultValue={data?.stock_size}
@@ -175,8 +186,7 @@ export default function EditStock(props: any) {
             <div className="w-1/3 grid grid-cols-1 gap-4">
               <label>Color</label>
               <input
-                className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
-      text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+                className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
                 type="text"
                 style={{ width: "100px" }}
                 defaultValue={data?.stock_color}

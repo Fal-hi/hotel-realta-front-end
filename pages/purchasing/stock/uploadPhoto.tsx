@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
@@ -8,6 +9,8 @@ import { doAddPhotos } from "@/redux/PURCHASING/action/actionPohe"
 export default function UploadPhoto(props: any) {
   const router = useRouter()
   const stockId = router.query.stock_id
+  const stockName = router.query.stock_name
+
   type FormValues = {
     spho_thumbnail_filename: string
     spho_photo_filename: string
@@ -25,47 +28,34 @@ export default function UploadPhoto(props: any) {
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null)
   const [previewUrls, setPreviewUrls] = useState<string[]>([])
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
+    const files = event.target.files
     if (files) {
-      setSelectedFiles(files);
-      const urls: string[] = [];
+      setSelectedFiles(files)
+      const urls: string[] = []
       for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const url = URL.createObjectURL(file);
-        urls.push(url);
+        const file = files[i]
+        const url = URL.createObjectURL(file)
+        urls.push(url)
       }
-      setPreviewUrls(urls);
+      setPreviewUrls(urls)
     }
-  };
+  }
 
   const handleRegistration = async (data: FormValues) => {
-    const formData = new FormData();
-    formData.append("spho_thumbnail_filename", data.spho_thumbnail_filename);
-    formData.append("spho_photo_filename", data.spho_photo_filename);
-    formData.append("spho_primary", data.spho_primary);
-    formData.append("spho_stock_id", data.spho_stock_id);
+    const formData = new FormData()
+    formData.append("spho_thumbnail_filename", data.spho_thumbnail_filename)
+    formData.append("spho_photo_filename", data.spho_photo_filename)
+    formData.append("spho_primary", data.spho_primary)
+    formData.append("spho_stock_id", data.spho_stock_id)
     if (selectedFiles) {
       for (let i = 0; i < selectedFiles.length; i++) {
-        formData.append("spho_url", selectedFiles[i]);
+        formData.append("spho_url", selectedFiles[i])
       }
     }
-    dispatch(doAddPhotos(formData));
-    console.log(formData);
-    props.closeModal();
-  };
-
-  // const handleRegistration = async (data: FormValues) => {
-  //   const dataForm = {
-  //     spho_thumbnail_filename: data.spho_thumbnail_filename,
-  //     spho_photo_filename: data.spho_photo_filename,
-  //     spho_primary: data.spho_primary,
-  //     spho_url: data.spho_url[0],
-  //     spho_stock_id: stockId,
-  //   }
-  //   dispatch(doAddPhotos(dataForm))
-  //   console.log(dataForm)
-  //   props.closeModal()
-  // }
+    dispatch(doAddPhotos(formData))
+    console.log(formData)
+    props.closeModal()
+  }
 
   const handleError = (errors: any) => {}
 
@@ -81,12 +71,13 @@ export default function UploadPhoto(props: any) {
     <div>
       <div className="px-5">
         <form onSubmit={handleSubmit(handleRegistration, handleError)}>
-          <div className="grid grid-cols-1 gap-4 max-w-xl m-auto"
-          style={{ marginTop: "1rem" }}>
+          <div
+            className="grid grid-cols-1 gap-4 max-w-xl m-auto"
+            style={{ marginTop: "1rem" }}
+          >
             <label>Stock ID</label>
             <input
-              className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
-                            text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+              className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
               type="text"
               value={stockId}
               {...register("spho_stock_id", registerOptions.spho_stock_id)}
@@ -96,7 +87,7 @@ export default function UploadPhoto(props: any) {
             </small>
           </div>
 
-          <div
+          {/* <div
             className="grid grid-cols-1 gap-4 max-w-xl m-auto"
           >
             <label>Thumbnail FIlename</label>
@@ -113,13 +104,12 @@ export default function UploadPhoto(props: any) {
               {errors?.spho_thumbnail_filename &&
                 errors.spho_thumbnail_filename.message}
             </small>
-          </div>
+          </div> */}
 
           <div className="grid grid-cols-1 gap-4 max-w-xl m-auto">
             <label>Photo Filename</label>
             <input
-              className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
-                            text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+              className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
               type="text"
               {...register(
                 "spho_photo_filename",
@@ -135,8 +125,7 @@ export default function UploadPhoto(props: any) {
           <div className="grid grid-cols-1 gap-4 max-w-xl m-auto">
             <label>Primary</label>
             <input
-              className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
-                            text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+              className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
               type="text"
               {...register("spho_primary", registerOptions.spho_primary)}
             />
@@ -148,8 +137,7 @@ export default function UploadPhoto(props: any) {
           <div className="grid grid-cols-1 gap-4 max-w-xl m-auto">
             <label>Photo</label>
             <input
-              className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
-              text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+              className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
               type="file"
               multiple
               {...register("spho_url", registerOptions.spho_url)}
