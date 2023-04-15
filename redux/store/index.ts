@@ -20,6 +20,11 @@ import { restomenureducers } from "../RESTO/reducer/restomenuReducer"
 import { orderrestoreducers } from "../RESTO/reducer/orderReducer"
 import galleryReducers from "../PURCHASING/reducer/galleryReducer"
 import { addressReducers } from "../HOTELS/reducer/addressReducers"
+
+import loginReducers from "../USERS/reducer/loginReducer"
+import passwordReducers from "../USERS/reducer/passwordReducer"
+import generalReducers from "../USERS/reducer/generalReducer"
+import registerReducers from "../USERS/reducer/registerReducer"
 import { facilitiesReducers } from "../HOTELS/reducer/facilitesReducers"
 import { facilitiesHistoryReducers } from "../HOTELS/reducer/facilityPriceHistoryReducers"
 
@@ -39,6 +44,10 @@ const reducer = combineReducers({
   vendorReducers,
   stockReducers,
   listOrderReducers,
+  loginReducers,
+  registerReducers,
+  passwordReducers,
+  generalReducers,
   fintechReducers,
   accountReducers,
   transactionReducers,

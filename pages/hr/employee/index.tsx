@@ -1,13 +1,17 @@
 import Table from "@/components/Table"
 import AddButton from "@/components/addButton"
+import DepartmentHistory from "@/components/hr/departmentHistories"
 import FormEmployee from "@/components/hr/formEmployee"
 import PopUp from "@/components/hr/popUp"
+import SalaryHistory from "@/components/hr/salaryHistory"
+import UpdateEmployee from "@/components/hr/updateEmployee"
 import DotsVertical from "@/components/icons/DotsVertical"
 import { Modal } from "@/components/modal"
 import { Pagination } from "@/components/pagination"
 // import { Pagination } from "@/components/pagination"
 import { SearchInput } from "@/components/searchInput"
 import ShowingResult from "@/components/showingResult"
+import { TolocaleDate } from "@/functions/toLocaleDate"
 import { getEmployee } from "@/redux/HR/action/employee"
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
@@ -49,6 +53,21 @@ const Employee = () => {
   const handleStatusChange = (e: any) => {
     setStatus(e.target.value)
   }
+
+  const [edit, setEdit] = useState({
+    id: 0,
+    isShown: false,
+  })
+
+  const [salary, setSalary] = useState({
+    id: 0,
+    isShown: false,
+  })
+  const [department, setdepartment] = useState({
+    id: 0,
+    isShown: false,
+  })
+
   return (
     <div className="flex w-full font-poppins-regular">
       <div className="flex flex-col items-start px-5 mt-10 w-full">
@@ -116,13 +135,13 @@ const Employee = () => {
             {
               title: "Birth Date",
               render: (data: any) => {
-                return <span>{data.emp_birth_date}</span>
+                return <span>{TolocaleDate(data.emp_birth_date)}</span>
               },
             },
             {
               title: "Hire Date",
               render: (data: any) => {
-                return <span>{data.emp_hire_date}</span>
+                return <span>{TolocaleDate(data.emp_hire_date)}</span>
               },
             },
             {
@@ -144,7 +163,19 @@ const Employee = () => {
                   <>
                     <PopUp
                       handleEdit={() =>
-                        setUpdate({
+                        setEdit({
+                          id: data.emp_id,
+                          isShown: true,
+                        })
+                      }
+                      handleSalary={() =>
+                        setSalary({
+                          id: data.emp_id,
+                          isShown: true,
+                        })
+                      }
+                      handleDepartment={() =>
+                        setdepartment({
                           id: data.emp_id,
                           isShown: true,
                         })
@@ -168,11 +199,53 @@ const Employee = () => {
       </div>
       {update.isShown ? (
         <Modal
-          header="Edit Employee"
+          header="Create Employee"
           onClose={handleUpdateClose}
           terserah="sm:max-w-screen-xl"
         >
           <FormEmployee />
+        </Modal>
+      ) : null}
+      {edit.isShown ? (
+        <Modal
+          header="Update Emploee"
+          onClose={() =>
+            setEdit({
+              id: 0,
+              isShown: false,
+            })
+          }
+          terserah="sm:max-w-screen-xl"
+        >
+          <UpdateEmployee idEmployee={edit.id} />
+        </Modal>
+      ) : null}
+      {salary.isShown ? (
+        <Modal
+          header="Salary History"
+          onClose={() =>
+            setSalary({
+              id: 0,
+              isShown: false,
+            })
+          }
+          terserah="sm:max-w-screen-xl"
+        >
+          <SalaryHistory idEmployee={salary.id} />
+        </Modal>
+      ) : null}
+      {department.isShown ? (
+        <Modal
+          header="Department History"
+          onClose={() =>
+            setdepartment({
+              id: 0,
+              isShown: false,
+            })
+          }
+          terserah="sm:max-w-screen-xl"
+        >
+          <DepartmentHistory idEmployee={department.id} />
         </Modal>
       ) : null}
     </div>

@@ -5,9 +5,11 @@ import DotsVertical from "../icons/DotsVertical"
 interface Iprops {
   active?: boolean
   handleEdit: () => void
+  handleSalary: () => void
+  handleDepartment: () => void
 }
 
-const PopUp = ({ handleEdit }: Iprops) => {
+const PopUp = ({ handleEdit, handleSalary, handleDepartment }: Iprops) => {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <Menu.Button>
@@ -21,10 +23,18 @@ const PopUp = ({ handleEdit }: Iprops) => {
         >
           Edit
         </Menu.Item>
-        <Menu.Item as="div" className="py-2 px-2 cursor-pointer">
+        <Menu.Item
+          as="div"
+          className="py-2 px-2 cursor-pointer"
+          onClick={handleSalary}
+        >
           Salary History
         </Menu.Item>
-        <Menu.Item as="div" className="py-2 px-2 cursor-pointer">
+        <Menu.Item
+          as="div"
+          className="py-2 px-2 cursor-pointer"
+          onClick={handleDepartment}
+        >
           Department History
         </Menu.Item>
       </Menu.Items>

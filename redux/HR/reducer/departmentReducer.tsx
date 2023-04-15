@@ -13,19 +13,29 @@ export function departmentReducers(state = initialState, action: Iaction) {
   switch (type) {
     case ActionTypes.GET_DEPARTMENT_RESPONSE:
       return {
+        ...state,
         data: payload.data,
         refresh: true,
       }
     case ActionTypes.CREATE_DEPARTMENT_RESPONSE:
-      return { data: payload.data, refresh: true }
+      return {
+        ...state,
+        createDepartment: payload.data,
+        response: "create",
+        refresh: true,
+      }
     case ActionTypes.DELETE_DEPARTMENT_RESPONSE:
       return {
-        data: payload.data,
+        ...state,
+        deleteDepartmentResponse: payload.data,
+        response: "delete",
         refresh: true,
       }
     case ActionTypes.UPDATE_DEPARTEMENT_RESPONSE:
       return {
-        data: payload.data,
+        ...state,
+        updateDepartment: payload.data,
+        response: "update",
         refresh: true,
       }
     default:
