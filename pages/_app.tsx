@@ -12,6 +12,8 @@ export default function App({ Component, pageProps }: AppProps) {
     router.pathname !== "/" &&
     !router.pathname.startsWith("/booking") &&
     !router.pathname.startsWith("/purchasing/gallery") &&
+    
+    !router.pathname.startsWith("/resto/orders")&&
 
     !router.pathname.startsWith("/resto/restomenus")
     && !router.pathname.startsWith("/users/signupEmployee") &&

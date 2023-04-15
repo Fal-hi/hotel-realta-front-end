@@ -1,8 +1,8 @@
 import axios from "../config";
 
 
-const getRestoall = (search: any, page: number, entry: number)=>{
-    return axios.get( `/resto-menus?search=${search}&page=${page}&limit=${entry}`);
+const getRestoall = (search: any, page: number, entry: number, sortType: string)=>{
+    return axios.get( `/resto-menus?search=${search}&page=${page}&limit=${entry}&sortType=${sortType}`);
 }
 
 const createRestoMenu = (data:any)=>{

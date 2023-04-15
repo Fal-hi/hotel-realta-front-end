@@ -30,7 +30,7 @@ export const tableConstants = (setIsEdit?: any, setIsDelete?: any, setIsAdd?:any
     {
       title: 'Status',
       render: (data:any) => {
-        return <span>{data.reme_status}</span>;
+        return <span className={data.reme_status == 'empty' ? 'text-red-600': 'text-green-400'}>{data.reme_status}</span>;
       },
     },
  {
