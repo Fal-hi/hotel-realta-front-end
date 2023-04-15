@@ -56,14 +56,20 @@ function* handleCreateEmployee(action: any): Generator<any, void, any> {
   }
 }
 
-function* handlegetEmployeeForUpdate(
-  action: IAction
-): Generator<any, void, any> {
+function* handlegetEmployeeForUpdate(action: any): any {
   try {
-    const { id } = action.payload as IEmployeeForUpdate
-    const result = yield call(employeeApi.getEmployeeForUpdate, id)
+    const result = yield call(employeeApi.getEmployeeForUpdate, +action.payload)
+
     yield put(getEmployeeForUpdateResponse(result.data))
-  } catch (error) {}
+  } catch (error) {
+    yield put(
+      getEmployeeForUpdateResponse({
+        statusCode: 400,
+        message: error,
+        data: [],
+      })
+    )
+  }
 }
 
 function* handleUpdateEmployee(action: IAction): Generator<any, void, any> {
@@ -115,8 +121,11 @@ function* handleGetUsersForSearchOptionEmployee(action: any): any {
 function* handleGetUserForProfiles(action: any): any {
   try {
     const result = yield call(employeeApi.getUserForProfiles, action.payload)
+
     yield put(geUsersForProfilesResponse(result.data))
-  } catch (error) {}
+  } catch (error) {
+    yield put(geUsersForProfilesResponse({ message: error }))
+  }
 }
 function* handleGetShift(action: any): any {
   try {

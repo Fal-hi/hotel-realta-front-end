@@ -7,7 +7,7 @@ import { Magnifier } from "../icons"
 import Typography from "../Typography"
 import variants from "../Typography/textcss"
 
-const Shift = () => {
+const Shift = ({ setShiftId }: any) => {
   const dispatch = useDispatch()
 
   const [query, setQuery] = useState("")
@@ -56,6 +56,17 @@ const Shift = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shift])
 
+  useEffect(() => {
+    if (shiftTest) {
+      const shfitId = []
+      for (let i = 0; i < shiftTest.length; i++) {
+        const element = shiftTest[i]
+        shfitId.push(element.shiftID)
+      }
+      setShiftId(shfitId)
+    }
+  }, [shiftTest])
+
   const handleTest = (shift: any, index: any) => {
     const updatedShift = [...shiftTest]
     updatedShift[index].shiftStartTime = shift.shift_start_time
@@ -71,7 +82,7 @@ const Shift = () => {
     }
   }
 
-  console.log("shiftTest", shiftTest)
+  // console.log("shiftTest", shiftTest)
 
   return (
     <>

@@ -39,7 +39,7 @@ export function employeeReducers(state = initialState, action: Iaction) {
     case ActionTypes.GET_EMPLOYEE_FOR_UPDATE_RESPONSE:
       return {
         ...state,
-        oneEmployee: payload.data,
+        oneEmployee: payload,
         refresh: true,
       }
     case ActionTypes.UPDATE_EMPLOYEE_RESPONSE:
