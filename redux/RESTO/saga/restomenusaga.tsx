@@ -11,18 +11,9 @@ function* handleAddRestoPhotos(action:any):any{
     }
 }
 
-// function* handleGetGuest():any {
-    
-//     try {
-//         const result = yield call(restoMenuApi.getaallguest)
-        
-//         yield put(getGuestMenuPhotoResponse(result.data))
-//     } catch (error) {
-//         yield put(getGuestMenuPhotoResponse({message:error}))
-//     }
-// }
+
 
 export {
     handleAddRestoPhotos,
-    // handleGetGuest
+   
 }

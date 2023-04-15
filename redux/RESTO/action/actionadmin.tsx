@@ -1,11 +1,12 @@
 import ActionTypes from "./actionType";
 
 ////////////////////////UNTUK MENAMPILKAN SEMUA DATA PADA RESTO MENU/////////////////////
-export const doGetRestoMenuAll = (search: string, page: number, entry: number)=>{
+export const doGetRestoMenuAll = (search: string, page: number, entry: number, sortType: string)=>{
     const payload = {
         search,
         page,
         entry,
+        sortType,
       };
     return {
             type: ActionTypes.GET_RESTOMENU,

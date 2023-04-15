@@ -8,13 +8,11 @@ const createRestoPhoto = (data:any)=>{
 })
 }
 
-// const getaallguest =()=>{
-//     return axios.get('/resto-menus/photo')
-// }
+
 
 const restoMenuApi = {
     createRestoPhoto,
-    // getaallguest
+  
 }
 
 export default restoMenuApi;

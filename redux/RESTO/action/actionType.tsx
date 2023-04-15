@@ -24,14 +24,15 @@ const ActionTypes ={
     ADD_RESTOMENU_PHOTOS_RESPONSE: 'ADD_RESTOMENU_PHOTOS_RESPONSE',
 
 
-    /////////////////////UNTUK MENAMPILKAN SEMUA DATA PADA MENU GUEST////////////////////////
-    // GET_GUEST: 'GET_GUEST',
-    // GET_GUEST_RESPONSE: 'GET_GUEST_RESPONSE',
-
-
     /////////////////////UNTUK MEMBUAT ORDER////////////////////////
     ADD_ORDER: 'ADD_ORDER',
     ADD_ORDER_RESPONSE: 'ADD_ORDER_RESPONSE',
+
+       /////////////////////UNTUK MENAMPILKAN BILL////////////////////////
+     GET_ORDER: 'GET_ORDER',
+     GET_ORDER_RESPONSE: 'GET_ORDER_RESPONSE',
+
+   
 
 };
 export default ActionTypes;

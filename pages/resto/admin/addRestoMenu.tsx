@@ -20,6 +20,7 @@ export default function AddRestoMenu(props: any) {
   };
   
   const handleError = (errors:any)=>{};
+
   const handleSave = async (data: FormValues) => {
      
     try {
@@ -48,45 +49,49 @@ export default function AddRestoMenu(props: any) {
         <form
             onSubmit={handleSubmit(handleSave, handleError)}
           >
-            <div className="border rounded-md p-3 flex items-center">
-              <label className="mr-4">Menu Name</label>
-              <input className="border rounded-md p-3 ml-3"
-                
-                type="text"
+            <div className="mb-4">
+            <label className="w-full mb-3">Menu Name</label>
+            <input
+              type="text"
+              className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
+              placeholder="Masukkan nama Menu"
                 {...register("reme_name", registerOptions.reme_name)}
               />
               <small className="text-danger">
                 {errors?.reme_name && errors.reme_name.message}
               </small>
             </div>
-            <div className="border rounded-md p-3 flex items-center">
-              <label className="mr-4">Description</label>
-              <input className="border rounded-md p-3 ml-4"
-                type="text"
-                style={{ width: '400px' }}
-                {...register("reme_description", registerOptions.reme_description)}
-              />
+            <div className="mb-4">
+            <label className="w-full mb-3">Description</label>
+            <input
+              type="text"
+              className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
+              placeholder="Masukkan deskripsi menu "
+              {...register("reme_description", registerOptions.reme_description)}
+            />
               <small className="text-danger">
                 {errors?.reme_description && errors.reme_description.message}
               </small>
             </div>
-           <div className="border rounded-md p-3 flex items-center">
-            <label className="mr-4">Price</label>
-            <input className="border rounded-md p-3 ml-16"
-                type="text"
-                {...register("reme_price", registerOptions.reme_price)}
+            <div className="mb-4">
+            <label className="w-full mb-3">Price</label>
+            <input
+              type="text"
+              className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
+              placeholder="Masukkan harga "
+                        {...register("reme_price", registerOptions.reme_price)}
             />
             <small className="text-danger">
                 {errors?.reme_price && errors.reme_price.message}
             </small>
             </div>
-            <div className="border rounded-md p-3 flex items-center">
-            <label className="mr-4">Status</label>
+            <div className="flex mb-4 items-center">
+            <label  className="mr-4">Status</label>
             <Switch
             checked={status}
             onChange={handleStatusChange}
-            className={`${status ? 'bg-teal-500' : 'bg-red-700'}
-              ml-10  relative inline-flex h-[38px] w-[74px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
+            className={`${status ? 'bg-teal-500' : 'bg-red-700'} 
+              ml-10  inline-flex h-[38px] w-[74px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
             >
             <span className="sr-only">Use setting</span>
             <span

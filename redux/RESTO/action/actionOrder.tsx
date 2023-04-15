@@ -13,3 +13,17 @@ export const doAddOrderRestoResponse = (payload:any)=>{
         payload
     }
 }
+export const doGetOrderResto = (payload:any)=>{
+    //  console.log('ini di action===>',payload)
+    return{
+        type : ActionTypes.GET_ORDER,
+        payload
+    }
+}
+
+export const doGetOrderRestoResponse = (payload:any)=>{
+    return{
+        type : ActionTypes.GET_ORDER_RESPONSE,
+        payload
+    }
+}

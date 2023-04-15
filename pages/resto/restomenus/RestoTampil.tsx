@@ -1,17 +1,15 @@
 import React, { Fragment, useEffect, useState } from "react"
-//import Carousel from "nuka-carousel"
 import { Carousel } from "react-responsive-carousel"
 import "react-responsive-carousel/lib/styles/carousel.min.css"
-import Breadcumb from "@/components/breadcumb"
 import { useDispatch, useSelector } from "react-redux"
-import { getGuestMenuPhoto } from "@/redux/RESTO/action/actionrestomenu"
-import { GiShoppingCart } from "react-icons/gi"
 import { doAddOrderResto } from "@/redux/RESTO/action/actionOrder"
-import formatRupiah from "@/functions/formatRupiah"
-import { OutlineButton } from "@/components/buttons/OutlineButton"
 import { Cart, Coupon } from "@/components/icons"
 import BgButton from "@/components/buttons/BgButton"
-import Link from "next/link"
+import { doGetRestoMenuAll } from "@/redux/RESTO/action/actionadmin"
+import { SearchInput } from "@/components/searchInput"
+import { Pagination } from "@/components/pagination"
+import router from "next/router"
+
 
 const RestoMenusTampil = () => {
   const { restophotos, refresh } = useSelector(
@@ -19,10 +17,26 @@ const RestoMenusTampil = () => {
   )
   const dispatch = useDispatch()
 
+  const { adminresto } = useSelector((state: any) => state.adminRestoReducers)
+
+  const { orderresto, message } = useSelector((state: any) => state.orderrestoreducers)
+
+  const [search, setSearch] = useState("")
+  const [page, setPage] = useState(1)
+  const [entry, setEntry] = useState(6)
+  const [sortType, setSortType] = useState("")
+  const [isOpen, setIsOpen] = useState(false)
+
   const [cart, setCart] = useState<any[]>([])
-  const [discount, setDiscount] = useState<number>(0)
+  
+
+  const handleSortTypeChange = (event:any) => {
+    setSortType(event.target.value);
+  };
 
   const [currentSlide, setCurrentSlide] = useState(0)
+
+  const [test, setTest] = useState(false);
 
   const handlePrevClick = () => {
     setCurrentSlide(prevSlide =>
@@ -36,23 +50,47 @@ const RestoMenusTampil = () => {
     )
   }
 
-  const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const handleSearchChange = (e: any): void => {
+    setSearch(e.target.value)
+  }
 
+  // const [showSuccessModal, setShowSuccessModal] = useState(false)
+  
   const createOrder = async (cart: any) => {
     const data = cart.map((item: any) => {
+      const discount = ((item.price * item.quantity )* 0.05);
       return {
         orme_price: item.price.toString(),
         orme_qty: item.quantity,
         orme_subtotal: (item.price * item.quantity - discount).toString(), // kurangi nilai diskon dari subtotal
         orme_discount: discount.toString(),
-        omde_orme_id: 1,
+        // omde_orme_id: 2,
         omde_reme_id: item.id,
       }
     })
-    await dispatch(doAddOrderResto(data))
-    setShowSuccessModal(true)
-  }
+    
+     await dispatch(doAddOrderResto(data));
 
+    setTest(true);
+   
+    // const message = result.payload[0].omde_orme_id;
+    // const orme = message;
+    // setShowSuccessModal(true)
+   }
+
+   
+
+   useEffect(() => {
+    if(message && message[0].omde_orme_id && test) {
+      router.push({
+        pathname: "/resto/orders",
+        query: {
+         orme_id: message[0].omde_orme_id,
+        },
+      });
+    }
+   }, [message, test])
+   
   function addToCart(menu: any) {
     const cartItem = cart.find(item => item.id === menu.reme_id)
 
@@ -75,18 +113,32 @@ const RestoMenusTampil = () => {
         },
       ])
     }
+  
+    
   }
+ 
+  const totalDiscount = cart.reduce((acc, item) => acc + item.price * item.quantity * 0.05, 0) // hitung total diskon
 
   useEffect(() => {
-    dispatch(getGuestMenuPhoto())
-  }, [dispatch, refresh])
+    dispatch(doGetRestoMenuAll(search, page, entry, sortType))
+  }, [refresh, search, page, entry, dispatch, isOpen, sortType])
 
   return (
     <div className="mx-auto font-poppins-regular">
+      <div className="mb-8 mx-auto flex gap-12 justify-center items-center">
+          <SearchInput onChange={handleSearchChange}/>
+            {/* <label htmlFor="sort">Sort by:</label> */}
+          <select className="bg-violet-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[11rem] p-2.5
+            dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="sort" value={sortType} onChange={handleSortTypeChange}>
+            <option value="ASC">Price Low To High</option>
+            <option value="DESC">Price High To Low</option>
+          </select>
+      </div>
+
       <div className="flex w-full gap-20 justify-between">
         <div className="w-8/12">
           <div className="grid grid-cols-3 gap-10">
-            {(restophotos.data || []).map((menu: any, index: number) => (
+            {(adminresto.data || []).map((menu: any, index: number) => (
               <div
                 key={menu.reme_id}
                 className={`group relative bg-white rounded-lg border ${
@@ -103,7 +155,7 @@ const RestoMenusTampil = () => {
                     {menu.resto_menu_photos.map((photo: any) => (
                       <Fragment key={photo.remp_id}>
                         <img
-                          className="w-full object-fit object-center lg:h-[20rem] lg:w-full"
+                          className="w-full object-fit object-center lg:h-[15rem] lg:w-full"
                           src={photo.remp_url}
                           alt={photo.remp_url}
                         />
@@ -118,9 +170,12 @@ const RestoMenusTampil = () => {
                   </div>
                 </div>
                 <div className="px-2 py-2">
-                  <h3 className="text-sm text-gray-700">{menu.reme_name}</h3>
+                  <h3 className="text-base text-gray-700 mt-2">{menu.reme_name}</h3>
                   <p className="text-xs text-gray-500">
                     {menu.reme_description}
+                  </p>
+                  <p className={menu.reme_status=== 'empty' ? 'text-red-600': 'text-green-400'}>
+                    {menu.reme_status}
                   </p>
 
                   <div className="flex justify-between items-center">
@@ -164,7 +219,7 @@ const RestoMenusTampil = () => {
             <hr />
             {cart.map((item, index) => (
               <>
-                <div className="mt-4 flex justify-between items-center">
+                <div className="mt-4 flex justify-between items-end">
                   <div>
                     <p className="text-sm mt-1">{item.name}</p>
                     <h1 className="font-semibold mt-1">
@@ -197,6 +252,7 @@ const RestoMenusTampil = () => {
                       }).format(item.price * item.quantity)}
                     </h1>
                   </div>
+                  
                 </div>
               </>
             ))}
@@ -206,14 +262,12 @@ const RestoMenusTampil = () => {
                 <div className="flex justify-between items-center bg-[#E7F2FF] rounded-md p-2 mt-8">
                   <div className="flex gap-4 items-center">
                     <Coupon />
-                    <span>
-                      <input
-                        type="number"
-                        className="w-full rounded-md p-2 ml-auto"
-                        placeholder="Masukkan jumlah diskon"
-                        value={discount}
-                        onChange={e => setDiscount(Number(e.target.value))}
-                      />
+                    <span className="font-semibold"> Discount(5%) : </span>
+                    <span className="py-1 px-2 rounded">
+                      {Intl.NumberFormat("id-ID", {
+                        style: "currency",
+                        currency: "IDR",
+                      }).format(totalDiscount)}
                     </span>
                   </div>
                 </div>
@@ -227,7 +281,7 @@ const RestoMenusTampil = () => {
                       cart.reduce(
                         (acc, item) => acc + item.price * item.quantity,
                         0
-                      ) - discount
+                      ) - totalDiscount
                     )}
                   </span>
                 </div>
@@ -243,7 +297,7 @@ const RestoMenusTampil = () => {
                         (acc, item) => acc + item.price * item.quantity,
                         0
                       ) -
-                        discount) *
+                        totalDiscount) *
                         0.1
                     )}
                   </span>
@@ -264,16 +318,16 @@ const RestoMenusTampil = () => {
                         (acc, item) => acc + item.price * item.quantity,
                         0
                       ) -
-                        discount) *
+                        totalDiscount) *
                         1.1
                     )}
                   </h1>
                 </div>
-                <Link href="/resto/invoice">
+
                   <div className="mt-8 flex justify-end">
-                    <BgButton title="Create Order" width="w-full" />
+                    <BgButton title="Create Order" width="w-full"  onClick={() => createOrder(cart)} /> 
                   </div>
-                </Link>
+              
               </>
             )}
             {cart.length === 0 && (
@@ -283,163 +337,11 @@ const RestoMenusTampil = () => {
             )}
           </section>
 
-          {/* <div className="bg-slate-200 w-full rounded-sm">
-            <div className="w-full  border-2 border-black bg-white ">
-              <div className="flex items-center">
-                <GiShoppingCart className="text-6xl ml-3" />
-                <h2 className="text-2xl font-bold mb-4">Keranjang Belanja</h2>
-              </div>
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr>
-                    <th className="py-2 border">No.</th>
-                    <th className="py-2 border">Nama Menu</th>
-                    <th className="py-2 border">Jumlah</th>
-                    <th className="py-2 border">Harga Satuan</th>
-                    <th className="py-2 border">Subtotal</th>
-                    <th className="py-2 border">Aksi</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {cart.map((item, index) => (
-                    <tr key={index}>
-                      <td className="py-2 ">{item.name}</td>
-                      <td className="py-2 ">{item.quantity}</td>
-                      <td className="py-2 ">
-                        {Intl.NumberFormat("id-ID", {
-                          style: "currency",
-                          currency: "IDR",
-                        }).format(item.price)}
-                      </td>
-                      <td className="py-2 ">
-                        {Intl.NumberFormat("id-ID", {
-                          style: "currency",
-                          currency: "IDR",
-                        }).format(item.price * item.quantity)}
-                      </td>
-                      <td className="py-2 ">
-                        <button
-                          className="ml-2 text-xs text-red-600"
-                          onClick={() =>
-                            setCart(
-                              cart.filter(cartItem => cartItem.id !== item.id)
-                            )
-                          }
-                        >
-                          Hapus
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              {cart.length > 0 && (
-                <>
-                  <div className="flex items-center mt-4">
-                    <label className="text-right font-bold ml-36 mb-2">
-                      Diskon:
-                    </label>
-                    <input
-                      type="number"
-                      className="w-1/2 p-2 border border-gray-400 mb-4 ml-auto"
-                      placeholder="Masukkan jumlah diskon"
-                      value={discount}
-                      onChange={e => setDiscount(Number(e.target.value))}
-                    />
-                  </div>
-                  <div className="text-right font-bold mb-4">
-                    Total Pembayaran setelah diskon:{" "}
-                    {Intl.NumberFormat("id-ID", {
-                      style: "currency",
-                      currency: "IDR",
-                    }).format(
-                      cart.reduce(
-                        (acc, item) => acc + item.price * item.quantity,
-                        0
-                      ) - discount
-                    )}
-                  </div>
-                  <div className="text-right font-bold mb-4">
-                    Tax (10%):{" "}
-                    {Intl.NumberFormat("id-ID", {
-                      style: "currency",
-                      currency: "IDR",
-                    }).format(
-                      (cart.reduce(
-                        (acc, item) => acc + item.price * item.quantity,
-                        0
-                      ) -
-                        discount) *
-                        0.1
-                    )}
-                  </div>
-                  <div className="text-right font-bold mb-4">
-                    Total Pembayaran (incl. tax):{" "}
-                    {Intl.NumberFormat("id-ID", {
-                      style: "currency",
-                      currency: "IDR",
-                    }).format(
-                      (cart.reduce(
-                        (acc, item) => acc + item.price * item.quantity,
-                        0
-                      ) -
-                        discount) *
-                        1.1
-                    )}
-                  </div>
-                  <div className="flex items-center ml-36">
-                    <button
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                      onClick={() => createOrder(cart)}
-                    >
-                      CREATE ORDER
-                    </button>
-                  </div>
-                  {showSuccessModal && (
-                    <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center">
-                      <div className="bg-white p-6 rounded-lg shadow-lg flex items-center flex-col animate-bounceIn">
-                        <svg
-                          className="h-6 w-6 text-green-500 mr-4"
-                          fill="none"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
-                          <path d="M22 4L12 14.01l-3-3" />
-                        </svg>
-                        <div className="text-center">
-                          <h2 className="text-lg font-bold mb-2">
-                            Pesanan Berhasil Dibuat!
-                          </h2>
-                          <p className="text-sm text-gray-700">
-                            Terima kasih telah melakukan pesanan di restoran
-                            kami.
-                          </p>
-                        </div>
-                        <div className="mt-4">
-                          <button
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-                            onClick={() => setShowSuccessModal(false)}
-                          >
-                            OK
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </>
-              )}
-              {cart.length === 0 && (
-                <p className="text-center font-bold text-gray-700">
-                  Keranjang belanja kosong
-                </p>
-              )}
-            </div>
-          </div> */}
+                 
         </div>
+      </div>
+      <div className="my-8">
+        <Pagination pagination={{totalPage: adminresto?.totalPage, page: adminresto?.currentPage}} setPage={setPage}/>
       </div>
     </div>
   )

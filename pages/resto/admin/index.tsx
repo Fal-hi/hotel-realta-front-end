@@ -14,7 +14,7 @@ import EditRestoMenu from "./editRestoMenu"
 import AddRestoPhoto from "./addRestoPhoto"
 
 
-const Adminresto =(props:any)=> {
+const Adminresto =()=> {
   const { adminresto, refresh } = useSelector((state: any) => state.adminRestoReducers)
     const [search, setSearch] = useState("")
     const [page, setPage] = useState(1)
