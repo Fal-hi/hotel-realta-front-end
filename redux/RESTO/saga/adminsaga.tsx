@@ -5,8 +5,8 @@ import { addRestoMenuResponse, doGetRestoMenuAllResponse, updateRestoMenu, updat
  /////////////////////UNTUK MENAMPILKAN SEMUA DATA PADA RESTO MENU////////////////////////
 function* handleGetRestoMenuAll(action:any):any{
     try {
-        const { search, page, entry } = action.payload
-        const result = yield call(adminApi.getRestoall,search,page,entry)
+        const { search, page, entry,sortType } = action.payload
+        const result = yield call(adminApi.getRestoall,search,page,entry,sortType)
         yield put(doGetRestoMenuAllResponse(result.data))
     } catch (error) {
         yield put(doGetRestoMenuAllResponse({message:error}))

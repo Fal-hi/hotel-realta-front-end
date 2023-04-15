@@ -11,6 +11,9 @@ export default function App({ Component, pageProps }: AppProps) {
   const Layout =
     router.pathname !== "/" &&
     !router.pathname.startsWith("/booking") &&
+    
+    !router.pathname.startsWith("/resto/orders")&&
+
     !router.pathname.startsWith("/resto/restomenus")
     && !router.pathname.startsWith("/users/signupEmployee") &&
     !router.pathname.startsWith("/users/signupGuest") &&
