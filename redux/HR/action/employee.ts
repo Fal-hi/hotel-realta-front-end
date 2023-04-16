@@ -116,7 +116,7 @@ export const geUsersForProfiles = (payload: number) => {
     payload,
   }
 }
-export const geUsersForProfilesResponse = (payload: string) => {
+export const geUsersForProfilesResponse = (payload: any) => {
   return {
     type: ActionTypes.GET_USERS_FOR_PPROFILES_RESPONSE,
     payload,

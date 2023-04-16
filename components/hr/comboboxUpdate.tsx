@@ -1,26 +1,19 @@
 import { Combobox } from "@headlessui/react"
-import React from "react"
+import React, { useState } from "react"
 import { Magnifier } from "../icons"
 
-interface Idata {
-  handleSelected: any
-  value: string
-  onChange: any
-  data: {
-    option: number | string
-    value: string
-  }[]
-  inputChanges: any
-  selectedPerson: any
-}
+const ComboboxUpdate = () => {
+  const [value, setValue] = useState("")
+  const onChange = () => {}
+  const inputChanges = (e: any) => {}
+  const [data, setData] = useState([
+    {
+      option: "",
+      value: "",
+    },
+  ])
+  const handleSelected = (value: string, option: string) => {}
 
-const ComboboxHr = ({
-  value,
-  handleSelected,
-  onChange,
-  data,
-  inputChanges,
-}: any) => {
   return (
     <Combobox value={value} onChange={onChange} name="fullname">
       <div className="flex">
@@ -40,13 +33,13 @@ const ComboboxHr = ({
         {data.map((data: any, i: number) => (
           <Combobox.Option
             key={i}
-            value={data.option}
+            value={data.value}
             onClick={() => {
               handleSelected(data.value, data.option)
             }}
             className={`py-2 px-2 cursor-pointer border-b hover:bg-bgGray `}
           >
-            {data.value}
+            {data.option}
           </Combobox.Option>
         ))}
       </Combobox.Options>
@@ -54,4 +47,4 @@ const ComboboxHr = ({
   )
 }
 
-export default ComboboxHr
+export default ComboboxUpdate

@@ -34,9 +34,7 @@ const createEmployee = (data: any): Promise<AxiosResponse<Iresponse, any>> => {
   })
 }
 
-const getEmployeeForUpdate = (
-  id: number
-): Promise<AxiosResponse<Iresponse, any>> => {
+const getEmployeeForUpdate = (id: number): any => {
   return axios.get(`/hr/employee/${id}`)
 }
 
@@ -58,11 +56,11 @@ const getDepartmentOption = (): Promise<AxiosResponse<Iresponse, any>> => {
 const getUsersForSearchOptionEmployee = (
   search: string
 ): Promise<AxiosResponse<Iresponse, any>> => {
-  return axios.get(`/users/usersByName?search=${search}`)
+  return axios.get(`/hr/employee/usersByName?search=${search}`)
 }
 
 const getUserForProfiles = (id: number): any => {
-  return axios.get(`/users/profile/${id}`)
+  return axios.get(`/hr/employee/userprofile/${id}`)
 }
 const getShift = (search: string): any => {
   return axios.get(`/hr/employee/shift?search=${search}`)

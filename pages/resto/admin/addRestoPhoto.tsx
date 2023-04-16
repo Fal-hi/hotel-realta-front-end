@@ -133,16 +133,22 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
+
+
+
 export default function AddRestoPhoto(props:any) {
     type FormValues ={
-        remp_thumbnail_filename: string;
+        // remp_thumbnail_filename: string;
         remp_photo_filename: FileList[];
-        remp_primary: string;
+        // remp_primary: string;
         remp_reme_id: number;
       }
       
-      const { register, handleSubmit, formState:{errors} } = useForm<FormValues>();
+      const { register, handleSubmit, formState:{errors}, getValues, setValue} = useForm<FormValues>();
+
+
       const dispatch = useDispatch();
+      
       const [files, setFiles] = useState<File[]>([]);
       const [previewUrls, setPreviewUrls] = useState<string[]>([]);
     
@@ -155,45 +161,52 @@ export default function AddRestoPhoto(props:any) {
           setPreviewUrls([...previewUrls, ...previewUrlsArray]);
         }
       };
+
+      
+      const handleError = (errors: any) => {};
+      
+      // const handleRegistration = async (data: any) => {
+      //   const formData = new FormData();
+      //   // formData.append('remp_thumbnail_filename', data.remp_thumbnail_filename);
+      //   // formData.append('remp_primary', data.remp_primary);
+      //   formData.append('remp_reme_id', data.remp_reme_id);
+      //   if (data.remp_photo_filename && data.remp_photo_filename.length > 0) {
+      //     for (let i = 0; i < data.remp_photo_filename.length; i++) {
+      //       formData.append('remp_photo_filename', data.remp_photo_filename[i]);
+      //     }
+      //   }
+      //   console.log('masa gabisa sih',formData)
+      //     dispatch(addRestoMenuPhoto(formData));
+      //     props.closeModal();
+      //   };
+      const handleRegistration = async (data: any) => {
+        const formData = new FormData();
+        formData.append('remp_reme_id', data.remp_reme_id);
     
+        // append file(s) to the form data
+        for (let i = 0; i < files.length; i++) {
+          formData.append('remp_photo_filename', files[i]);
+        }
     
+        // send the form data to the server
+        dispatch(addRestoMenuPhoto(formData));
+        props.closeModal();
+      };
+
+
       const handleDeleteButtonClick = (index: number) => {
+        console.log("Delete button clicked at index", index);
         const newFiles = [...files];
         newFiles.splice(index, 1);
         setFiles(newFiles);
         const newPreviewUrls = [...previewUrls];
         newPreviewUrls.splice(index, 1);
         setPreviewUrls(newPreviewUrls);
+        const newRempPhotoFilename = [...getValues("remp_photo_filename")];
+        newRempPhotoFilename.splice(index, 1);
+        setValue("remp_photo_filename", newRempPhotoFilename);
       };
-
-
-
-      
-      const handleError = (errors: any) => {};
-      
-      const handleRegistration = async (data: any) => {
-        console.log('ngeteas=>',data);
-        
-        const formData = new FormData();
-        formData.append('remp_thumbnail_filename', data.remp_thumbnail_filename);
-        formData.append('remp_primary', data.remp_primary);
-        formData.append('remp_reme_id', data.remp_reme_id);
-        if (data.remp_photo_filename && data.remp_photo_filename.length > 0) {
-          for (let i = 0; i < data.remp_photo_filename.length; i++) {
-            formData.append('remp_photo_filename', data.remp_photo_filename[i]);
-          }
-        }
-    //   console.log('masa gabisa sih',formData)
-        dispatch(addRestoMenuPhoto(formData));
-        props.closeModal();
-      };
-      
-      const registerOptions = {
-        remp_thumbnail_filename: { required: 'name is required' },
-        remp_photo_filename: { required: 'photo is required' },
-        remp_primary: { required: 'Price is required' },
-        
-      };
+   
 
      
   return (
@@ -202,7 +215,7 @@ export default function AddRestoPhoto(props:any) {
         <form
             onSubmit={handleSubmit(handleRegistration, handleError)}
           >
-            <div className="border rounded-md p-3 flex items-center">
+            {/* <div className="border rounded-md p-3 flex items-center">
               <label className="mr-4">Photo Name</label>
               <input className="border rounded-md p-3 ml-3"
                 
@@ -213,7 +226,7 @@ export default function AddRestoPhoto(props:any) {
                 {errors?.remp_thumbnail_filename && errors.remp_thumbnail_filename.message}
               </small>
             </div>
-            
+
            <div className="border rounded-md p-3 flex items-center">
             <label className="mr-4">Primary</label>
             <input className="border rounded-md p-3 ml-16"
@@ -223,7 +236,8 @@ export default function AddRestoPhoto(props:any) {
             <small className="text-danger">
                 {errors?.remp_primary && errors.remp_primary.message}
             </small>
-            </div>
+            </div> */}
+            
 
 
            <div className="border rounded-md p-3 flex items-center">
@@ -254,23 +268,7 @@ export default function AddRestoPhoto(props:any) {
             />
           </div>
 
-          {/* <div className="flex flex-wrap mt-4">
-            {previewUrls.map((url, index) => (
-              <div key={index} className="flex items-center m-2">
-                <img
-                  src={url}
-                  alt={`Preview ${index}`}
-                  style={{ width: '80px', height: '80px' }}
-                />
-                <button
-                  className="flex items-center bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded ml-4"
-                  onClick={() => handleDeleteButtonClick(index)}
-                >
-                  Delete
-                </button>
-              </div>
-            ))}
-            </div> */}
+
             <div className="flex flex-wrap mt-4">
                 {previewUrls.map((url, index) => (
                     <div key={index} className="flex flex-col items-center m-2">
@@ -280,7 +278,7 @@ export default function AddRestoPhoto(props:any) {
                         style={{ width: '120px', height: '120px' }}
                     />
                     <button
-                        className="flex items-center bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mt-2"
+                        className="flex items-center bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mt-1"
                         onClick={() => handleDeleteButtonClick(index)}
                     >
                         Delete
