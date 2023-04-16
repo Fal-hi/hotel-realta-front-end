@@ -31,6 +31,7 @@ export const doGetHistoryMember = (payload: any) => {
   }
 }
 export const doGetHistoryMemberResponse = (payload: any) => {
+  console.log('ini payload',payload)
   return {
     type: ActionTypesUsers.GET_HISTORY_MEMBER_RESPONSE,
     payload,
@@ -44,6 +45,7 @@ export const doReqUpdateEditGeneral = (payload: any) => {
   }
 }
 export const doReqUpdateEditGeneralResponse = (payload: any) => {
+  console.log("ini payload", payload)
   return {
     type: ActionTypesUsers.UPDATE_GENERAL_MEMBER_RESPONSE,
     payload,

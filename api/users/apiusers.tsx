@@ -29,7 +29,7 @@ const loginEmployee = (data: any) => {
   )
 }
 const GetUsersById = (id: any) => {
-  return axios.get(`/users/${id}`)
+  return axios.get(`/users/profile/${id}`)
 }
 
 const loginGuest = (data: RegisterOrLoginGuest) => {
@@ -51,15 +51,16 @@ const registerGuest = (data: RegisterOrLoginGuest) => {
 const pointMember = (id: number) => {
   return axios.get(`/user-bonus-points/${id}`)
 }
-const historyMember = (id: any) => {
+const historyMember = (id: number) => {
   return axios.get(`/historyMembers/${id}`)
 }
 
-const updateGeneral = (id: any) => {
-  return axios.get(`/users/update/${id}`)
+const updateGeneral = (id: any, data: any) => {
+  return axios.put(`/users/update/${id}`, data)
 }
 const passwordUpdate = (id: any, data: any) => {
-  return axios.get(`/changepassword/${id}`, data)
+  console.log(data)
+  return axios.put(`/changepassword/${id}`, data)
 }
 
 const apiMethodUsers = {

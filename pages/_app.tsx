@@ -11,11 +11,12 @@ export default function App({ Component, pageProps }: AppProps) {
   const Layout =
     router.pathname !== "/" &&
     !router.pathname.startsWith("/booking") &&
-    !router.pathname.startsWith("/resto/restomenus")
-    && !router.pathname.startsWith("/users/signupEmployee") &&
+    !router.pathname.startsWith("/resto/restomenus") &&
+    !router.pathname.startsWith("/users/signupEmployee") &&
     !router.pathname.startsWith("/users/signupGuest") &&
     !router.pathname.startsWith("/users/loginGuest") &&
     !router.pathname.startsWith("/users/loginEmployee") &&
+    !router.pathname.startsWith("/users/forgotPassword") &&
     router.pathname !== "/_error"
   return (
     <Provider store={store}>

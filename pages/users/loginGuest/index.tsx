@@ -17,6 +17,8 @@ import UserButton from "@/components/buttons/userButton"
 import Image from "next/image"
 import phoneNumberCode from "@/functions/phonenumber/PhoneCodeNumber"
 import { MdArrowDropDown, MdError } from "react-icons/md"
+import Button from "@/components/buttons/Button"
+import BgButton from "@/components/buttons/BgButton"
 
 export default function LoginGuest() {
   const dispatch = useDispatch()
@@ -191,16 +193,14 @@ export default function LoginGuest() {
                 {errors?.phone_number && errors.phone_number.message}
               </small>
 
-              <p className="font-medium text-center mt-6">
-                <Link
-                  href="/users/signupGuest"
-                  className="text-blue-600 hover:text-blue-700"
-                >
-                  forgot Password?{" "}
-                </Link>
-              </p>
+              <Link
+                href="/users/forgotPassword"
+                className="text-blue-700 hover:text-blue-800 font-medium text-sm md:text-base"
+              >
+                Forgot Your Password
+              </Link>
               <div className="mt-3 grid-cols-2 mx-auto flex justify-center text-9xl">
-                <UserButton title="Login" width="76%" paddingTop="1rem" />
+                <BgButton title="Login" width="76%" padding="1rem" />
               </div>
             </form>
           </div>

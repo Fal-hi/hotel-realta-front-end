@@ -12,14 +12,16 @@ import PassModalEdit from "@/components/users/PassModalEdit"
 import BgPrimary from "@/components/BgPrim"
 import TableUser from "@/components/TableUser"
 import ModalEdit from "@/components/users/ModalEdit"
-
+import Avatar from "@/assets/image/Frame 1000004115.svg"
+import Image from "next/image"
+import TabUser from "@/components/TabUser"
 export default function Profile({ userData }: any) {
   const dispatch = useDispatch()
   const routerId = useRouter()
   // const bonusPoints = useSelector((state: any) => state.bonusPoints)
   // const historyMembers = useSelector((state: any) => state.historyMembers)
 
-  const { users, usersBonusPoints, usersHistoryMember } = useSelector(
+  const { users, usersBonusPoints, usersHistoryMember, refresh } = useSelector(
     (state: any) => state.generalReducers
   )
 
@@ -28,18 +30,25 @@ export default function Profile({ userData }: any) {
     id: 0,
   })
 
+  console.log("data", users)
+
   console.log("usersHistoryMember", usersHistoryMember)
   const [isPassword, setIsPassword] = useState({
     status: false,
     id: 0,
   })
   const { id } = routerId.query
-  console.log(id)
   useEffect(() => {
+    const url = window.location.href
+    const urlArray = url.split("/")
+
+    const id = urlArray[urlArray.length - 1]
+
+    console.log(id)
     dispatch(doGetUsers(id))
     dispatch(doGetBonusPoint(id))
     dispatch(doGetHistoryMember(id))
-  }, [])
+  }, [refresh])
 
   const editOpen = (id: any) => {
     setIsEdit(prev => {
@@ -51,7 +60,7 @@ export default function Profile({ userData }: any) {
       return { ...prev, status: true, id: id }
     })
   }
-  console.log("usersBonusPoints", usersBonusPoints.data)
+  // console.log("usersBonusPoints", usersBonusPoints.data)
   return (
     <div className="w-full shadow-md p-4">
       <p>{userData}</p>
@@ -67,72 +76,78 @@ export default function Profile({ userData }: any) {
         <p className="font-poppins-regular mt-4">
           The information will be display, so be careful what you share
         </p>
-        <section className="relative general shadow-md overflow-auto">
-          <div className="p-8">
-            <div className="hotel-info-container mt-5 relative flex items-center content-center">
-              <BgPrimary width={"100%"} height={"100%"} />
-              <div className="hotel-info flex justify-between px-5 absolute top-50 w-full">
+        <section className="general shadow-md overflow-auto">
+          <div className="flex justify-between gap-5">
+            <div className="bg-slate-50 w-1/4 rounded-xl md:pr-0 mx-auto flex content-center">
+              <Image
+                src={Avatar}
+                alt="Hotel Realta Logo"
+                width={300}
+                height={100}
+                className="rounded-sm w-36 mx-auto object-contain"
+              />
+            </div>
+            <div className="hotel-info-container relative flex items-center content-center h-full mx-auto">
+              <BgPrimary width={"888px"} height={"200px"} />
+              <div className="hotel-info flex justify-between px-5 absolute top-50 w-full h-full">
                 <div className="info-1 w-1/2 flex flex-col justify-center">
                   <h1 className="font-poppins-bold text-white text-sm">
-                    Muhammad Ikrar Ilham
+                    {" "}
+                    {users.data && users.data.user_full_name}
                   </h1>
                 </div>
                 <div className="info-2 flex flex-col mr-10 justify-center text-sm font-poppins-bold">
-                  <p className="text-white font-thin">Gold Member</p>
-                  <p className="text-white font-thin">Travel Agency</p>
+                  <p className="text-white font-thin">
+                    {usersHistoryMember?.usme_memb_name}
+                  </p>
+        
+                  <p className="text-white font-thin font-semibold mt-1 text-primary">
+                    {users.data && users.data.user_type === "T"
+                      ? "Travel Agent"
+                      : users.data && users.data.user_type === "C"
+                      ? "Corporate"
+                      : "Individual"}
+                  </p>
                 </div>
+                {/* <div className="info-2 flex flex-col mr-10 justify-center text-sm font-poppins-bold">
+              
+                  <p className="text-sm text-gray-400">User Gender</p>
+                  <p className="text-base md:text-2xl font-semibold mt-1 text-primary">
+                    {userData.uspro_gender === "M" ? "Male" : "Female"}
+                  </p>
+        
+                  <p className="text-white font-thin font-semibold mt-1 text-primary">
+                    {users.data && users.data.user_type === "T"
+                      ? "Travel Agent"
+                      : users.data && users.data.user_type === "C"
+                      ? "Corporate"
+                      : "Individual"}
+                  </p>
+                </div> */}
                 <div className="info-2 flex flex-col justify-center text-sm font-poppins-bold ">
-                  <p className="text-white font-thin">kontak123@gmail.com</p>
-                  <p className="text-white font-thin">phone number</p>
+                  <p className="text-white font-thin">
+                    {" "}
+                    {users.data && users.data.user_email}
+                  </p>
+                  <p className="text-white font-thin">
+                    {" "}
+                    {users.data && users.data.user_phone_number}
+                  </p>
                 </div>
               </div>
             </div>
-            <div>
-              {/* <TableUser
-                bonusPoints={usersBonusPoints}
-                historyMembers={usersHistoryMember}
-              /> */}
-            </div>
-            {/* 
-            <div className="grid grid-cols-2 md:grid-cols-4 col-span-3 justify-between gap-2 mt-32 md:mt-0">
-              <div className="absolute bottom-0 right-0 flex gap-4 items-end justify-end">
-                <Button
-                  label="Edit Profile"
-                  size="small"
-                  type="main"
-                  variant="danger-secondary"
-                  // onClick={() =>
-                  //   setIsEdit(prev => {
-                  //     return { ...prev, status: true, id: user_id }
-                  //   })
-                  // }
-                />
-
-                <Button
-                  label="Edit Password"
-                  size="small"
-                  type="main"
-                  variant="variant"
-                  // onClick={() =>
-                  //   setIsPassword(prev => {
-                  //     return { ...prev, status: true, id: user_id }
-                  //   })
-                  // }
-                />
-              </div>
-            </div> */}
           </div>
         </section>
         <div className="grid grid-cols-2 md:grid-cols-4 col-span-3 justify-between gap-2 mt-32 md:mt-6 py-4 ml-6">
           <button
             className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
-            onClick={() => editOpen(id)}
+            onClick={() => editOpen(users?.data?.user_id)}
           >
             Edit
           </button>
           <button
             className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
-            onClick={() => editOpenC(id)}
+            onClick={() => editOpenC(users?.data?.user_id)}
           >
             Change Password
           </button>
@@ -144,8 +159,8 @@ export default function Profile({ userData }: any) {
           <hr className="mt-1" />
         </div>
         <div className="security-card flex justify-between">
-          <TableUser
-            bonusPoints={usersBonusPoints?.data}
+          <TabUser
+            bonusPoints={usersBonusPoints}
             historyMembers={usersHistoryMember}
           />
         </div>
@@ -155,7 +170,7 @@ export default function Profile({ userData }: any) {
         isEdit={isEdit}
         closeModal={() =>
           setIsEdit(prev => {
-            return { ...prev, status: false }
+            return { ...prev, status: false, id: 0 }
           })
         }
       />

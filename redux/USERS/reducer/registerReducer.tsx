@@ -13,6 +13,8 @@ function registerReducers(state = initialState, action: any) {
 
   switch (type) {
     case ActionTypesUsers.REQ_REGISTER:
+      console.log(payload)
+
       return {
         payload,
         refresh: true,
@@ -20,6 +22,7 @@ function registerReducers(state = initialState, action: any) {
         isRegister: true,
       }
     case ActionTypesUsers.REGISTER_SUCCESS:
+      console.log(payload)
       return {
         payload,
         refresh: true,

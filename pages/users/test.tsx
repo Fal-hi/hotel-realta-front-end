@@ -1,238 +1,184 @@
-// import Image from "next/image";
-// import React, { useEffect, useState } from "react";
-// import HotelLogo from "@/public/realta-hotel-logo.svg";
-// import Button from "@/components/Button/button";
-// import TabUser from "@/components/TabUser";
-// import { useRouter } from "next/router";
-// import axios from "axios";
-// import EditProfile from "./editProfile";
-// import EditPassword from "./editPassword";
-// import Head from "next/head";
+<div className="form-group">
+<InputText
+  name="user_full_name"
+  label="Username"
+  placeholder="Your Username"
+  type="text"
+  errors={errors}
+  register={register}
+  className="w-full"
+  defaultValue={data.user_full_name}
+/>
+</div>
 
-// export default function UserProfile({ userData, bonus, members }: any) {
-//   const router = useRouter();
-//   const [redirected, setRedirected] = useState(false);
-//   const [isEditProfile, setIsEditProfile] = useState({
-//     status: false,
-//     id: 0,
-//   });
+<div className="form-group">
+<InputText
+  name="user_email"
+  label="Email"
+  placeholder="Your Email"
+  type="email"
+  errors={errors}
+  register={register}
+  className="w-full"
+  defaultValue={data.user_email}
+/>
+</div>
 
-//   const [isEditPassword, setIsEditPassword] = useState({
-//     status: false,
-//     id: 0,
-//   });
+<div className="form-group mt-5">
+<label
+  htmlFor="password"
+  className="block text-lg font-medium"
+>
+  Type User
+</label>
 
-//   const [isRefreshing, setIsRefreshing] = useState(false);
+<ListBoxInput
+  data={userTypeList}
+  selectedValue={userType}
+  handleChangeUserType={handleChangeUserType}
+/>
+</div>
 
-//   useEffect(() => {
-//     const userLogin = JSON.parse(localStorage.getItem("loginData") || "{}");
+<div className="form-group">
+<InputText
+  name="user_company_name"
+  label="Company Name"
+  placeholder="Your Company Name"
+  type="text"
+  errors={errors}
+  register={register}
+  className="w-full"
+  defaultValue={data.user_company_name}
+/>
+</div>
 
-//     const { user_id } = router.query;
+<div className="form-group">
+<InputText
+  name="user_phone_number"
+  label="Phone Number"
+  placeholder="Your Phone Number"
+  type="text"
+  errors={errors}
+  register={register}
+  className="w-full"
+  defaultValue={data.user_phone_number}
+/>
+</div>
 
-//     if (!redirected && userLogin.user_id !== user_id) {
-//       router.push(`/users/profile/${userLogin.user_id}`);
-//       setRedirected(true);
-//     }
-//   }, [router, router.query, redirected]);
+{Number(data.usro_role_id) === 4 ? (
+<div className="form-group mt-4">
+  <label htmlFor="password" className="block text-lg">
+    Role Type
+  </label>
 
-//   useEffect(() => {
-//     setIsRefreshing(false);
-//   }, [userData]);
+  <ListBoxInput
+    data={rolesList}
+    selectedValue={roleUser}
+    handleChangeUserType={handleChangeUserRole}
+  />
 
-//   const refreshData = () => {
-//     router.replace(router.asPath);
-//     setIsRefreshing(true);
-//   };
+  {/* <input
+  type="text"
+  className="outline-none border border-spacing-2 border-variant block p-3 mt-2 active:border-blue-700 focus:border-blue-700 active:bg-blue-200 focus:bg-blue-200 rounded w-full"
+  value={data.user_company_name}
+/> */}
+</div>
+) : null}
+</div>
+</div>
 
-//   console.log(userData);
-  
-//   return (
-//     <>
-//       <Head>
-//         <title>Hotel Realta - {userData.user_full_name} Profile</title>
-//       </Head>
-//       <div className="w-full">
-//         <section className="relative general shadow-md overflow-auto">
-//           <div className="h-60 w-full bg-[url('https://images.unsplash.com/photo-1620121478247-ec786b9be2fa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY3NDYzNjQ0Mg&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080')] bg-no-repeat bg-center bg-cover rounded-tl rounded-tr"></div>
+<div className="mt-2 p-6">
+<h2 className="text-2xl font-bold text-primary">
+Profile
+</h2>
 
-//           <div className="p-4">
-//             <div className="relative grid grid-cols-1 md:grid-rows-2 md:grid-cols-4 p-6">
-//               <div className="relative md:row-span-2">
-//                 <div className="absolute -top-48 md:left-0 left-1/2 transform md:translate-x-0 -translate-x-1/2 bg-white p-4 rounded-lg shadow-md">
-//                   <Image
-//                     src={HotelLogo}
-//                     alt="Hotel Realta Logo"
-//                     width={150}
-//                     height={150}
-//                     className="rounded-sm mx-auto "
-//                   />
+<hr className="mt-2" />
 
-//                   <div className="my-4">
-//                     <p className="text-sm text-gray-400">Email</p>
-//                     <p className="text-base md:tex-sm font-semibold mt-1 text-danger-secondary">
-//                       {userData.user_email ? userData.user_email : "-"}
-//                     </p>
-//                   </div>
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 items-center">
+<div className="form-group">
+<InputText
+  name="uspro_national_id"
+  label="National ID"
+  placeholder="Your National ID"
+  type="text"
+  errors={errors}
+  register={register}
+  className="w-full"
+  defaultValue={data.uspro_national_id}
+/>
+</div>
 
-//                   <div className="my-4">
-//                     <p className="text-sm text-gray-400">Phone Number</p>
-//                     <p className="text-base md:tex-sm font-semibold mt-1 text-danger-secondary">
-//                       {userData.user_phone_number}
-//                     </p>
-//                   </div>
-//                 </div>
-//               </div>
+<div className="form-group mt-4">
+<label htmlFor="birt_date" className="block">
+  Birth Date
+</label>
+<input
+  type="date"
+  className="mt-2 p-3 border-2 rounded w-full"
+  defaultValue={data.uspro_birt_date}
+  {...register("uspro_birt_date")}
+/>
+</div>
 
-//               <div className="grid grid-cols-2 md:grid-cols-4 col-span-3 justify-between gap-2 mt-32 md:mt-0">
-//                 <div className="my-1">
-//                   <p className="text-sm text-gray-400">Name</p>
-//                   <p className="text-base md:text-2xl font-semibold mt-1 text-primary">
-//                     {userData.user_full_name}
-//                   </p>
-//                 </div>
+<div className="form-group">
+{/* <label htmlFor="password" className="block text-lg">
+  Job Title
+</label> */}
 
-//                 <div className="my-1">
-//                   <p className="text-sm text-gray-400">Member Type</p>
-//                   <p className="text-base md:text-2xl font-semibold mt-1 text-danger-secondary">
-//                     {userData.usme_memb_name
-//                       ? `${userData.usme_memb_name} Member`
-//                       : "-"}
-//                   </p>
-//                 </div>
+<InputText
+  name="uspro_job_title"
+  label="Job Title"
+  placeholder="Your Job Title"
+  type="text"
+  errors={errors}
+  register={register}
+  className="w-full"
+  defaultValue={data.uspro_job_title}
+/>
 
-//                 <div className="my-1">
-//                   <p className="text-sm text-gray-400">User Type</p>
-//                   <p className="text-base md:text-2xl font-semibold mt-1 text-primary">
-//                     {userData.user_type === "T"
-//                       ? "Travel Agent"
-//                       : userData.user_type === "C"
-//                       ? "Corporate"
-//                       : "Individual"}
-//                   </p>
-//                 </div>
+{/* <input
+  type="text"
+  className="outline-none border border-spacing-2 border-variant block p-3 mt-2 active:border-blue-700 focus:border-blue-700 active:bg-blue-200 focus:bg-blue-200 rounded w-full"
+  value={data.user_job_title}
+/> */}
+</div>
 
-//                 <div className="my-1">
-//                   <p className="text-sm text-gray-400">User Gender</p>
-//                   <p className="text-base md:text-2xl font-semibold mt-1 text-primary">
-//                     {userData.uspro_gender === "M" ? "Male" : "Female"}
-//                   </p>
-//                 </div>
-//               </div>
+<div className="form-group mt-4">
+<label htmlFor="password" className="block text-lg">
+  Marital Status
+</label>
 
-//               <div className="absolute bottom-0 right-0 flex gap-4 items-end justify-end">
-//                 <Button
-//                   label="Edit Profile"
-//                   size="small"
-//                   type="main"
-//                   variant="danger-secondary"
-//                   onClick={() =>
-//                     setIsEditProfile((prev) => {
-//                       return { ...prev, status: true, id: userData.user_id };
-//                     })
-//                   }
-//                 />
+<ListBoxInput
+  data={[
+    { label: "Marriage", value: "M" },
+    { label: "Single", value: "S" },
+  ]}
+  selectedValue={userMaritalStatus}
+  handleChangeUserType={handleChangeUserMaritalStatus}
+/>
+{/* <input
+type="text"
+className="outline-none border border-spacing-2 border-variant block p-3 mt-2 active:border-blue-700 focus:border-blue-700 active:bg-blue-200 focus:bg-blue-200 rounded w-full"
+value={data.user_company_name}
+/> */}
+</div>
+<div className="form-group">
+<label htmlFor="password" className="block text-lg">
+  Gender
+</label>
 
-//                 <Button
-//                   label="Edit Password"
-//                   size="small"
-//                   type="main"
-//                   variant="variant"
-//                   onClick={() =>
-//                     setIsEditPassword((prev) => {
-//                       return { ...prev, status: true, id: userData.user_id };
-//                     })
-//                   }
-//                 />
-//               </div>
-//             </div>
-//           </div>
-//         </section>
-//         user_email
-
-//         <section id="points-member" className="mt-10 p-4 rounded shadow-xl">
-//           <div id="security-header">
-//             <h1 className="text-2xl text-primary font-bold">Points & Member</h1>
-//             <hr className="mt-1" />
-//           </div>
-
-//           <div className="security-card flex justify-between">
-//             <TabUser bonusPoints={bonus} historyMembers={members} />
-//           </div>
-//         </section>
-
-//         {isEditProfile.status ? (
-//           <EditProfile
-//             data={userData}
-//             isEdit={isEditProfile}
-//             refreshData={refreshData}
-//             closeModal={() =>
-//               setIsEditProfile((prev) => {
-//                 return { ...prev, status: false };
-//               })
-//             }
-//           />
-//         ) : null}
-
-//         {isEditPassword.status ? (
-//           <EditPassword
-//             data={userData}
-//             isEdit={isEditPassword}
-//             closeModal={() =>
-//               setIsEditPassword((prev) => {
-//                 return { ...prev, status: false };
-//               })
-//             }
-//           />
-//         ) : null}
-//       </div>
-//     </>
-//   );
-// }
-
-// export async function getServerSideProps(context: any) {
-//   const { req } = context;
-//   const { id } = context.params;
-
-//   if (!req.cookies["loginData"] && !req.cookies["token"]) {
-//     return {
-//       redirect: {
-//         destination: "/users/loginEmployee",
-//       },
-//     };
-//   }
-
-//   const loginData = JSON.parse(req.cookies["loginData"]);
-
-//   if (Number(loginData.user_id) !== Number(id)) {
-//     return {
-//       redirect: {
-//         statusCode: 301,
-//         destination: `/users/profile/${loginData.user_id}`,
-//       },
-//     };
-//   }
-
-//   // Fetch user by ID
-//   const resUser = await axios.get(`${process.env.BACKEND_URL}/users/${id}`);
-//   const userData = await resUser.data.data;
-
-//   if (userData.statusCode === 404) {
-//     return {
-//       notFound: true,
-//     };
-//   }
-
-//   // fetch user bonus point
-//   const resBonus = await axios.get(
-//     `${process.env.BACKEND_URL}/users/bonusPoints/${id}`
-//   );
-//   const bonus = await resBonus.data.data;
-
-//   // fetch user
-//   const resMembers = await axios.get(
-//     `${process.env.BACKEND_URL}/users/userMembers/${id}`
-//   );
-//   const members = await resMembers.data.data;
-
-//   return { props: { userData, bonus, members } };
-// }
+<ListBoxInput
+  data={[
+    { label: "Male", value: "M" },
+    { label: "Female", value: "F" },
+  ]}
+  selectedValue={userGender}
+  handleChangeUserType={handleChangeUserGender}
+/>
+{/* <input
+type="text"
+className="outline-none border border-spacing-2 border-variant block p-3 mt-2 active:border-blue-700 focus:border-blue-700 active:bg-blue-200 focus:bg-blue-200 rounded w-full"
+value={data.user_phone_number}
+/> */}
+</div>
+</div>

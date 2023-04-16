@@ -14,6 +14,7 @@ import { doRegisterEmployee } from "@/redux/USERS/action/registerType"
 import phoneNumberCode from "@/functions/phonenumber/PhoneCodeNumber"
 import InText from "@/components/input/InText"
 import UserButton from "@/components/buttons/userButton"
+import BgButton from "@/components/buttons/BgButton"
 
 export default function SignupEmployee() {
   const [selected, setSelected] = useState(phoneNumberCode[0].value)
@@ -249,7 +250,7 @@ export default function SignupEmployee() {
             /> */}
             {/* className="bg-bgPrimary text-white px-6 py-2 rounded-lg" */}
             <div className="mt-3 grid-cols-2 mx-auto flex justify-center text-9xl">
-              <UserButton title="Sign Up" width="76%" paddingTop="1rem" />
+              <BgButton title="Sign Up" width="100%" padding="1rem" />
             </div>
           </form>
           <Link href="/users/loginEmployee"></Link>
@@ -257,10 +258,10 @@ export default function SignupEmployee() {
           <p className="font-medium text-center mt-2">
             If You are Realta Hotel,{" "}
             <Link
-              href="/users/signupEmployee"
+              href="/users/loginEmployee"
               className="text-blue-600 hover:text-blue-700"
             >
-              Click This For Signup
+              Click This For login
             </Link>
           </p>
         </div>

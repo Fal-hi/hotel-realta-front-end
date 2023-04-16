@@ -1,21 +1,20 @@
-import classNames from "classnames";
-import React, { useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import classNames from "classnames"
+import React from "react"
 
-interface InputTextProps {
-  label: string;
-  name: string;
-  placeholder: string;
-  defaultValue?: string;
-  className?: string;
-  errors?: any;
-  required?: boolean;
-  register?: any;
-  registerOptions?: any;
-  type: string;
+interface InTextProps {
+  label: string
+  name: string
+  placeholder: string
+  defaultValue?: string
+  className?: string
+  errors?: any
+  required?: boolean
+  register?: any
+  registerOptions?: any
+  type: string
 }
 
-export default function Intext(props: InputTextProps) {
+export default function InText(props: InTextProps) {
   const {
     label,
     name,
@@ -27,52 +26,36 @@ export default function Intext(props: InputTextProps) {
     register,
     registerOptions,
     type,
-  } = props;
+  } = props
 
-  const [showPassword, setShowPassword] = useState(false);
-
-  const inputTextClass = classNames(
-    "outline-none border border-spacing-2 border-2 border-variant block p-3 mt-2 active:border-blue-700 focus:border-blue-700 active:bg-blue-200 focus:bg-blue-200 rounded",
+  const inText = classNames(
+    "outline-none border border-spacing-2 border-4 border-variant block p-3 mt-1 active:border-purple-700 focus:border-purple-700 active:bg-purple-200 focus:bg-purple-200 rounded",
     {
       "active:border-red-700 focus:border-red-700 active:bg-red-200 focus:bg-red-200":
         errors?.[name],
     },
     className
-  );
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+  )
 
   return (
     <div className="form-group mt-4">
-      <label htmlFor={label} className="block text-lg font-medium">
+      <label htmlFor={label} className="block text-lg font-poppins-regular">
         {label}
         {required && <span className="text-danger">*</span>}
       </label>
-      <div className="relative">
-        <input
-          id={name}
-          type={showPassword ? "text" : type}
-          name={name}
-          placeholder={placeholder}
-          defaultValue={defaultValue}
-          className={inputTextClass}
-          {...register(name, registerOptions?.[name])}
-          required={required}
-        />
-        {type === "password" && (
-          <span
-            onClick={togglePasswordVisibility}
-            className="absolute top-5 right-2 transform -translate-y-1/2 cursor-pointer"
-          >
-            {showPassword ? <FaEyeSlash /> : <FaEye />}
-          </span>
-        )}
-      </div>
-      <small className="text-red-600">
+      <input
+        id={name}
+        type={type}
+        name={name}
+        placeholder={placeholder}
+        defaultValue={defaultValue}
+        className={inText}
+        {...register(name, registerOptions?.[name])}
+        required={required}
+      />
+      <small className="text-purple-600">
         {errors?.[name] && errors?.[name]?.message}
       </small>
     </div>
-  );
+  )
 }

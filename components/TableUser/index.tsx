@@ -61,15 +61,11 @@ export default function TabUser(bonusPoints: any, historyMembers: any) {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {/* {(category?.data || []).map((item: any, idx: number) => ( */}
                   <tr>
-                    {/* {Object.values(item).map((value: any, index: number) => ( */}
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {/* {category?.data} */}
-                    </td>
-                    {/* // ))} */}
+                    <td>{bonusPoints}</td>
+                    <td>asd</td>
+                    <td>asd</td>
                   </tr>
-                  {/* ))} */}
                 </tbody>
               </table>
             </div>

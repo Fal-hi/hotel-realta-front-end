@@ -8,22 +8,22 @@ import {
 import { call, put } from "redux-saga/effects"
 
 function* handleUpdateGeneral(action: any): any {
+  console.log("action payload", action)
   try {
     const response = yield call(
       apiMethodUsers.updateGeneral,
       action.payload.id,
+      action.payload.data
     )
-    yield put(doReqUpdateEditGeneral(response.data))
+    yield put(doReqUpdateEditGeneralResponse(response.data))
   } catch (e) {
     yield put(doReqUpdateEditGeneralResponse({ message: e }))
   }
 }
 function* handleGetUsers(action: any): any {
- console.log(action)
+  console.log(action)
   try {
-    const response = yield call(apiMethodUsers.GetUsersById,
-      action.payload
-    )
+    const response = yield call(apiMethodUsers.GetUsersById, action.payload)
     yield put(doGetUsersResponse(response.data))
   } catch (e) {
     yield put(doGetUsersResponse({ message: e }))
