@@ -14,6 +14,7 @@ import UserButton from "@/components/buttons/userButton"
 import Image from "next/image"
 import Intext from "@/components/input/InText"
 import id from "date-fns/locale/id"
+import BgButton from "@/components/buttons/BgButton"
 
 export default function LoginEmployee() {
   const dispatch = useDispatch()
@@ -126,8 +127,8 @@ export default function LoginEmployee() {
                   Forgot Password?{" "}
                 </Link>
               </p>
-              <div className="mt-3 grid-cols-2 mx-auto flex justify-center text-9xl mt-5">
-                <UserButton title="Login" width="76%" paddingTop="1rem" />
+              <div className="mt-3 grid-cols-2 mx-auto flex justify-center text-9xl">
+                <BgButton title="Login" width="76%" padding="1rem" />
               </div>
             </form>
           </div>

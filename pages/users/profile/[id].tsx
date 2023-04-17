@@ -15,6 +15,7 @@ import ModalEdit from "@/components/users/ModalEdit"
 import Avatar from "@/assets/image/Frame 1000004115.svg"
 import Image from "next/image"
 import TabUser from "@/components/TabUser"
+import MemberTab from "../mapping"
 export default function Profile({ userData }: any) {
   const dispatch = useDispatch()
   const routerId = useRouter()
@@ -100,7 +101,7 @@ export default function Profile({ userData }: any) {
                   <p className="text-white font-thin">
                     {usersHistoryMember?.usme_memb_name}
                   </p>
-        
+
                   <p className="text-white font-thin font-semibold mt-1 text-primary">
                     {users.data && users.data.user_type === "T"
                       ? "Travel Agent"
@@ -153,18 +154,11 @@ export default function Profile({ userData }: any) {
           </button>
         </div>
       </section>
-      <section id="points-member" className="mt-10">
-        <div id="security-header">
-          <h1 className="text-2xl text-primary font-bold">Points & Member</h1>
-          <hr className="mt-1" />
-        </div>
-        <div className="security-card flex justify-between">
-          <TabUser
-            bonusPoints={usersBonusPoints}
-            historyMembers={usersHistoryMember}
-          />
-        </div>
-      </section>
+      
+      
+          <TabUser/>
+      
+      
 
       <ModalEdit
         isEdit={isEdit}

@@ -132,7 +132,7 @@ export default function LoginGuest() {
               <div className="flex gap-2 items-center">
                 <Listbox value={selected} onChange={setSelected}>
                   <div className="relative w-1/2">
-                    <Listbox.Button className="w-full relative p-3 mt-2 border-2 border-pink-500 outline-none active:border-fuchsia-600 focus:border-fuchsia-800 rounded text-left">
+                    <Listbox.Button className="w-full relative p-3 mt-2 border-2 border-purple-500 outline-none active:border-purple-600 focus:border-purple-800 rounded text-left">
                       <span className="block truncate">{selected}</span>
                       <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                         <MdArrowDropDown

@@ -67,12 +67,11 @@ export default function EditPassword({ isPassword, closeModal }: any) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded text-left align-middle shadow-xl transition-all bg-purple-600">
+<Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded text-left align-middle shadow-xl transition-all bg-purple-600 bg-opacity-80 backdrop-filter backdrop-blur-sm">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-white bg-primary p-5"
                   >
-                    Edit Password
                   </Dialog.Title>
                   <div className="mt-2 p-6">
                     <h2 className="text-2xl font-bold text-primary">

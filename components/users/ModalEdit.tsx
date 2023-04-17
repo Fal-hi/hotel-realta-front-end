@@ -240,7 +240,7 @@ export default function EditProfile({ data, isEdit, closeModal }: any) {
         value: users?.data?.uspro_gender,
       })
     }
-  }, [users,])
+  }, [users])
 
   // useEffect(() => {
   //   if (users && !users.data) {
@@ -305,12 +305,12 @@ export default function EditProfile({ data, isEdit, closeModal }: any) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded text-left align-middle shadow-xl transition-all bg-white">
+                <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded-3xl text-left align-middle shadow-xl transition-all bg-gradient-to-r from-indigo-600 to-purple-500">
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-medium leading-6 text-white bg-primary p-5"
+                    className="text-3xl font-medium leading-6 text-white bg-primary p-5"
                   >
-                    User Profile
+                    <h1>user Profile</h1>
                   </Dialog.Title>
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="mt-2 p-6">
@@ -386,7 +386,7 @@ export default function EditProfile({ data, isEdit, closeModal }: any) {
                           />
                         </div>
 
-                        <div className="form-group mt-3">
+                        <div className="form-group mt-3 ">
                           <label
                             htmlFor="fullname"
                             className="block text-lg font-medium"
@@ -394,7 +394,10 @@ export default function EditProfile({ data, isEdit, closeModal }: any) {
                             Type User
                           </label>
 
-                          <select onChange={handleChangeUserType}>
+                          <select
+                            className="relative w-full cursor-default rounded bg-white p-3 text-left focus:outline-none border-spacing-2 border-2 border-variant focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-purple-300"
+                            onChange={handleChangeUserType}
+                          >
                             {userTypeList.map((type: any, index: number) => (
                               <option
                                 key={index}
@@ -445,7 +448,10 @@ export default function EditProfile({ data, isEdit, closeModal }: any) {
                             Role Type
                           </label>
 
-                          <select>
+                          <select
+                            className="relative w-full cursor-default rounded bg-white p-3 text-left focus:outline-none border-spacing-2 border-2 border-variant focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-300"
+                            onChange={handleChangeUserRole}
+                          >
                             {rolesList.map((role: any, index: number) => (
                               <option
                                 key={index}
@@ -522,7 +528,10 @@ export default function EditProfile({ data, isEdit, closeModal }: any) {
                             Marital Status
                           </label>
 
-                          <select>
+                          <select
+                            className="relative w-full cursor-default rounded bg-white p-3 text-left focus:outline-none border-spacing-2 border-2 border-variant focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-300"
+                            onChange={handleChangeUserMaritalStatus}
+                          >
                             {MaritalStatusList.map(
                               (Marital: any, index: number) => (
                                 <option
@@ -545,7 +554,10 @@ export default function EditProfile({ data, isEdit, closeModal }: any) {
                             Gender
                           </label>
 
-                          <select onChange={handleChangeUserGender}>
+                          <select
+                            className="relative w-full cursor-default rounded bg-white p-3 text-left focus:outline-none border-spacing-2 border-2 border-variant focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-300"
+                            onChange={handleChangeUserGender}
+                          >
                             {userGenderList.map(
                               (gender: any, index: number) => (
                                 <option

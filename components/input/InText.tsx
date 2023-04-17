@@ -28,8 +28,8 @@ export default function InText(props: InTextProps) {
     type,
   } = props
 
-  const inText = classNames(
-    "outline-none border border-spacing-2 border-4 border-variant block p-3 mt-1 active:border-purple-700 focus:border-purple-700 active:bg-purple-200 focus:bg-purple-200 rounded",
+  const InText = classNames(
+    "outline-none border border-spacing-2 border-4 border-variant block p-3 mt-1 active:border-purple-700 focus:border-blue-700 active:bg-purple-200 focus:bg-indigo-200 rounded",
     {
       "active:border-red-700 focus:border-red-700 active:bg-red-200 focus:bg-red-200":
         errors?.[name],
@@ -49,7 +49,7 @@ export default function InText(props: InTextProps) {
         name={name}
         placeholder={placeholder}
         defaultValue={defaultValue}
-        className={inText}
+        className={InText}
         {...register(name, registerOptions?.[name])}
         required={required}
       />

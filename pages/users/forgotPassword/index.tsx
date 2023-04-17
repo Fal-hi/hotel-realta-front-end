@@ -34,21 +34,21 @@ export default function ForgotPassword() {
     setMessage(null)
 
     await axios
-      .post(`${process.env.BACKEND_URL}/users/password/forgotPassword`, {
+      .post(`${process.env.BACKEND_URL}/changePassword/forgotPassword`, {
         email: data.user_email,
       })
-      .then(function (response) {
+      .then(function (response: any) {
         setIsLoading(false)
         setMessage({
           statusCode: response.data.statusCode,
           message: response.data.message,
         })
       })
-      .catch(function (err) {
+      .catch(function (err: any) {
         console.log(err)
         setIsLoading(false)
 
-        setMessage(err.data.message)
+        setMessage(err.response.data.message)
       })
   }
 
@@ -124,7 +124,11 @@ export default function ForgotPassword() {
                 Loading
               </button>
             ) : (
-              <BgButton title="Forgot Password" padding="0.5rem,0.1rem" width="100%"  />
+              <BgButton
+                title="Forgot Password"
+                padding="0.5rem,0.1rem"
+                width="100%"
+              />
             )}
           </form>
 
