@@ -13,6 +13,7 @@ import { deleteDepartment, getDepartment } from "@/redux/HR/action/department"
 import Table from "@/components/Table"
 import { tableConstants } from "./listHeader"
 import ShowingResult from "@/components/showingResult"
+import Swal from "sweetalert2"
 
 interface IDepartement {
   id: number
@@ -33,10 +34,14 @@ const Department = () => {
     id: 0,
     isShow: false,
   })
-  const header = ["Departmen ID", "Department"]
-  const { data, refresh } = useSelector(
-    (state: any) => state.departmentReducers
-  )
+
+  const {
+    data,
+    refresh,
+    createDepartment,
+    deleteDepartmentResponse,
+    response,
+  } = useSelector((state: any) => state.departmentReducers)
   const dispatch = useDispatch()
   const handleClose = () => {
     setIsOpen(prev => {
@@ -46,6 +51,7 @@ const Department = () => {
 
   const handleSearchChange = (e: any): void => {
     setSearch(e.target.value)
+    setPage(1)
   }
   const closeDeleteModal = (): void => {
     setIsDelete((prev: any) => {
@@ -61,8 +67,25 @@ const Department = () => {
   }
   useEffect(() => {
     dispatch(getDepartment(search, page, entry))
-  }, [search, page, entry, refresh, isOpen, dispatch, isDelete])
-  // console.log(isDelete)
+  }, [search, page, entry, refresh, isOpen, dispatch, isDelete, data])
+  useEffect(() => {
+    if (createDepartment && response === "create") {
+      Swal.fire({
+        title: "Sukses",
+        text: `Berhasil Tambah ${createDepartment.name} Dengan ID = ${createDepartment.id}`,
+        icon: "success",
+      })
+    }
+
+    if (deleteDepartmentResponse && response === "delete") {
+      Swal.fire({
+        title: "Sukses",
+        text: `Berhasil Hapus ${deleteDepartmentResponse.name} Dengan ID = ${deleteDepartmentResponse.id}`,
+        icon: "success",
+      })
+    }
+  }, [createDepartment, deleteDepartmentResponse])
+
   return (
     <div className="flex w-full font-poppins-regular">
       <div className="flex flex-col items-start px-5 mt-10 w-full">
@@ -89,8 +112,8 @@ const Department = () => {
         >
           <Pagination
             pagination={{
-              totalPage: data.totalPage,
-              page: data.page,
+              totalPage: +data.totalPage,
+              page: +data.page,
             }}
             setPage={setPage}
           />

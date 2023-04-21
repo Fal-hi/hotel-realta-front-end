@@ -1,5 +1,9 @@
 import axios from "../config"
 
+// const get = () => {
+
+//   return axios.get("/hotels")
+// }
 const get = offset => {
   return axios.get(`/hotels/pagination/${offset}`)
 }

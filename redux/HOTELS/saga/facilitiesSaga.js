@@ -4,6 +4,9 @@ import ApiMethodFacilites from "../../../api/hotel/facilities"
 import {
   doGetFaciByNameResponse,
   doGetFaciResponse,
+  doAddFaciResponse,
+  doUpdateFaci,
+  doUpdateFaciResponse,
 } from "../action/actionFacilites"
 
 function* handleGetFaci(action) {
@@ -28,4 +31,30 @@ function* handleGetFaciByName(action) {
   }
 }
 
-export { handleGetFaci, handleGetFaciByName }
+function* handleAddFacility(action) {
+  // console.log(action)
+  try {
+    const result = yield call(ApiMethodFacilites.createFaci, action.payload)
+
+    yield put(doAddFaciResponse(result))
+  } catch (error) {
+    yield put(doAddFaciResponse(error))
+  }
+}
+
+function* handleUpdateFacility(action) {
+  try {
+    const result = yield call(ApiMethodFacilites.updateFaci, action.payload)
+
+    yield put(doUpdateFaciResponse(result.data))
+  } catch (error) {
+    yield put(doUpdateFaciResponse(error))
+  }
+}
+
+export {
+  handleGetFaci,
+  handleGetFaciByName,
+  handleAddFacility,
+  handleUpdateFacility,
+}

@@ -1,10 +1,18 @@
-import { Dashboard, Chevron, Money, Hr, Folder, User, Hotel, Cart } from "../icons";
-
+import {
+  Dashboard,
+  Chevron,
+  Money,
+  Hr,
+  Folder,
+  User,
+  Hotel,
+  Cart,
+} from "../icons"
 
 const listMenu = [
   {
-    to: "/",
-    path: "/",
+    to: "/dashboard",
+    path: "/dashboard",
     icon: Dashboard,
     name: "Dashboard",
   },
@@ -17,9 +25,28 @@ const listMenu = [
   {
     to: "",
     path: "",
-    icon: Hotel,
+    icon: Cart,
     name: "Resto",
+    icon2: Chevron,
+    submenu: [
+      {
+        to: "/resto/admin",
+        path: "/resto/admin",
+        title: "Resto Admin",
+      },
+      {
+        to: "/resto/restomenus",
+        path: "/resto/restomenus",
+        title: "Resto Menu",
+      },
+      {
+        to: "/resto/restoorder",
+        path: "/resto/restorder",
+        title: "Resto Order",
+      },
+    ],
   },
+
   {
     to: "#",
     path: "#",
@@ -38,8 +65,8 @@ const listMenu = [
         title: "Stock",
       },
       {
-        to: "",
-        path: "",
+        to: "/purchasing/gallery",
+        path: "/purchasing/gallery",
         title: "Gallery",
       },
       {
@@ -145,26 +172,26 @@ const listMenu = [
     to: "",
     path: "",
     icon: User,
-    name: "User",
+    name: "users",
     icon2: Chevron,
     submenu: [
       {
-        to: "",
-        path: "",
+        to: "/users/profil",
+        path: "/users/profil",
         title: "Profil",
       },
       {
-        to: "",
-        path: "",
+        to: "/Users/Booking",
+        path: "/Users/Booking",
         title: "Booking",
       },
       {
-        to: "",
-        path: "",
-        title: "Accaount",
+        to: "/Users/Account",
+        path: "/Users/Account",
+        title: "Account",
       },
     ],
   },
-];
+]
 
-export default listMenu;
+export default listMenu

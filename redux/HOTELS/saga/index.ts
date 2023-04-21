@@ -12,7 +12,19 @@ import {
 
 import { handleGetAddress, handleGetAddressById } from "./addressSaga"
 
-import { handleGetFaci, handleGetFaciByName } from "./facilitiesSaga"
+import {
+  handleAddFacility,
+  handleGetFaci,
+  handleGetFaciByName,
+  handleUpdateFacility,
+} from "./facilitiesSaga"
+
+import {
+  handleGetFaciHistory,
+  handleGetFaciHistoryByOrder,
+} from "./facilityPriceHistorySaga"
+
+import { handleAddFacilityPhotos } from "./facility-photosSaga"
 
 function* watchAll() {
   yield all([
@@ -25,6 +37,16 @@ function* watchAll() {
 
     takeEvery(ActionTypes.REQ_GET_FACI, handleGetFaci),
     takeEvery(ActionTypes.REQ_GET_FACI_BY_NAME, handleGetFaciByName),
+    takeEvery(ActionTypes.ADD_FACI, handleAddFacility),
+    takeEvery(ActionTypes.UPDATE_FACI, handleUpdateFacility),
+
+    takeEvery(ActionTypes.ADD_FACI_PHOTOS, handleAddFacilityPhotos),
+
+    takeEvery(ActionTypes.REQ_GET_FACI_HISTORY, handleGetFaciHistory),
+    takeEvery(
+      ActionTypes.REQ_GET_FACI_HISTORY_BY_ORDER,
+      handleGetFaciHistoryByOrder
+    ),
 
     takeEvery(ActionTypes.REQ_GET_ADDRESS, handleGetAddress),
     takeEvery(ActionTypes.REQ_GET_ADDRES_BY_ID, handleGetAddressById),

@@ -2,6 +2,12 @@ import ActionTypes from "../action/actionTypes"
 
 const initialState = {
   data: {},
+  employee: [],
+  usersProfiles: {},
+  shifts: [],
+  shift: {},
+  users: [],
+  jobRoles: {},
   statusCode: "200",
   message: "success",
 }
@@ -20,37 +26,62 @@ export function employeeReducers(state = initialState, action: Iaction) {
   switch (type) {
     case ActionTypes.GET_EMPLOYEE_RESPONSE:
       return {
-        data: payload.data,
+        ...state,
+        employee: payload.data,
         refresh: true,
       }
     case ActionTypes.CREATE_EMPLOYEE_RESPONSE:
       return {
-        data: payload.data,
+        ...state,
+        createResponse: payload.data,
         refresh: true,
       }
     case ActionTypes.GET_EMPLOYEE_FOR_UPDATE_RESPONSE:
       return {
-        data: payload.data,
+        ...state,
+        oneEmployee: payload,
         refresh: true,
       }
     case ActionTypes.UPDATE_EMPLOYEE_RESPONSE:
       return {
-        data: payload.data,
+        ...state,
+        updateResponse: payload.data,
         refresh: true,
       }
     case ActionTypes.GET_JOB_ROLE_OPTION_RESPONSE:
       return {
-        data: payload.data,
+        ...state,
+        jobRoles: payload.data,
         refresh: true,
       }
     case ActionTypes.GET_DEPARTMENT_OPTION_RESPONSE:
       return {
-        data: payload.data,
+        ...state,
+        departments: payload.data,
         refresh: true,
       }
     case ActionTypes.GET_USERS_FOR_SEARCH_OPTION_EMPLOYEE_RESPONSE:
       return {
-        data: payload.data,
+        ...state,
+        users: payload.data,
+        refresh: true,
+      }
+    case ActionTypes.GET_USERS_FOR_PPROFILES_RESPONSE:
+      return {
+        ...state,
+        usersProfiles: payload.data,
+        refresh: true,
+      }
+    case ActionTypes.GET_SHIFT_RESPONSE:
+      return {
+        ...state,
+        shifts: payload.data,
+        refresh: true,
+      }
+    case ActionTypes.GET_SHIFT_BY_ID_RESPONSE:
+      return {
+        ...state,
+        shift: payload,
         refresh: true,
       }
 

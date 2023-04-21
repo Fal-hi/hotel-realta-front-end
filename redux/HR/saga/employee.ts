@@ -5,7 +5,15 @@ import {
   IEmployee,
   IEmployeeUpdate,
   createEmployeeResponse,
+  geUsersForProfilesResponse,
+  getDepartmentOptionResponse,
+  getEmployeeForUpdateResponse,
   getEmployeeResponse,
+  getJobRoleOptionResponse,
+  getShiftByIdResponse,
+  getShiftResponse,
+  getUsersForSearchEmployeeOptionResponse,
+  updateEmployeeResponse,
 } from "../action/employee"
 
 interface IEmployeeForUpdate {
@@ -27,45 +35,124 @@ function* handleGetEmployee(action: IAction): Generator<any, void, any> {
       search,
       status
     )
-    console.log("handleGetEmployee  ", result.data)
+
     yield put(getEmployeeResponse(result.data))
-  } catch (error) {}
+  } catch (error) {
+    yield put(
+      getEmployeeResponse({ statusCode: 400, message: error, data: [] })
+    )
+  }
 }
 
-function* handleCreateEmployee(action: IAction): Generator<any, void, any> {
+function* handleCreateEmployee(action: any): Generator<any, void, any> {
   try {
-    const { image, general, salary, assigment, shift } =
-      action.payload as ICreate
-    const data = {
-      image,
-      general,
-      salary,
-      assigment,
-      shift,
-    }
+    const data = action.payload
     const result = yield call(employeeApi.createEmployee, data)
-    put(createEmployeeResponse(result.data))
-  } catch (error) {}
+    yield put(createEmployeeResponse(result.data))
+  } catch (error) {
+    yield put(
+      createEmployeeResponse({ message: error, statusCode: 400, data: [] })
+    )
+  }
 }
 
-function* handlegetEmployeeForUpdate(
-  action: IAction
-): Generator<any, void, any> {
+function* handlegetEmployeeForUpdate(action: any): any {
   try {
-    const { id } = action.payload as IEmployeeForUpdate
-    const result = yield call(employeeApi.getEmployeeForUpdate, id)
-  } catch (error) {}
+    const result = yield call(employeeApi.getEmployeeForUpdate, +action.payload)
+
+    yield put(getEmployeeForUpdateResponse(result.data))
+  } catch (error) {
+    yield put(
+      getEmployeeForUpdateResponse({
+        statusCode: 400,
+        message: error,
+        data: [],
+      })
+    )
+  }
 }
 
 function* handleUpdateEmployee(action: IAction): Generator<any, void, any> {
   try {
     const { id, data } = action.payload as IEmployeeUpdate
+    const result = yield call(employeeApi.updateEmployee, id, data)
+    yield put(updateEmployeeResponse(result.data))
+  } catch (error) {}
+}
+function* handleGetJobRoleOption(): any {
+  try {
+    const result = yield call(employeeApi.getJobRoleOption)
+    yield put(getJobRoleOptionResponse(result.data))
+  } catch (error) {
+    yield put(
+      getJobRoleOptionResponse({
+        statusCode: 400,
+        message: error,
+        data: [],
+      })
+    )
+  }
+}
+function* handleGetDepartmentOption(): Generator<any, void, any> {
+  try {
+    const result = yield call(employeeApi.getDepartmentOption)
+    yield put(getDepartmentOptionResponse(result.data))
   } catch (error) {}
 }
 
+function* handleGetUsersForSearchOptionEmployee(action: any): any {
+  try {
+    const result = yield call(
+      employeeApi.getUsersForSearchOptionEmployee,
+      action.payload
+    )
+    yield put(getUsersForSearchEmployeeOptionResponse(result.data))
+  } catch (error) {
+    yield put(
+      getUsersForSearchEmployeeOptionResponse({
+        statusCode: 400,
+        message: error,
+        data: [],
+      })
+    )
+  }
+}
+
+function* handleGetUserForProfiles(action: any): any {
+  try {
+    const result = yield call(employeeApi.getUserForProfiles, action.payload)
+
+    yield put(geUsersForProfilesResponse(result.data))
+  } catch (error) {
+    yield put(geUsersForProfilesResponse({ message: error }))
+  }
+}
+function* handleGetShift(action: any): any {
+  try {
+    const result = yield call(employeeApi.getShift, action.payload)
+    yield put(getShiftResponse(result.data))
+  } catch (error) {
+    yield put(getShiftResponse({ message: error }))
+  }
+}
+function* handleGetShiftById(action: any): any {
+  try {
+    const result = yield call(employeeApi.getShiftById, action.payload)
+
+    yield put(getShiftByIdResponse(result.data))
+  } catch (error) {
+    yield put(getShiftByIdResponse({ message: error }))
+  }
+}
 export {
   handleGetEmployee,
   handleUpdateEmployee,
   handleCreateEmployee,
   handlegetEmployeeForUpdate,
+  handleGetJobRoleOption,
+  handleGetUsersForSearchOptionEmployee,
+  handleGetDepartmentOption,
+  handleGetUserForProfiles,
+  handleGetShift,
+  handleGetShiftById,
 }

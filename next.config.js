@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
   images: {
     domains: ["localhost"],
@@ -6,6 +7,9 @@ const nextConfig = {
   reactStrictMode: true,
   env: {
     BACKEND_URL: process.env.BACKEND_URL,
+  },
+  images: {
+    domains: ['localhost',"images.unsplash.com"],
   },
 }
 
