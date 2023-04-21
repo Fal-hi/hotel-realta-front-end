@@ -20,7 +20,6 @@ import { restomenureducers } from "../RESTO/reducer/restomenuReducer"
 import { orderrestoreducers } from "../RESTO/reducer/orderReducer"
 import galleryReducers from "../PURCHASING/reducer/galleryReducer"
 import { addressReducers } from "../HOTELS/reducer/addressReducers"
-<<<<<<< HEAD
 import { facilitiesReducers } from "../HOTELS/reducer/facilitesReducers"
 import { facilitiesHistoryReducers } from "../HOTELS/reducer/facilityPriceHistoryReducers"
 import bookingReducers from "../BOOKING/reducer/bookingReducer"
@@ -28,8 +27,11 @@ import bookingOneReducers from "../BOOKING/reducer/bookingOneReducer"
 import facilitiesSupportBookingReducers from "../BOOKING/reducer/facilitiesSupportReducer"
 import otherRoomsReducers from "../BOOKING/reducer/otherRoomsReducer"
 import couponReducers from "../BOOKING/reducer/couponReducer"
+import loginReducers from "../USERS/reducer/loginReducer"
+import registerReducers from "../USERS/reducer/registerReducer"
+import passwordReducers from "../USERS/reducer/passwordReducer"
+import generalReducers from "../USERS/reducer/generalReducer"
 
->>>>>>> master
 const logger = createLogger()
 const saga = createSagaMiddleware()
 
@@ -46,14 +48,12 @@ const reducer = combineReducers({
   vendorReducers,
   stockReducers,
   listOrderReducers,
-<<<<<<< HEAD
 
   bookingReducers,
   bookingOneReducers,
   facilitiesSupportBookingReducers,
   otherRoomsReducers,
   couponReducers,
-=======
   loginReducers,
   registerReducers,
   passwordReducers,
@@ -65,7 +65,6 @@ const reducer = combineReducers({
   restomenureducers,
   orderrestoreducers,
   galleryReducers,
->>>>>>> master
 })
 
 const store = configureStore({
