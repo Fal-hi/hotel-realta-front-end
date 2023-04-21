@@ -39,8 +39,18 @@ export const getStocks = async () => {
     return response.data
 }
 
+export const getFacilities = async () => {
+    const response = await axios.get('purchasing/facilities');
+    return response.data
+}
+
 export const getVendors = async () => {
     const response = await axios.get('purchasing/vendorAll');
+    return response.data
+}
+
+export const getEmployee = async () => {
+    const response = await axios.get('purchasing/employee');
     return response.data
 }
 

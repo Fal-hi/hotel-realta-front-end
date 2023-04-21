@@ -24,9 +24,17 @@ export default function Vepro(props: any) {
   const [selectedVendorEntityId, setSelectedVendorEntityId] = useState(0)
 
   useEffect(() => {
-    dispatch(doRequestGetProductid(vendorEntityId))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refresh])
+    if (vendorEntityId) {
+      dispatch(doRequestGetProductid(vendorEntityId))
+      localStorage.setItem('vendorEntityId',JSON.stringify(vendorEntityId))
+    }
+    return () => {
+      localStorage.removeItem('vendorEntityId')
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refresh, vendorEntityId])
+  
+  
   // console.log(vendorEntityId)
 
   const handleAddButtonClick = () => {

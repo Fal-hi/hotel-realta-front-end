@@ -3,9 +3,10 @@ import ApiPurchasing from "@/api/purchasing/apiPurchasing";
 import {  doAddPodeResponse, doUpdatePodeResponse } from "../action/actionPode";
 
 function* handleAddPode(action: any): any {
+    console.log("Pode Saga",action)
     try {
         const result = yield call(ApiPurchasing.createPode, action.payload)
-        console.log(result)
+        console.log("action", result.data)
         yield put(doAddPodeResponse(result.data))
     }
     catch (error) {

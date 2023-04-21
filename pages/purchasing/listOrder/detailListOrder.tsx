@@ -12,6 +12,7 @@ import { Modal } from "@/components/modal"
 import AddButton from "@/components/addButton"
 import AddStockListOrder from "./addStockListOrder"
 import AddGenerate from "./addGenerate"
+import { BgPrimary } from "@/components/icons"
 
 export default function DetailListOrder(props: any) {
   const router = useRouter()
@@ -25,9 +26,31 @@ export default function DetailListOrder(props: any) {
     month: "short",
     year: "numeric",
   })
+  const status = `${router.query.pohe_status}`
+  let newStatus = "";
+  switch (parseInt(status)) {
+    case 1:
+      newStatus = "Pending";
+      break;
+    case 2:
+      newStatus = "Approved";
+      break;
+    case 3:
+      newStatus = "Rejected";
+      break;
+    case 4:
+      newStatus = "Received";
+      break;
+    case 5:
+      newStatus = "Completed";
+      break;
+    default:
+      newStatus = "Unknow";
+      break;
+  }
 
   const vendorName = router.query.vendor_name
-  const status = router.query.pohe_status
+
   const subTotal = router.query.pohe_subtotal
   const amount = router.query.pohe_total_amount
   const tax = router.query.pohe_tax
@@ -83,16 +106,23 @@ export default function DetailListOrder(props: any) {
   }
 
   useEffect(() => {
-    dispatch(doGetFindListOrder(purchaseOrder))
+    if (purchaseOrder) {
+      dispatch(doGetFindListOrder(purchaseOrder))
+      localStorage.setItem('purchaseOrder', JSON.stringify(purchaseOrder))
+    }
+    return () => {
+      localStorage.removeItem('purchaseOrder')
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refresh])
+  }, [refresh, purchaseOrder])
+  
   // console.log(purchaseOrder)
   // console.log("ts=>",listOrder?.data?.data[0]?.purchase_order_details)
 
   return (
     <div>
       <Breadcumb
-        child={"PO Number: " + purchaseOrder}
+        // child={"PO Number: " + purchaseOrder}
         parent={purchaseOrder}
         detail="Detail List Order"
       ></Breadcumb>
@@ -100,16 +130,35 @@ export default function DetailListOrder(props: any) {
         className="grid grid-cols-1 gap-4 max-w-xl m-auto"
         style={{ marginTop: "1rem" }}
       ></div>
-      <div>
-        <h5>PO Number : {purchaseOrder}</h5>
-        <h5>PO Date : {newPO}</h5>
-        <h5>Vendor Name : {vendorName}</h5>
-        <h5>Status : {status} </h5>
-        <h5>Sub Total : {subTotal}</h5>
-        <h5>
-          Total Amount : {amount} *include Tax {tax}%
-        </h5>
-      </div>
+      <div className="hotel-info-container mt-5 relative flex items-center content-center">
+          <BgPrimary width={"100%"} height={"100%"} />
+          <div className="hotel-info flex justify-between px-5 absolute top-50 w-full">
+            <div className="info-1 flex flex-col justify-center">
+              <h1 className="font-semibold text-white text-xl">
+                {"Vendor " + vendorName}
+              </h1>
+              <p className="text-white font-thin text-sm">
+                {"PO Number: " + purchaseOrder}
+              </p>
+            </div>
+            <div className="info-2 flex flex-col justify-center ">
+              <p className="text-white font-thin text-sm">
+                {"PO Date  : " + newPO}
+              </p>
+              <p className="text-white font-thin text-sm">
+                {"Status : " + newStatus}
+              </p>
+            </div>
+            <div className="info-3 flex flex-col justify-center ">
+              <p className="text-white font-thin text-sm">
+                {"Sub Total : Rp." + subTotal}
+              </p>
+              <p className="text-white font-thin text-sm">
+                {"Total Amount : Rp." + amount} *include tax 10%
+              </p>
+            </div>
+          </div>
+        </div>
       <div
         className="grid grid-cols-1 gap-4 max-w-xl m-auto"
         style={{ marginTop: "1rem" }}

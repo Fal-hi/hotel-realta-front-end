@@ -68,8 +68,7 @@ export default function AddVendor(props: any) {
           >
             <label>Vendor Name</label>
             <input
-              className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
-                            text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+             className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
               type="text"
               {...register("vendor_name", registerOptions.vendor_name)}
             />
@@ -84,8 +83,7 @@ export default function AddVendor(props: any) {
             <label>Status</label>
             <select
               id="vendor_active"
-              className="bg-violet-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-            dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
               {...register("vendor_active", registerOptions.vendor_active)}
             >
               <option selected>Choose a status</option>
@@ -100,8 +98,7 @@ export default function AddVendor(props: any) {
             <label>Priority</label>
             <select
               id="vendor_priority"
-              className="bg-violet-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-            dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
               {...register("vendor_priority", registerOptions.vendor_priority)}
             >
               <option selected>Choose a priority</option>
@@ -115,8 +112,7 @@ export default function AddVendor(props: any) {
             <div className="grid grid-cols-1 gap-4 max-w-xl relative">
               <DatePicker
                 dateFormat="yyyy/MM/dd"
-                className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium w-full
-                            text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+                className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
                 selected={selectedDate}
                 onChange={handleDateChange}
               /> <BsCalendar2Date className="absolute right-0 top-0 mt-3 mr-3 text-gray-400" size={20} />
@@ -136,8 +132,7 @@ export default function AddVendor(props: any) {
             <label>Web URL</label>
             <div className="grid grid-cols-1 gap-4 max-w-xl relative">
               <input
-                className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
-                            text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+               className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
                 type="text"
                 {...register("vendor_weburl", registerOptions.vendor_weburl)}
               />

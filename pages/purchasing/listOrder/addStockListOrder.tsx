@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react"
+import React, { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
 import "react-datepicker/dist/react-datepicker.css"
@@ -29,7 +29,7 @@ export default function AddStockListOrder(props: any) {
   const dispatch = useDispatch()
 
   const [stocks, setStocks] = useState<Stocks[]>([])
-  
+
   useEffect(() => {
     const fetchStocks = async () => {
       const data = await getStocks()
@@ -47,7 +47,7 @@ export default function AddStockListOrder(props: any) {
       pode_received_qty: data.pode_received_qty,
       pode_rejected_qty: data.pode_rejected_qty,
       pode_stock_id: data.pode_stock_id,
-      pode_stocked_qty: data.pode_stocked_qty
+      pode_stocked_qty: data.pode_stocked_qty,
     }
     console.log(dataForm)
     dispatch(doAddPode(dataForm))
@@ -69,13 +69,14 @@ export default function AddStockListOrder(props: any) {
     <div>
       <div className="px-5">
         <form onSubmit={handleSubmit(handleRegistration, handleError)}>
-        <div className="grid grid-cols-1 gap-4 max-w-xl m-auto"
-          style={{ marginBottom: "1rem", marginTop: "1rem" }}>
+          <div
+            className="grid grid-cols-1 gap-4 max-w-xl m-auto"
+            style={{ marginBottom: "1rem", marginTop: "1rem" }}
+          >
             <label>Stock Name</label>
             <select
               id="countries"
-              className="bg-violet-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-                           dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
               {...register("pode_stock_id", registerOptions.pode_stock_id)}
             >
               <option selected>Choose a stock</option>
@@ -90,13 +91,9 @@ export default function AddStockListOrder(props: any) {
           <div className="grid grid-cols-1 gap-4 max-w-xl m-auto">
             <label>Price</label>
             <input
-              className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
-                            text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+              className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
               type="text"
-              {...register(
-                "pode_price",
-                registerOptions.pode_price
-              )}
+              {...register("pode_price", registerOptions.pode_price)}
             />
             <small className="text-danger">
               {errors?.pode_price && errors.pode_price.message}
@@ -109,13 +106,9 @@ export default function AddStockListOrder(props: any) {
               <input
                 type="number"
                 id="quantity"
-                className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
-      text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+                className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
                 style={{ width: "100px" }}
-                {...register(
-                  "pode_order_qty",
-                  registerOptions.pode_order_qty
-                )}
+                {...register("pode_order_qty", registerOptions.pode_order_qty)}
               />
               <small className="text-danger">
                 {errors?.pode_order_qty && errors.pode_order_qty.message}
@@ -127,8 +120,7 @@ export default function AddStockListOrder(props: any) {
               <input
                 type="number"
                 id="quantity"
-                className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
-      text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+                className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
                 style={{ width: "100px" }}
                 {...register(
                   "pode_received_qty",
@@ -145,8 +137,7 @@ export default function AddStockListOrder(props: any) {
               <input
                 type="number"
                 id="quantity"
-                className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
-      text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+                className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
                 style={{ width: "100px" }}
                 {...register(
                   "pode_rejected_qty",
@@ -157,14 +148,13 @@ export default function AddStockListOrder(props: any) {
                 {errors?.pode_rejected_qty && errors.pode_rejected_qty.message}
               </small>
             </div>
-   
+
             <div className="w-1/2 grid grid-cols-1 gap-4">
               <label htmlFor="quantity">Stocked Qty </label>
               <input
                 type="number"
                 id="quantity"
-                className="inline-flex justify-center rounded-md border-transparent bg-violet-100 px-4 py-2 text-sm font-medium
-      text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible::ring-blue-500 focus-visible:ring-offset-2"
+                className="w-full px-4 py-2 border border-[#DADADA] rounded-md focus:border-indigo-500 focus:outline-none focus:shadow-outline-indigo"
                 style={{ width: "100px" }}
                 {...register(
                   "pode_stocked_qty",
@@ -191,16 +181,6 @@ export default function AddStockListOrder(props: any) {
               Cancel
             </button>
           </div>
-
-          {/* <div className="flex justify-center items-center mt-4 p-5">
-            <button
-              className="flex items-center bg-[#7743DB] hover:bg-[#5f35ac] text-white py-2 px-4 rounded mr-4"
-              onClick={props.closeModal}
-            >
-              Generate Barcode
-            </button>
-          </div> */}
-
         </form>
       </div>
     </div>

@@ -47,7 +47,7 @@ export default function Stock() {
   const { stock, message, refresh } = useSelector(
     (state: any) => state.stockReducers
   )
-  console.log(stock)
+  console.log("Stock",stock)
 
   const [isOpen, setIsOpen] = useState(false)
   const [search, setSearch] = useState("")
@@ -80,7 +80,7 @@ export default function Stock() {
 
       <Table
         cols={tableConstants(editOpen, deleteOpen, photosOpen)}
-        data={stock?.data?.data}
+        data={stock?.data?.data || []}
       >
         <Pagination
           pagination={{

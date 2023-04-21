@@ -115,6 +115,7 @@ export const tableConstants = (setIsOpen?: any, setIsDelete?: any, setIsPhotos?:
                             router.push({
                               query: {
                                 stock_id: data.stock_id,
+                                stock_name: data.stock_name,
                               },
                             })
                           }}

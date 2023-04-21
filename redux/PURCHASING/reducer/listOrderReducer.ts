@@ -19,17 +19,20 @@ function listOrderReducers(state = initialState, action: any) {
             return {message: payload, refresh: false};
         case ActionTypes.DEL_LIST_DETAIL_RESPONSE:
             return {message: payload, refresh: false};  
+        //POHE
+        case ActionTypes.ADD_POHE_RESPONSE:
+            console.log("reducer",payload)
+            return {message: payload?.message || '', refresh: false, listOrder: payload.data};
         //PODE
         case ActionTypes.ADD_PODE_RESPONSE:
-            return {message: payload?.message || '', refresh: false};
+          
+            return {message: payload?.message || '', refresh: false,};
         case ActionTypes.UPDATE_PODE_RESPONSE:
             return {...state, message: payload.message || '', refresh: false};
         //STOD
         case ActionTypes.ADD_STOD_RESPONSE:
             return {message: payload?.message || '', refresh: false};
-        //POHE
-        case ActionTypes.ADD_POHE_RESPONSE:
-            return {message: payload?.message || '', refresh: false};
+            
     default:
         return state
     }
