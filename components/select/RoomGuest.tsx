@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react"
+import React, { useState, useRef, useEffect, useCallback } from "react"
 import classNames from "classnames"
 import { Trash } from "../icons"
 import { OutlineButton } from "../buttons/OutlineButton"
@@ -14,15 +14,14 @@ type RoomData = {
 const RoomGuest: React.FC<RoomGuestProps> = () => {
   const [showModal, setShowModal] = useState(false)
   const [roomCount, setRoomCount] = useState(1)
-  const [guestCount, setGuestCount] = useState(1)
-  const [totalGuestCount, setTotalGuestCount] = useState("1 Kamar, 1 Tamu")
+  const [totalGuestCount, setTotalGuestCount] = useState("1 Room, 1 Guest")
   const [rooms, setRooms] = useState<RoomData[]>([{ id: 1, guestCount: 1 }])
 
   const RoomGuestRef = useRef<HTMLDivElement | null>(null)
 
-  const handleModalOpen = () => {
+  const handleModalOpen = useCallback(() => {
     setShowModal(true)
-  }
+  }, [])
 
   const handleModalClose = () => {
     setShowModal(false)
@@ -70,7 +69,7 @@ const RoomGuest: React.FC<RoomGuestProps> = () => {
       totalRooms++
     })
 
-    return `${totalRooms} Kamar, ${totalGuests} Tamu`
+    return `${totalRooms} Room, ${totalGuests} Guest`
   }
 
   useEffect(() => {

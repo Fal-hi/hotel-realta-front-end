@@ -21,6 +21,7 @@
     "dotenv": "^16.0.3",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
+    "formik": "^2.2.9",
     "moment": "^2.29.4",
     "next": "13.2.4",
     "nuka-carousel": "^5.5.1",
@@ -30,6 +31,9 @@
     "react-hook-form": "^7.43.8",
     "react-icons": "^4.8.0",
     "react-redux": "^8.0.5",
+    "react-spinners": "^0.13.8",
+    "react-to-print": "^2.14.12",
+    "react-toastify": "^9.1.2",
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.2.3",
     "typescript": "5.0.2"
