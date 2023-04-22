@@ -6,6 +6,7 @@ interface InputTextProps {
   width?: string
   value?: any
   onChange?: (e?: any) => void
+  disabled?: boolean
 }
 
 const InputText: FC<InputTextProps> = (props: any) => {
@@ -17,6 +18,7 @@ const InputText: FC<InputTextProps> = (props: any) => {
       required
       value={props.value}
       onChange={props.onChange}
+      disabled={props.disabled}
       style={{
         width: props.width,
       }}
@@ -27,6 +29,7 @@ const InputText: FC<InputTextProps> = (props: any) => {
 InputText.defaultProps = {
   width: "auto",
   placeholder: "Input text...",
+  disabled: false,
 }
 
 export default InputText

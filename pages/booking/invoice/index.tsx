@@ -105,7 +105,7 @@ const InvoiceBooking = () => {
                     className="text-xs font-light mb-2 text-left"
                     key={biling.id}
                   >
-                    {`-${formatRupiah(biling.discount)}`}
+                    {biling.discount}
                   </p>
                 ))}
               </div>
@@ -116,7 +116,7 @@ const InvoiceBooking = () => {
                     className="text-xs font-light mb-2 text-left"
                     key={biling.id}
                   >
-                    {`${formatRupiah(biling.pointMember)} (100Pts)`}
+                    {biling.pointMember}
                   </p>
                 ))}
               </div>
@@ -137,7 +137,7 @@ const InvoiceBooking = () => {
         <hr className="mt-4" />
         <div className="text-right flex gap-8 justify-end items-center mt-2">
           <h3 className="font-semibold mb-2">Total Amount</h3>
-          <p className="text-sm font-semibold mb-2">{formatRupiah(335000)}</p>
+          <p className="text-sm font-semibold mb-2">{formatRupiah(431000)}</p>
         </div>
         <div className="text-right flex gap-[5.5rem] justify-end items-center mt-2">
           <h3 className="font-semibold mb-2">Tax</h3>
@@ -147,7 +147,7 @@ const InvoiceBooking = () => {
           {/* <BgButton title="Send To Email" padding="0.3rem 1rem" />
           <OutlineButton title="Print" padding="0.3rem 1rem" textSize="12px" /> */}
           <h3 className="font-semibold mb-2">Payment Amount</h3>
-          <p className="text-sm font-semibold mb-2">{formatRupiah(368500)}</p>
+          <p className="text-sm font-semibold mb-2">{formatRupiah(474100)}</p>
         </div>
       </div>
     )
@@ -155,24 +155,6 @@ const InvoiceBooking = () => {
 
   return (
     <section className="text-textPrimary w-[85vw] mx-auto font-poppins-regular">
-      <div className="sticky top-0 bg-[#FBFBFB] h-6 z-50"></div>
-      <div className="sticky top-6 z-50 flex justify-between items-center bg-white shadow rounded-md px-4 py-4">
-        <figure>
-          <Image
-            width={220}
-            height={100}
-            src={Logo}
-            alt="Logo Realta"
-            className=""
-          />
-        </figure>
-        <Link href="/" className="flex gap-1 items-center">
-          <User width="20" stroke="#7743DB" />
-          <span className="text-xs font-semibold text-textPurple mr-2">
-            Sign In
-          </span>
-        </Link>
-      </div>
       <section className="pr-6 ml-4">
         <Link
           href="/booking/modify"
@@ -185,8 +167,6 @@ const InvoiceBooking = () => {
         <PrintContent />
         <div className="flex justify-end gap-4 items-center mr-11 mt-2">
           <PrintButton />
-          <BgButton title="Send To Email" padding="0.3rem 1rem" />
-          {/* <OutlineButton title="Print" padding="0.3rem 1rem" textSize="12px" /> */}
         </div>
       </section>
     </section>

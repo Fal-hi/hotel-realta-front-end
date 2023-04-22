@@ -5,6 +5,7 @@ interface OutlineButtonProps {
   padding?: string
   textSize?: string
   textColor?: string
+  type?: string
   onClick?: () => void
 }
 
@@ -17,6 +18,7 @@ export const OutlineButton: FC<OutlineButtonProps> = (props: any) => {
         fontSize: props.textSize,
         color: props.textColor,
       }}
+      type={props.type}
       onClick={props.onClick}
     >
       {props.title}
@@ -29,4 +31,5 @@ OutlineButton.defaultProps = {
   padding: "0.5rem 1rem",
   textSize: "8px",
   textColor: "#7743DB",
+  type: "submit",
 }

@@ -3,6 +3,7 @@ import { FC } from "react"
 interface InputEmailProps {
   width?: string
   placeholder: string
+  disabled?: boolean
 }
 
 const InputEmail: FC<InputEmailProps> = (props: any) => {
@@ -12,6 +13,7 @@ const InputEmail: FC<InputEmailProps> = (props: any) => {
       className="bg-white border-[#D0D5DD] text-[#667085] text-xs px-3 py-2 rounded-md font-normal border-2 focus:outline-none"
       placeholder={props.placeholder}
       required
+      disabled={props.disabled}
       style={{
         width: props.width,
       }}
@@ -22,6 +24,7 @@ const InputEmail: FC<InputEmailProps> = (props: any) => {
 InputEmail.defaultProps = {
   width: "auto",
   placeholder: "Input Email...",
+  disabled: false,
 }
 
 export default InputEmail

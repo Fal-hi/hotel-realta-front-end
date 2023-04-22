@@ -1,95 +1,95 @@
 export const invoiceData = [
   {
-  bookingData: [
-    {
-      id: 1,
-      title: "Booking Order",
-      data: "BO-20230123-001",
-    },
-    {
-      id: 2,
-      title: "Order Date",
-      data: "23 January 2023",
-    },
-    {
-      id: 3,
-      title: "Invoice Number",
-      data: "TRX#2021127-0002",
-    },
-    {
-      id: 4,
-      title: "Invoice Date",
-      data: "23 January 2023",
-    },
-    {
-      id: 5,
-      title: "Status",
-      data: "Paid",
-    },
-    {
-      id: 6,
-      title: "Payment Type",
-      data: "GoTo",
-    },
-  ],
-  customerData: [
-    {
-      id: 1,
-      title: "Full Name",
-      data: "Mamank Racing",
-    },
-    {
-      id: 2,
-      title: "Contact Number",
-      data: "08968872829",
-    },
-    {
-      id: 3,
-      title: "Member",
-      data: "VIP",
-    },
-    {
-      id: 4,
-      title: "Member Date",
-      data: "23 May 2022",
-    },
-    {
-      id: 5,
-      title: "Remaining Points",
-      data: "+150",
-    },
-  ],
-  bilingData: [
-    {
-      id: 1,
-      facilities: "Indonesia Standard Double",
-      qty: 1,
-      price: 300000,
-      discount: 15000,
-      pointMember: 15000,
-      subTotal: 270000
-    },
-    {
-      id: 2,
-      facilities: "Extra Bed",
-      qty: 1,
-      price: 45000,
-      discount: 0,
-      pointMember: 0,
-      subTotal: 45000
-    },
-    {
-      id: 3,
-      facilities: "Soft Drink",
-      qty: 2,
-      price: 20000,
-      discount: 0,
-      pointMember: 0,
-      subTotal: 20000
-    },
-  ],
-  totalAmount: 335000,
-  tax: 10,
-  paymentAmount: 368500
-  }
+    bookingData: [
+      {
+        id: 1,
+        title: "Booking Order",
+        data: "BO-20230401-001",
+      },
+      {
+        id: 2,
+        title: "Order Date",
+        data: "01 April 2023",
+      },
+      {
+        id: 3,
+        title: "Invoice Number",
+        data: "TRX#202341-0001",
+      },
+      {
+        id: 4,
+        title: "Invoice Date",
+        data: "01 April 2023",
+      },
+      {
+        id: 5,
+        title: "Status",
+        data: "Paid",
+      },
+      {
+        id: 6,
+        title: "Payment Type",
+        data: "GoTo",
+      },
+    ],
+    customerData: [
+      {
+        id: 1,
+        title: "Full Name",
+        data: "Syaifal Illahi",
+      },
+      {
+        id: 2,
+        title: "Contact Number",
+        data: "089608234617",
+      },
+      {
+        id: 3,
+        title: "Member",
+        data: "None",
+      },
+      {
+        id: 4,
+        title: "Member Date",
+        data: "-",
+      },
+      {
+        id: 5,
+        title: "Remaining Points",
+        data: "-",
+      },
+    ],
+    bilingData: [
+      {
+        id: 1,
+        facilities: "Deluxe Twin Room",
+        qty: 1,
+        price: 427500,
+        discount: "-Rp 20.000",
+        pointMember: "-",
+        subTotal: 407500,
+      },
+      {
+        id: 2,
+        facilities: "Coca-Cola",
+        qty: 1,
+        price: 6500,
+        discount: "",
+        pointMember: "",
+        subTotal: 6500,
+      },
+      {
+        id: 3,
+        facilities: "Coklat Silver Queen",
+        qty: 1,
+        price: 17000,
+        discount: "",
+        pointMember: "",
+        subTotal: 17000,
+      },
+    ],
+    totalAmount: 411000,
+    tax: 10,
+    paymentAmount: 368500,
+  },
 ]

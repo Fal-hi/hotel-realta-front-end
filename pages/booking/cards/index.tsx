@@ -1,133 +1,167 @@
-import { Fragment, useState } from "react"
+import { Fragment, useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import BgButton from "@/components/buttons/BgButton"
 import Carousel from "nuka-carousel/lib/carousel"
 import { ChevronRight, Plus } from "@/components/icons"
 import formatRupiah from "@/functions/formatRupiah"
-import { cardHotel } from "./data"
+import { useDispatch, useSelector } from "react-redux"
+import { doRequestGetListBooking } from "@/redux/BOOKING/action/booking"
+import EmptyData from "@/components/booking/emptyData"
 
-const CardBooking = ({ onViewDetails }: any) => {
+const CardBooking = ({ onViewDetails, filterHead }: any) => {
+  const dispatch = useDispatch()
+
+  const { bookings, status } = useSelector(
+    (state: any) => state.bookingReducers
+  )
+
+  useEffect(() => {
+    console.log("filterHead", filterHead)
+    const payload = {
+      facilities_support_filter: "[]",
+      cityName: filterHead.search,
+      startDate: filterHead.checkinDate,
+      endDate: filterHead.checkoutDate,
+    }
+    dispatch(doRequestGetListBooking(payload))
+  }, [dispatch, filterHead])
+  console.log("bookings.dataResponse.data", bookings)
   return (
-    <div className="w-auto ml-80">
-      {cardHotel.map((item: any) => (
-        <section
-          key={item.id}
-          className="flex text-textPrimary bg-white mb-4 shadow rounded-md"
-        >
-          <div className="w-2/6">
-            <Carousel
-              autoplay={true}
-              animation="zoom"
-              autoplayInterval={2000}
-              zoomScale={0.98}
-              wrapAround={true}
-              renderCenterLeftControls={null}
-              renderCenterRightControls={null}
-              defaultControlsConfig={{
-                pagingDotsStyle: {
-                  fill: "white",
-                  margin: "1px",
-                },
-              }}
-            >
-              {item.hotelImages.map((hi: any) => (
-                <Fragment key={hi.id}>
-                  <Image
-                    className="rounded-tl-md rounded-bl-md w-auto h-auto"
-                    width={300}
-                    src={hi.image}
-                    alt="Bedroom"
-                    priority
-                  />
-                </Fragment>
-              ))}
-            </Carousel>
-          </div>
-          <article className="px-4 py-4 flex justify-between items-start w-[45vw]">
-            <section>
-              <div className="flex justify-between items-start">
-                <h1 className="text-left text-lg font-semibold">
-                  {item.hotelName}
-                </h1>
-              </div>
-              <div className="flex gap-2 items-end mt-2">
-                <figure>
-                  <Image
-                    className="w-auto h-auto"
-                    width={100}
-                    height={100}
-                    src={item.hotelStars}
-                    alt="Stars"
-                  />
-                </figure>
-                <span className="text-[8px]">{item.hotelDesc}</span>
-              </div>
-              <div className="flex gap-2 items-center mt-2 text-xs">
-                <span>
-                  <b>{item.hotelRatingStars}</b> / {item.hotelRatingStarsTotal}
-                </span>
-                <span>({item.hotelReviewsCount} Ratings)</span>
-                <span className="text-uppercase text-textPurple font-bold">
-                  {item.hotelRating}
-                </span>
-              </div>
-              <div>
-                <span className="text-[10px] font-light">
-                  Per Room Per Night
-                </span>
-              </div>
-              <div className="flex gap-4 items-center mt-6">
-                {item.hotelFacilities.map((hf: any) => (
-                  <div
-                    key={hf.id}
-                    className="flex gap-2 items-center font-light text-textPrimary"
-                  >
-                    <span>{<hf.icon width="20" fill="#8A92A6" />}</span>
-                    <span className="text-xs font-normal">{hf.desc}</span>
-                  </div>
+    <div className="w-auto px-2">
+      {bookings.dataResponse?.data === 0 ? <EmptyData /> : null}
+      {status == true &&
+        bookings.dataResponse?.data.map((item: any, index: number) => (
+          <section
+            key={index}
+            className="flex text-textPrimary bg-white mb-4 shadow rounded-md"
+          >
+            <div className="w-1/4">
+              <Carousel
+                autoplay={true}
+                animation="zoom"
+                autoplayInterval={2000}
+                zoomScale={0.98}
+                wrapAround={true}
+                renderCenterLeftControls={null}
+                renderCenterRightControls={null}
+                defaultControlsConfig={{
+                  pagingDotsStyle: {
+                    fill: "white",
+                    margin: "1px",
+                  },
+                }}
+              >
+                {item.facility_photos.map((hi: any) => (
+                  <Fragment key={hi.fapho_id}>
+                    <Image
+                      className="rounded-tl-md rounded-bl-md w-[350px] h-[250px]"
+                      width={350}
+                      height={250}
+                      src={`http://localhost:5000/hotel/${hi.fapho_photo_filename}`}
+                      alt="Bedroom"
+                      priority
+                    />
+                  </Fragment>
                 ))}
-                {/* Mengarah ke file booking details */}
-                <Link href="/">
-                  <div className="flex gap-2 items-center text-xs font-semibold text-textPurple">
-                    <Plus width="10" height="10" stroke="#5B33A8" />
-                    <span>All Facilities</span>
+              </Carousel>
+            </div>
+            <article className="pl-8 pr-4 py-4 flex justify-between items-start w-[62vw]">
+              <section>
+                <div>
+                  <h1 className="text-left text-lg font-semibold">
+                    {item.hotel.hotel_name}
+                  </h1>
+                  <h5 className="text-xs">{item.hotel.hotel_description}</h5>
+                </div>
+                <div className="flex gap-2 items-end mt-4">
+                  <p className="text-2xl text-textPurple font-semibold border-2 border-textPurple rounded-md py-0 px-3">
+                    {item.hotel.hotel_user_reviews[0].hore_rating}{" "}
+                  </p>
+                  <span className="text-sm text-textPurple font-bold">
+                    Stars
+                  </span>
+                </div>
+                <h3 className="text-uppercase text-textPurple text-sm pt-3 font-bold">
+                  {item.hotel.hotel_rating_status}
+                </h3>
+                <div>
+                  <span className="text-[10px] font-light">
+                    {item.faci_keterangan}
+                  </span>
+                </div>
+                <div className="flex gap-4 items-center mt-12">
+                  {item.hotel.facilities_support.slice(0, 2).map((fs: any) => (
+                    <div
+                      key={fs.fs_id}
+                      className="flex gap-2 items-center font-light text-textPrimary"
+                    >
+                      <Image
+                        src={`http://localhost:5000/hotel/${fs.fs_icon}`}
+                        width={15}
+                        height={15}
+                        alt={fs.fs_description}
+                      />
+                      <span className="text-xs font-normal">
+                        {fs.fs_description}
+                      </span>
+                    </div>
+                  ))}
+                  {item.hotel.facilities_support.length > 2 && (
+                    <Link
+                      href={`booking/details/?hotel=${item.hotel.hotel_id}&room=${item.faci_id}`}
+                      target="_blank"
+                    >
+                      <div className="flex gap-2 items-center text-xs font-semibold text-textPurple">
+                        <Plus width="10" height="10" stroke="#5B33A8" />
+                        <span>All Facilities</span>
+                      </div>
+                    </Link>
+                  )}
+                </div>
+              </section>
+              <section className="mr-1">
+                {/* Pergi ke detail booking */}
+                <Link
+                  href={`booking/details/?hotel=${item.hotel.hotel_id}&room=${item.faci_id}`}
+                  target="_blank"
+                >
+                  <div
+                    className="flex gap-2 justify-end items-center mb-8 text-xs text-textPurple cursor-pointer"
+                    onClick={onViewDetails}
+                  >
+                    <span>See details</span>
+                    <ChevronRight width="7" fill="#7743DB" />
                   </div>
                 </Link>
-              </div>
-            </section>
-            <section className="mr-1">
-              {/* Pergi ke detail booking */}
-              <Link href="booking/details" target="_blank">
-                <div
-                  className="flex gap-2 justify-end items-center mb-8 text-xs text-textPurple cursor-pointer"
-                  onClick={onViewDetails}
-                >
-                  <span>Lihat Detail</span>
-                  <ChevronRight width="7" fill="#7743DB" />
+                <div className="text-right">
+                  <span className="text-rose-500 text-xs line-through mr-2">
+                    {formatRupiah(item.faci_rate_price)}
+                  </span>
+                  <span className="text-xs bg-yellow-300 py-[2px] px-1 rounded">
+                    {item.faci_discount}%
+                  </span>
+                  <h1 className="text-right font-semibold text-lg my-1">
+                    {formatRupiah(item.faci_subtotal)}
+                  </h1>
+                  <span className="text-[10px] border-2 border-bgPrimary text-textPurple font-semibold py-1 px-2 rounded-sm">
+                    {item.faci_memb_name} MEMBER
+                  </span>
                 </div>
-              </Link>
-              <div>
-                <span className="text-rose-500 text-xs line-through mr-2">
-                  {formatRupiah(item.hotelFaciRatePrice)}
-                </span>
-                <span className="text-xs bg-yellow-300 py-[2px] px-1 rounded">
-                  -{item.hotelFaciDiscount}%
-                </span>
-                <h1 className="text-right font-semibold mt-1">
-                  {formatRupiah(item.hotelFaciLowPrice)}
-                </h1>
-              </div>
-              {/* Pergi ke modify booking */}
-              <Link href="booking/modify" target="_blank">
-                <div className="mt-7 text-right cursor-pointer">
-                  <BgButton padding="0.5rem 1rem" title="Booking Now" />
+                {/* Pergi ke modify booking */}
+                <div className="mt-8">
+                  <Link
+                    href={`booking/modify/?hotel=${item.hotel.hotel_id}&room=${item.faci_id}`}
+                    target="_blank"
+                    className="font-semibold text-white border-bgPrimary bg-bgPrimary border-solid border-2 outline-none focus:outline-none hover:text-white rounded-md hover:bg-bgPrimary text-xs py-2 px-3"
+                  >
+                    Booking Now
+                  </Link>
                 </div>
-              </Link>
-            </section>
-          </article>
-        </section>
-      ))}
+              </section>
+            </article>
+          </section>
+        ))}
     </div>
   )
 }
